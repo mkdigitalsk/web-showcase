@@ -4,7 +4,7 @@ import './index.css'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 
-const Login = () => <div className="p-8 text-2xl font-bold">Login Page</div>
+const Login = () => <div className="p-8 text-2xl font-bold text-primary">Login Page</div>
 const Register = () => <div className="p-8 text-2xl font-bold">Register Page</div>
 const Dashboard = () => <div className="p-8 text-2xl font-bold">Dashboard</div>
 
