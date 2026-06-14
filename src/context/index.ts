@@ -1,1 +1,1 @@
-// Context providers (AuthContext, ThemeContext...)
+export { AuthContext, AuthProvider } from './AuthContext'

@@ -1,45 +1,39 @@
-interface InputProps {
-  label: string
-  type?: 'text' | 'email' | 'password'
-  value: string
+import { useState } from 'react'
+import { TextField, InputAdornment, IconButton, type TextFieldProps } from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+
+interface InputProps extends Omit<TextFieldProps, 'onChange'> {
   onChange: (value: string) => void
-  placeholder?: string
-  error?: string
-  disabled?: boolean
-  className?: string
 }
 
-export function Input({
-  label,
-  type = 'text',
-  value,
-  onChange,
-  placeholder,
-  error,
-  disabled = false,
-  className = '',
-}: InputProps) {
+export function Input({ type = 'text', onChange, ...props }: InputProps) {
+  const [showPassword, setShowPassword] = useState(false)
+  const isPassword = type === 'password'
+  const inputType = isPassword && showPassword ? 'text' : type
+
   return (
-    <div className={`flex flex-col gap-1 ${className}`}>
-      <label className="text-sm font-medium text-neutral-60">
-        {label}
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        disabled={disabled}
-        className={`
-          px-3 py-2 rounded border transition-colors
-          focus:outline-none focus:ring-2 focus:ring-primary
-          disabled:bg-neutral-20 disabled:cursor-not-allowed
-          ${error ? 'border-error' : 'border-neutral-20'}
-        `}
-      />
-      {error && (
-        <span className="text-sm text-error">{error}</span>
-      )}
-    </div>
+    <TextField
+      type={inputType}
+      onChange={(e) => onChange(e.target.value)}
+      slotProps={
+        isPassword
+          ? {
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
+            }
+          : undefined
+      }
+      {...props}
+    />
   )
 }

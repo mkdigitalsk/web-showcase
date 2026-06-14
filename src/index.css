@@ -1,26 +1,14 @@
-@import "tailwindcss";
+/* MUI handles all component styling */
+/* This file contains only global resets */
 
-/* Design tokens - Figma style */
-@theme {
-  /* Brand */
-  --color-primary: #6200EE;
-  --color-secondary: #03DAC6;
-
-  /* Feedback */
-  --color-error: #FF1A1A;
-  --color-success: #4CAF50;
-  --color-warning: #FF9800;
-
-  /* Neutrals */
-  --color-neutral-0: #FFFFFF;
-  --color-neutral-20: #C8C8C8;
-  --color-neutral-40: #919191;
-  --color-neutral-60: #5A5A5A;
-  --color-neutral-80: #232323;
-  --color-neutral-100: #000000;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Base styles */
 body {
-  @apply bg-neutral-0 text-neutral-80;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

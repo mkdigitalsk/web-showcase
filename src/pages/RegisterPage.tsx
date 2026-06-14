@@ -5,10 +5,11 @@ import { Box, Container } from '@mui/material'
 import { Button, Input, TextH4Bold, TextBody1Neutral60, TextLinkPrimary, AlertError } from '../components'
 import { useAuth } from '../hooks'
 
-export function LoginPage() {
+export function RegisterPage() {
   const intl = useIntl()
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { register } = useAuth()
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -20,10 +21,10 @@ export function LoginPage() {
     setLoading(true)
 
     try {
-      await login({ email, password })
+      await register({ name, email, password })
       navigate('/dashboard')
     } catch {
-      setError(intl.formatMessage({ id: 'login.error' }))
+      setError(intl.formatMessage({ id: 'register.error' }))
     } finally {
       setLoading(false)
     }
@@ -40,26 +41,36 @@ export function LoginPage() {
         }}
       >
         <TextH4Bold align="center" gutterBottom>
-          {intl.formatMessage({ id: 'login.title' })}
+          {intl.formatMessage({ id: 'register.title' })}
         </TextH4Bold>
 
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }}>
           <Input
-            label={intl.formatMessage({ id: 'login.emailLabel' })}
-            type="email"
-            value={email}
-            onChange={setEmail}
-            placeholder={intl.formatMessage({ id: 'login.emailPlaceholder' })}
+            label={intl.formatMessage({ id: 'register.nameLabel' })}
+            type="text"
+            value={name}
+            onChange={setName}
+            placeholder={intl.formatMessage({ id: 'register.namePlaceholder' })}
             margin="normal"
             fullWidth
           />
 
           <Input
-            label={intl.formatMessage({ id: 'login.passwordLabel' })}
+            label={intl.formatMessage({ id: 'register.emailLabel' })}
+            type="email"
+            value={email}
+            onChange={setEmail}
+            placeholder={intl.formatMessage({ id: 'register.emailPlaceholder' })}
+            margin="normal"
+            fullWidth
+          />
+
+          <Input
+            label={intl.formatMessage({ id: 'register.passwordLabel' })}
             type="password"
             value={password}
             onChange={setPassword}
-            placeholder={intl.formatMessage({ id: 'login.passwordPlaceholder' })}
+            placeholder={intl.formatMessage({ id: 'register.passwordPlaceholder' })}
             margin="normal"
             fullWidth
           />
@@ -67,14 +78,14 @@ export function LoginPage() {
           {error && <AlertError sx={{ mt: 2 }}>{error}</AlertError>}
 
           <Button type="submit" loading={loading} fullWidth size="large" sx={{ mt: 3 }}>
-            {intl.formatMessage({ id: 'login.button' })}
+            {intl.formatMessage({ id: 'register.button' })}
           </Button>
         </Box>
 
         <TextBody1Neutral60 align="center" sx={{ mt: 3 }}>
-          {intl.formatMessage({ id: 'login.noAccount' })}{' '}
-          <TextLinkPrimary to="/register">
-            {intl.formatMessage({ id: 'login.register' })}
+          {intl.formatMessage({ id: 'register.hasAccount' })}{' '}
+          <TextLinkPrimary to="/login">
+            {intl.formatMessage({ id: 'register.login' })}
           </TextLinkPrimary>
         </TextBody1Neutral60>
       </Box>
