@@ -3,6 +3,10 @@
   "common.error": "An error occurred",
   "common.retry": "Retry",
 
+  "validation.required": "This field is required",
+  "validation.invalidEmail": "Invalid email format",
+  "validation.passwordTooShort": "Password must be at least 6 characters",
+
   "login.title": "Welcome Back",
   "login.emailLabel": "Email",
   "login.emailPlaceholder": "Enter your email",
