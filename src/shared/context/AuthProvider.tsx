@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { ReactNode } from 'react'
 import type { AuthUser } from '../types'
 import { authService } from '../services'
-import { AuthContext } from './AuthContext'
+import { AuthContext, type AuthContextValue } from './AuthContext'
 
 function getStoredUser(): AuthUser | null {
   const token = localStorage.getItem('token')
@@ -40,7 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser(null)
   }
 
-  const value = {
+  const value: AuthContextValue = {
     user,
     isLoading: false,
     isAuthenticated: !!user,
