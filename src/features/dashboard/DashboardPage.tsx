@@ -1,11 +1,10 @@
-import { useIntl } from 'react-intl'
 import { useNavigate } from 'react-router-dom'
 import { AppBar, Box, Container, Toolbar } from '@mui/material'
-import { Button, TextH6Bold, TextBody1Neutral60 } from '../components'
-import { useAuth } from '../hooks'
+import { Button, TextH6Bold, TextBody1Neutral60 } from '../../shared/components'
+import { useAuth, useTranslation } from '../../shared/hooks'
 
 export function DashboardPage() {
-  const intl = useIntl()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()
 
@@ -19,13 +18,13 @@ export function DashboardPage() {
       <AppBar position="static" color="default" elevation={1}>
         <Toolbar>
           <TextH6Bold component="h1" sx={{ flexGrow: 1 }}>
-            {intl.formatMessage({ id: 'dashboard.title' })}
+            {t('dashboard.title')}
           </TextH6Bold>
           <TextBody1Neutral60 sx={{ mr: 2 }}>
-            {intl.formatMessage({ id: 'dashboard.welcome' })}, {user?.name}
+            {t('dashboard.welcome')}, {user?.name}
           </TextBody1Neutral60>
           <Button onClick={handleLogout} variant="secondary">
-            {intl.formatMessage({ id: 'dashboard.logout' })}
+            {t('dashboard.logout')}
           </Button>
         </Toolbar>
       </AppBar>
