@@ -12,4 +12,5 @@ export const Routes = {
   LOGIN: '/login',
   REGISTER: '/register',
   NETWORKING: '/networking',
+  STORAGE: '/storage',
 } as const

@@ -59,5 +59,13 @@
   "home.calendar.title": "Calendar",
   "home.calendar.subtitle": "Date range picker",
   "home.notifications.title": "Notifications",
-  "home.notifications.subtitle": "Browser notifications"
+  "home.notifications.subtitle": "Browser notifications",
+
+  "storage.title": "Storage",
+  "storage.subtitle": "localStorage vs sessionStorage — persistent and session-scoped data",
+  "storage.session.label": "Session Counter",
+  "storage.session.hint": "Stored in sessionStorage — resets when the tab is closed",
+  "storage.persistent.label": "Persistent Counter",
+  "storage.persistent.hint": "Stored in localStorage — survives browser restarts",
+  "storage.clearSession": "Clear Session"
 }
