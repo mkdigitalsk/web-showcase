@@ -15,7 +15,7 @@ import { PrivateRoute } from './shared/components'
 import { AuthProvider } from './shared/context'
 import { LoginPage } from './features/auth/login/LoginPage'
 import { RegisterPage } from './features/auth/register/RegisterPage'
-import { DashboardPage } from './features/dashboard/DashboardPage'
+import { HomePage } from './features/home/HomePage'
 import messages from './locales/en.json'
 import './index.css'
 
@@ -34,7 +34,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route element={<PrivateRoute />}>
-                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/dashboard" element={<HomePage />} />
                 </Route>
               </Routes>
             </BrowserRouter>

@@ -38,7 +38,23 @@
   "register.hasAccount": "Already have an account?",
   "register.login": "Login",
 
-  "dashboard.title": "Dashboard",
-  "dashboard.welcome": "Welcome",
-  "dashboard.logout": "Logout"
+  "home.title": "Features",
+  "home.welcome": "Welcome",
+  "home.logout": "Logout",
+  "home.uiComponents.title": "UI Components",
+  "home.uiComponents.subtitle": "Buttons, Cards, Dialogs, Typography",
+  "home.networking.title": "Networking",
+  "home.networking.subtitle": "HTTP Client, REST API",
+  "home.storage.title": "Storage",
+  "home.storage.subtitle": "DataStore, LocalStorage",
+  "home.database.title": "Database",
+  "home.database.subtitle": "IndexedDB, local persistence",
+  "home.platformApis.title": "Platform APIs",
+  "home.platformApis.subtitle": "Share, Print, Clipboard",
+  "home.scanner.title": "Scanner",
+  "home.scanner.subtitle": "Generate and scan QR codes & barcodes",
+  "home.calendar.title": "Calendar",
+  "home.calendar.subtitle": "Date range picker",
+  "home.notifications.title": "Notifications",
+  "home.notifications.subtitle": "Browser notifications"
 }
