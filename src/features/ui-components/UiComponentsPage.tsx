@@ -1,6 +1,6 @@
 import { Mail, Notifications } from '@mui/icons-material'
 import { Box, Stack } from '@mui/material'
-import { useState } from 'react'
+import { type ReactNode, useState } from 'react'
 import {
   AlertDialog,
   AlertError,
@@ -40,7 +40,7 @@ import {
 } from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
 
-function Section({ titleKey, children }: { titleKey: string; children: React.ReactNode }) {
+function Section({ titleKey, children }: { titleKey: string; children: ReactNode }) {
   const { t } = useTranslation()
   return (
     <Box>
@@ -83,7 +83,7 @@ export function UiComponentsPage() {
         </Section>
 
         <Section titleKey="uiComponents.buttons">
-          <Stack direction="row" spacing={2} flexWrap="wrap">
+          <Stack direction="row" spacing={2} sx={{ flexWrap: 'wrap' }}>
             <Button>{t('uiComponents.buttons.primary')}</Button>
             <Button variant="secondary">{t('uiComponents.buttons.secondary')}</Button>
             <Button variant="outline">{t('uiComponents.buttons.outline')}</Button>
@@ -114,7 +114,7 @@ export function UiComponentsPage() {
         </Section>
 
         <Section titleKey="uiComponents.chips">
-          <Stack direction="row" spacing={1} flexWrap="wrap">
+          <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
             <Chip label={t('uiComponents.chips.default')} />
             <Chip label={t('uiComponents.chips.outlined')} variant="outlined" />
             <Chip label={t('uiComponents.chips.deletable')} onDelete={() => {}} />
@@ -155,7 +155,7 @@ export function UiComponentsPage() {
         </Section>
 
         <Section titleKey="uiComponents.badges">
-          <Stack direction="row" spacing={3} alignItems="center">
+          <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
             <Badge badgeContent={4}>
               <Mail />
             </Badge>
