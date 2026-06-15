@@ -82,5 +82,76 @@
   "database.addNote": "Add Note",
   "database.empty": "No notes yet — add one above",
   "database.error": "Failed to load notes",
-  "database.clearAll": "Clear All Notes"
+  "database.clearAll": "Clear All Notes",
+
+  "uiComponents.typography": "Typography",
+  "uiComponents.typography.h4Bold": "H4 Bold",
+  "uiComponents.typography.h4BoldPrimary": "H4 Bold Primary",
+  "uiComponents.typography.h4BoldNeutral80": "H4 Bold Neutral 80",
+  "uiComponents.typography.h6Bold": "H6 Bold",
+  "uiComponents.typography.h6BoldPrimary": "H6 Bold Primary",
+  "uiComponents.typography.h6BoldNeutral80": "H6 Bold Neutral 80",
+  "uiComponents.typography.body1": "Body 1 — default",
+  "uiComponents.typography.body1Neutral80": "Body 1 — Neutral 80",
+  "uiComponents.typography.body1Neutral60": "Body 1 — Neutral 60",
+  "uiComponents.typography.body1Primary": "Body 1 — Primary",
+
+  "uiComponents.buttons": "Buttons",
+  "uiComponents.buttons.primary": "Primary",
+  "uiComponents.buttons.secondary": "Secondary",
+  "uiComponents.buttons.outline": "Outline",
+  "uiComponents.buttons.disabled": "Disabled",
+  "uiComponents.buttons.loading": "Loading",
+
+  "uiComponents.input": "Input",
+  "uiComponents.input.default": "Label",
+  "uiComponents.input.placeholder": "Enter text...",
+  "uiComponents.input.error": "Error state",
+  "uiComponents.input.errorText": "This field has an error",
+  "uiComponents.input.disabled": "Disabled",
+
+  "uiComponents.cards": "Cards",
+  "uiComponents.cards.outlined": "Outlined Card",
+  "uiComponents.cards.outlinedDesc": "Uses a border to separate from background",
+  "uiComponents.cards.elevated": "Elevated Card",
+  "uiComponents.cards.elevatedDesc": "Uses shadow to create depth",
+
+  "uiComponents.chips": "Chips",
+  "uiComponents.chips.default": "Default",
+  "uiComponents.chips.outlined": "Outlined",
+  "uiComponents.chips.deletable": "Deletable",
+  "uiComponents.chips.filter": "Filter",
+
+  "uiComponents.alerts": "Alerts",
+  "uiComponents.alerts.success": "Success — operation completed",
+  "uiComponents.alerts.error": "Error — something went wrong",
+  "uiComponents.alerts.warning": "Warning — proceed with caution",
+  "uiComponents.alerts.info": "Info — here is some information",
+
+  "uiComponents.progress": "Progress",
+  "uiComponents.progress.circular": "Circular progress",
+  "uiComponents.progress.linear": "Linear progress (60%)",
+  "uiComponents.progress.loadingView": "LoadingView (centered spinner)",
+
+  "uiComponents.badges": "Badges",
+
+  "uiComponents.forms": "Form Controls",
+  "uiComponents.forms.checkbox": "Checkbox",
+  "uiComponents.forms.switch": "Switch",
+  "uiComponents.forms.radioA": "Option A",
+  "uiComponents.forms.radioB": "Option B",
+  "uiComponents.forms.radioC": "Option C",
+  "uiComponents.forms.slider": "Slider",
+
+  "uiComponents.dialogs": "Dialogs & Snackbar",
+  "uiComponents.dialogs.openAlert": "Alert Dialog",
+  "uiComponents.dialogs.openConfirm": "Confirm Dialog",
+  "uiComponents.dialogs.openSnackbar": "Show Snackbar",
+  "uiComponents.dialogs.alertTitle": "Confirm action",
+  "uiComponents.dialogs.alertText": "Are you sure you want to proceed? This action cannot be undone.",
+  "uiComponents.dialogs.confirmTitle": "Done",
+  "uiComponents.dialogs.confirmText": "The operation completed successfully.",
+  "uiComponents.dialogs.snackbarMessage": "Saved successfully!",
+
+  "uiComponents.dividers": "Dividers"
 }

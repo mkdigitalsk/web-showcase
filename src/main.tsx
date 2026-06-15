@@ -19,6 +19,7 @@ import { HomePage } from './features/home/HomePage'
 import { NetworkingPage } from './features/networking/NetworkingPage'
 import { StoragePage } from './features/storage/StoragePage'
 import { DatabasePage } from './features/database/DatabasePage'
+import { UiComponentsPage } from './features/ui-components/UiComponentsPage'
 import { Routes as AppRoutes } from './utils'
 import messages from './locales/en.json'
 import './index.css'
@@ -42,6 +43,7 @@ createRoot(document.getElementById('root')!).render(
                   <Route path={AppRoutes.NETWORKING} element={<NetworkingPage />} />
                   <Route path={AppRoutes.STORAGE} element={<StoragePage />} />
                   <Route path={AppRoutes.DATABASE} element={<DatabasePage />} />
+                  <Route path={AppRoutes.UI_COMPONENTS} element={<UiComponentsPage />} />
                 </Route>
               </Routes>
             </BrowserRouter>
