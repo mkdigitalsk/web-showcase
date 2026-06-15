@@ -1,11 +1,6 @@
-import { type SxProps } from '@mui/material'
 import { BaseTypography } from './BaseTypography'
-import { type BaseTextProps } from './types'
+import { type TextInternalProps } from './types'
 
-interface TextH4InternalProps extends BaseTextProps {
-  internalSx?: SxProps
-}
-
-export function TextH4({ internalSx, ...props }: TextH4InternalProps) {
+export function TextH4({ internalSx, ...props }: TextInternalProps) {
   return <BaseTypography variant="h4" internalSx={internalSx} {...props} />
 }

@@ -1,5 +1,5 @@
 import { type ElementType, type ReactNode } from 'react'
-import { type TypographyProps } from '@mui/material'
+import { type SxProps, type TypographyProps } from '@mui/material'
 
 export interface SpacingSx {
   mt?: string | number
@@ -23,4 +23,8 @@ export interface BaseTextProps {
   noWrap?: boolean
   component?: ElementType
   children?: ReactNode
+}
+
+export interface TextInternalProps extends BaseTextProps {
+  internalSx?: SxProps
 }

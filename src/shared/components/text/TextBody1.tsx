@@ -1,13 +1,8 @@
-import { type SxProps } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { BaseTypography } from './BaseTypography'
-import { type BaseTextProps } from './types'
+import { type BaseTextProps, type TextInternalProps } from './types'
 
-interface TextBody1InternalProps extends BaseTextProps {
-  internalSx?: SxProps
-}
-
-export function TextBody1({ internalSx, ...props }: TextBody1InternalProps) {
+export function TextBody1({ internalSx, ...props }: TextInternalProps) {
   return <BaseTypography variant="body1" internalSx={internalSx} {...props} />
 }
 
