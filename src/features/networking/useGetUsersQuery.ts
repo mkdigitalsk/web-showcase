@@ -1,5 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { queryOptions, useQuery } from '@tanstack/react-query'
+import { userService } from '../../shared/services'
+
+export const getUsersQueryOptions = queryOptions({
+  queryKey: ['users'],
+  queryFn: () => userService.getUsers(),
+})
 
 export function useGetUsersQuery() {
-    const {data, isLoading, refetch} = 
+  return useQuery(getUsersQueryOptions)
+}
