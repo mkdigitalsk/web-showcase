@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../shared/hooks'
+import { Routes } from '../../../utils'
 
 export function useRegisterMutation() {
   const navigate = useNavigate()
@@ -8,6 +9,6 @@ export function useRegisterMutation() {
 
   return useMutation({
     mutationFn: register,
-    onSuccess: () => navigate('/dashboard'),
+    onSuccess: () => navigate(Routes.HOME),
   })
 }

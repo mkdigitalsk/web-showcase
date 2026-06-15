@@ -16,6 +16,7 @@ import {
   TextH6Bold,
 } from "../../shared/components";
 import { useAuth, useTranslation } from "../../shared/hooks";
+import { Routes } from "../../utils";
 import { FeatureCard } from "./FeatureCard";
 
 const features = [
@@ -76,7 +77,7 @@ export function HomePage() {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/login");
+    navigate(Routes.LOGIN);
   };
 
   return (
