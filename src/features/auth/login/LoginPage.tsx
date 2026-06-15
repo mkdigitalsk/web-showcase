@@ -13,8 +13,8 @@ export function LoginPage() {
   const { control, handleSubmit } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'test@test.com',
+      password: 'Kmpshowcase1@',
     },
   })
 
