@@ -60,7 +60,9 @@ function CounterCard({ label, hint, counter, onIncrement, onDecrement }: Counter
         <IconButton onClick={onDecrement} color="primary">
           <Remove />
         </IconButton>
-        <TextH6Bold sx={{ minWidth: 32, textAlign: 'center' }}>{counter}</TextH6Bold>
+        <Box sx={{ minWidth: 32, textAlign: 'center' }}>
+          <TextH6Bold>{counter}</TextH6Bold>
+        </Box>
         <IconButton onClick={onIncrement} color="primary">
           <Add />
         </IconButton>

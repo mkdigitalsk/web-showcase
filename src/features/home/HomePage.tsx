@@ -84,9 +84,9 @@ export function HomePage() {
     <Box>
       <AppBar position="static" color="default" elevation={1}>
         <Toolbar>
-          <TextH6Bold component="h1" sx={{ flexGrow: 1 }}>
-            {t("home.title")}
-          </TextH6Bold>
+          <Box sx={{ flexGrow: 1 }}>
+            <TextH6Bold component="h1">{t("home.title")}</TextH6Bold>
+          </Box>
           <TextBody1Neutral60 sx={{ mr: 2 }}>
             {t("home.welcome")}, {user?.name}
           </TextBody1Neutral60>
