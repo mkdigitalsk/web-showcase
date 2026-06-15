@@ -16,6 +16,7 @@ export {
   TextBody1Primary,
   TextLink,
   TextLinkPrimary,
+  TextTimestamp,
 } from './text'
 
 // Feedback components

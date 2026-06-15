@@ -1,6 +1,6 @@
-import { Delete, FilterList } from '@mui/icons-material'
-import { Box, IconButton, Menu, MenuItem, Stack, TextField } from '@mui/material'
-import { useState } from 'react'
+import { Delete, FilterList } from "@mui/icons-material";
+import { Box, IconButton, Menu, MenuItem, Stack } from "@mui/material";
+import { useState } from "react";
 import {
   AlertError,
   Button,
@@ -10,52 +10,61 @@ import {
   TextBody1Neutral60,
   TextBody1Neutral80,
   TextH6Bold,
-} from '../../shared/components'
-import { useNotesDb, useTranslation, type SortOption } from '../../shared/hooks'
+  TextTimestamp,
+} from "../../shared/components";
+import { useTranslation } from "../../shared/hooks";
+import { useNotesDb, type SortOption } from "./hooks/useNotesDb";
+import { type Note } from "./types";
 
 export function DatabasePage() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const {
     notes,
+    isLoading,
+    isEmpty,
+    hasNotes,
     searchQuery,
     setSearchQuery,
     sortOption,
     setSortOption,
-    isLoading,
-    error,
     addNote,
     deleteNote,
     deleteAllNotes,
-  } = useNotesDb()
+  } = useNotesDb();
 
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [filterAnchor, setFilterAnchor] = useState<HTMLElement | null>(null)
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [filterAnchor, setFilterAnchor] = useState<HTMLElement | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleAdd = async () => {
-    if (!title.trim()) return
-    await addNote(title.trim(), content.trim())
-    setTitle('')
-    setContent('')
-  }
+    if (!title.trim()) return;
+    try {
+      await addNote(title.trim(), content.trim());
+      setTitle("");
+      setContent("");
+    } catch {
+      setError(t("database.error"));
+    }
+  };
 
   const sortOptions: { value: SortOption; labelKey: string }[] = [
-    { value: 'DATE_DESC', labelKey: 'database.sort.dateNewest' },
-    { value: 'DATE_ASC', labelKey: 'database.sort.dateOldest' },
-    { value: 'TITLE_ASC', labelKey: 'database.sort.titleAsc' },
-    { value: 'TITLE_DESC', labelKey: 'database.sort.titleDesc' },
-  ]
+    { value: "DATE_DESC", labelKey: "database.sort.dateNewest" },
+    { value: "DATE_ASC", labelKey: "database.sort.dateOldest" },
+    { value: "TITLE_ASC", labelKey: "database.sort.titleAsc" },
+    { value: "TITLE_DESC", labelKey: "database.sort.titleDesc" },
+  ];
 
   return (
     <Box sx={{ p: 2 }}>
       <Stack spacing={2}>
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-          <TextField
-            size="small"
-            fullWidth
-            placeholder={t('database.search.hint')}
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          <Input
+            placeholder={t("database.search.hint")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            fullWidth
+            size="small"
           />
           <IconButton onClick={(e) => setFilterAnchor(e.currentTarget)}>
             <FilterList />
@@ -65,14 +74,17 @@ export function DatabasePage() {
             open={Boolean(filterAnchor)}
             onClose={() => setFilterAnchor(null)}
           >
-            <MenuItem disabled sx={{ fontWeight: 'bold', opacity: 1 }}>
-              <TextBody1Neutral80>{t('database.sort.by')}</TextBody1Neutral80>
+            <MenuItem disabled sx={{ opacity: "1 !important" }}>
+              <TextBody1Neutral80>{t("database.sort.by")}</TextBody1Neutral80>
             </MenuItem>
             {sortOptions.map((opt) => (
               <MenuItem
                 key={opt.value}
                 selected={sortOption === opt.value}
-                onClick={() => { setSortOption(opt.value); setFilterAnchor(null) }}
+                onClick={() => {
+                  setSortOption(opt.value);
+                  setFilterAnchor(null);
+                }}
               >
                 {t(opt.labelKey)}
               </MenuItem>
@@ -83,15 +95,15 @@ export function DatabasePage() {
         <ElevatedCard sx={{ p: 2 }}>
           <Stack spacing={2}>
             <Input
-              label={t('database.title.label')}
-              placeholder={t('database.title.hint')}
+              label={t("database.title.label")}
+              placeholder={t("database.title.hint")}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               fullWidth
             />
             <Input
-              label={t('database.content.label')}
-              placeholder={t('database.content.hint')}
+              label={t("database.content.label")}
+              placeholder={t("database.content.hint")}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               fullWidth
@@ -99,50 +111,54 @@ export function DatabasePage() {
               rows={3}
             />
             <Button onClick={() => void handleAdd()} disabled={!title.trim()}>
-              {t('database.addNote')}
+              {t("database.addNote")}
             </Button>
           </Stack>
         </ElevatedCard>
 
+        {error && <AlertError>{error}</AlertError>}
         {isLoading && <LoadingView />}
-        {error && <AlertError>{t('database.error')}</AlertError>}
-        {!isLoading && !error && notes.length === 0 && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-            <TextBody1Neutral60>{t('database.empty')}</TextBody1Neutral60>
+        {isEmpty && (
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+            <TextBody1Neutral60>{t("database.empty")}</TextBody1Neutral60>
           </Box>
         )}
 
-        {notes.map((note) => (
+        {notes.map((note: Note) => (
           <ElevatedCard key={note.id} sx={{ p: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+              }}
+            >
               <Box sx={{ flex: 1 }}>
                 <TextH6Bold>{note.title}</TextH6Bold>
                 {note.content && (
-                  <TextBody1Neutral80 sx={{ mt: 0.5 }}>{note.content}</TextBody1Neutral80>
+                  <TextBody1Neutral80 sx={{ mt: 0.5 }}>
+                    {note.content}
+                  </TextBody1Neutral80>
                 )}
-                <TextBody1Neutral60 sx={{ mt: 1, fontSize: '0.75rem' }}>
-                  {formatTimestamp(note.createdAt)}
-                </TextBody1Neutral60>
+                <TextTimestamp value={note.createdAt} sx={{ mt: 1 }} />
               </Box>
-              <IconButton onClick={() => void deleteNote(note.id!)} size="small">
+              <IconButton
+                onClick={() => void deleteNote(note.id!)}
+                size="small"
+              >
                 <Delete fontSize="small" />
               </IconButton>
             </Box>
           </ElevatedCard>
         ))}
 
-        {notes.length > 0 && (
+        {hasNotes && (
           <Button variant="outline" onClick={() => void deleteAllNotes()}>
-            {t('database.clearAll')}
+            {t("database.clearAll")}
           </Button>
         )}
       </Stack>
     </Box>
-  )
+  );
 }
 
-function formatTimestamp(ms: number): string {
-  const d = new Date(ms)
-  const pad = (n: number) => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
-}

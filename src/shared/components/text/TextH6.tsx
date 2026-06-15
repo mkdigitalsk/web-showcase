@@ -1,8 +1,11 @@
-import { Typography, type TypographyProps } from '@mui/material'
+import { type SxProps } from '@mui/material'
+import { BaseTypography } from './BaseTypography'
+import { type BaseTextProps } from './types'
 
-type TextH6Props = Omit<TypographyProps, 'variant'>
+interface TextH6InternalProps extends BaseTextProps {
+  internalSx?: SxProps
+}
 
-// Base H6 component - use style variants (TextH6Bold) in pages
-export function TextH6({ sx, ...props }: TextH6Props) {
-  return <Typography variant="h6" sx={sx} {...props} />
+export function TextH6({ internalSx, ...props }: TextH6InternalProps) {
+  return <BaseTypography variant="h6" internalSx={internalSx} {...props} />
 }

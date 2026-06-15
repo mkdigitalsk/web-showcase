@@ -1,14 +1,11 @@
-import { Typography, type TypographyProps } from '@mui/material'
+import { type SxProps } from '@mui/material'
+import { BaseTypography } from './BaseTypography'
+import { type BaseTextProps } from './types'
 
-type TextH4Props = Omit<TypographyProps, 'variant'>
+interface TextH4InternalProps extends BaseTextProps {
+  internalSx?: SxProps
+}
 
-// Base H4 component - use color variants (TextH4Bold, TextH4BoldPrimary) in pages
-export function TextH4({ sx, ...props }: TextH4Props) {
-  return (
-    <Typography
-      variant="h4"
-      sx={sx}
-      {...props}
-    />
-  )
+export function TextH4({ internalSx, ...props }: TextH4InternalProps) {
+  return <BaseTypography variant="h4" internalSx={internalSx} {...props} />
 }

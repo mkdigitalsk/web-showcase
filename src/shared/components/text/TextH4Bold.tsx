@@ -1,19 +1,17 @@
-import { type ComponentProps } from 'react'
 import { useTheme } from '@mui/material/styles'
 import { TextH4 } from './TextH4'
+import { type BaseTextProps } from './types'
 
-type TextH4BoldProps = Omit<ComponentProps<typeof TextH4>, 'fontWeight'>
-
-export function TextH4Bold({ sx, ...props }: TextH4BoldProps) {
-  return <TextH4 sx={{ fontWeight: 'bold', ...sx }} {...props} />
+export function TextH4Bold(props: BaseTextProps) {
+  return <TextH4 internalSx={{ fontWeight: 'bold' }} {...props} />
 }
 
-export function TextH4BoldPrimary({ sx, ...props }: TextH4BoldProps) {
+export function TextH4BoldPrimary(props: BaseTextProps) {
   const theme = useTheme()
-  return <TextH4Bold sx={{ color: theme.palette.primary.main, ...sx }} {...props} />
+  return <TextH4 internalSx={{ fontWeight: 'bold', color: theme.palette.primary.main }} {...props} />
 }
 
-export function TextH4BoldNeutral80({ sx, ...props }: TextH4BoldProps) {
+export function TextH4BoldNeutral80(props: BaseTextProps) {
   const theme = useTheme()
-  return <TextH4Bold sx={{ color: theme.palette.neutral[80], ...sx }} {...props} />
+  return <TextH4 internalSx={{ fontWeight: 'bold', color: theme.palette.neutral[80] }} {...props} />
 }
