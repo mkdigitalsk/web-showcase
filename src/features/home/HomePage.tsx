@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Button,
   TextBody1Neutral60,
-  TextH6Bold,
+  TextH6BoldPrimary,
 } from "../../shared/components";
 import { useAuth, useTranslation } from "../../shared/hooks";
 import { Routes } from "../../utils";
@@ -85,7 +85,7 @@ export function HomePage() {
       <AppBar position="static" color="default" elevation={1}>
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <TextH6Bold component="h1">{t("home.title")}</TextH6Bold>
+            <TextH6BoldPrimary>{t("home.title")}</TextH6BoldPrimary>
           </Box>
           <TextBody1Neutral60 sx={{ mr: 2 }}>
             {t("home.welcome")}, {user?.name}

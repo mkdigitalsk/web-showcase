@@ -1,4 +1,4 @@
-import { type ElementType, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { type SxProps, type TypographyProps } from '@mui/material'
 
 export interface SpacingSx {
@@ -21,7 +21,6 @@ export interface BaseTextProps {
   align?: TypographyProps['align']
   gutterBottom?: boolean
   noWrap?: boolean
-  component?: ElementType
   children?: ReactNode
 }
 

@@ -4,6 +4,9 @@ export { PrivateRoute } from './PrivateRoute'
 
 // Text components
 export {
+  TextH1Bold,
+  TextH1BoldPrimary,
+  TextH1BoldNeutral80,
   TextH4Bold,
   TextH4BoldPrimary,
   TextH4BoldNeutral80,
