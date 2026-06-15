@@ -67,5 +67,20 @@
   "storage.session.hint": "Stored in sessionStorage — resets when the tab is closed",
   "storage.persistent.label": "Persistent Counter",
   "storage.persistent.hint": "Stored in localStorage — survives browser restarts",
-  "storage.clearSession": "Clear Session"
+  "storage.clearSession": "Clear Session",
+
+  "database.search.hint": "Search notes...",
+  "database.sort.by": "Sort by",
+  "database.sort.dateNewest": "Date — Newest first",
+  "database.sort.dateOldest": "Date — Oldest first",
+  "database.sort.titleAsc": "Title — A to Z",
+  "database.sort.titleDesc": "Title — Z to A",
+  "database.title.label": "Title",
+  "database.title.hint": "Note title",
+  "database.content.label": "Content",
+  "database.content.hint": "Note content (optional)",
+  "database.addNote": "Add Note",
+  "database.empty": "No notes yet — add one above",
+  "database.error": "Failed to load notes",
+  "database.clearAll": "Clear All Notes"
 }

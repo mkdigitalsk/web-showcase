@@ -18,6 +18,7 @@ import { RegisterPage } from './features/auth/register/RegisterPage'
 import { HomePage } from './features/home/HomePage'
 import { NetworkingPage } from './features/networking/NetworkingPage'
 import { StoragePage } from './features/storage/StoragePage'
+import { DatabasePage } from './features/database/DatabasePage'
 import { Routes as AppRoutes } from './utils'
 import messages from './locales/en.json'
 import './index.css'
@@ -40,6 +41,7 @@ createRoot(document.getElementById('root')!).render(
                   <Route path={AppRoutes.HOME} element={<HomePage />} />
                   <Route path={AppRoutes.NETWORKING} element={<NetworkingPage />} />
                   <Route path={AppRoutes.STORAGE} element={<StoragePage />} />
+                  <Route path={AppRoutes.DATABASE} element={<DatabasePage />} />
                 </Route>
               </Routes>
             </BrowserRouter>

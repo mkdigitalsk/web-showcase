@@ -2,13 +2,11 @@ import { Add, Remove } from '@mui/icons-material'
 import { Box, IconButton, Stack } from '@mui/material'
 import { Button, ElevatedCard, TextBody1Neutral60, TextBody1Neutral80, TextH6Bold, TextH4BoldPrimary } from '../../shared/components'
 import { useLocalStorage, useSessionStorage, useTranslation } from '../../shared/hooks'
-
-const SESSION_KEY = 'storage.sessionCounter'
-const PERSISTENT_KEY = 'storage.persistentCounter'
+import { StorageKey } from '../../shared/enums/storageKey'
 
 export function StoragePage() {
   const { t } = useTranslation()
-  const [sessionCounter, setSessionCounter, clearSession] = useSessionStorage(SESSION_KEY, 0)
+  const [sessionCounter, setSessionCounter, clearSession] = useSessionStorage(StorageKey.SESSION_COUNTER, 0)
   const [persistentCounter, setPersistentCounter] = usePersistentCounter()
 
   return (
@@ -42,7 +40,7 @@ export function StoragePage() {
 }
 
 function usePersistentCounter() {
-  return useLocalStorage(PERSISTENT_KEY, 0)
+  return useLocalStorage(StorageKey.PERSISTENT_COUNTER, 0)
 }
 
 interface CounterCardProps {

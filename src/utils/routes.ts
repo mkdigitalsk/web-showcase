@@ -13,4 +13,5 @@ export const Routes = {
   REGISTER: '/register',
   NETWORKING: '/networking',
   STORAGE: '/storage',
+  DATABASE: '/database',
 } as const
