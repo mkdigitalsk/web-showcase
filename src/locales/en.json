@@ -52,7 +52,7 @@
   "home.storage.subtitle": "DataStore, LocalStorage",
   "home.database.title": "Database",
   "home.database.subtitle": "IndexedDB, local persistence",
-  "home.capabilities.title": "Capabilities",
+  "home.capabilities.title": "Browser Capabilities",
   "home.capabilities.subtitle": "Clipboard, Geolocation, Speech, Share & more",
   "home.scanner.title": "Scanner",
   "home.scanner.subtitle": "Generate and scan QR codes & barcodes",
@@ -154,6 +154,14 @@
   "uiComponents.dialogs.snackbarMessage": "Saved successfully!",
 
   "uiComponents.dividers": "Dividers",
+
+  "capabilities.browser.title": "Your Browser",
+  "capabilities.browser.subtitle": "Detected browser and platform info",
+  "capabilities.browser.name": "Browser",
+  "capabilities.browser.platform": "Platform",
+  "capabilities.browser.language": "Language",
+  "capabilities.browser.online": "Online",
+  "capabilities.browser.cookiesEnabled": "Cookies",
 
   "capabilities.clipboard.title": "Clipboard",
   "capabilities.clipboard.subtitle": "Read and write text via the Clipboard API",

@@ -1,6 +1,6 @@
 import { ContentCopy, ContentPaste, Fullscreen, FullscreenExit, LocationOn, Print, RecordVoiceOver, Share, Vibration } from '@mui/icons-material'
 import { Box, Stack } from '@mui/material'
-import { useState } from 'react'
+import { type ReactNode, useState } from 'react'
 import {
   AlertError,
   AlertInfo,
@@ -9,11 +9,33 @@ import {
   ElevatedCard,
   Input,
   TextBody1Neutral60,
+  TextBody1Neutral80,
   TextH6Bold,
 } from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
 
-function CapabilityCard({ title, subtitle, children }: { title: string; subtitle: string; children: React.ReactNode }) {
+function detectBrowser(): string {
+  const ua = navigator.userAgent
+  if (ua.includes('Edg')) return 'Microsoft Edge'
+  if (ua.includes('OPR') || ua.includes('Opera')) return 'Opera'
+  if (ua.includes('Firefox')) return 'Firefox'
+  if (ua.includes('Chrome')) return 'Chrome'
+  if (ua.includes('Safari')) return 'Safari'
+  return 'Unknown'
+}
+
+function InfoRow({ label, value }: { label: string; value: string }) {
+  return (
+    <Box sx={{ display: 'flex', gap: 1 }}>
+      <Box sx={{ minWidth: 120 }}>
+        <TextBody1Neutral60>{label}:</TextBody1Neutral60>
+      </Box>
+      <TextBody1Neutral80>{value}</TextBody1Neutral80>
+    </Box>
+  )
+}
+
+function CapabilityCard({ title, subtitle, children }: { title: string; subtitle: string; children: ReactNode }) {
   return (
     <ElevatedCard sx={{ p: 2 }}>
       <TextH6Bold sx={{ mb: 0.5 }}>{title}</TextH6Bold>
@@ -137,9 +159,24 @@ export function CapabilitiesPage() {
   const shareSupported = typeof navigator !== 'undefined' && 'share' in navigator
   const vibrationSupported = typeof navigator !== 'undefined' && 'vibrate' in navigator
 
+  const browser = detectBrowser()
+
   return (
     <Box sx={{ p: 2 }}>
       <Stack spacing={2}>
+
+        <CapabilityCard
+          title={t('capabilities.browser.title')}
+          subtitle={t('capabilities.browser.subtitle')}
+        >
+          <Stack spacing={0.5}>
+            <InfoRow label={t('capabilities.browser.name')} value={browser} />
+            <InfoRow label={t('capabilities.browser.platform')} value={navigator.platform} />
+            <InfoRow label={t('capabilities.browser.language')} value={navigator.language} />
+            <InfoRow label={t('capabilities.browser.online')} value={navigator.onLine ? 'Yes' : 'No'} />
+            <InfoRow label={t('capabilities.browser.cookiesEnabled')} value={navigator.cookieEnabled ? 'Enabled' : 'Disabled'} />
+          </Stack>
+        </CapabilityCard>
 
         <CapabilityCard
           title={t('capabilities.clipboard.title')}
