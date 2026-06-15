@@ -4,7 +4,7 @@ export function useTranslation() {
   const intl = useIntl()
 
   return {
-    t: (id: string) => intl.formatMessage({ id }),
+    t: (id: string, values?: Record<string, string | number>) => intl.formatMessage({ id }, values),
     intl,
   }
 }

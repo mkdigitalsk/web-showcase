@@ -45,9 +45,9 @@ const features = [
     Icon: Dataset,
   },
   {
-    id: "platform-apis",
-    titleKey: "home.platformApis.title",
-    subtitleKey: "home.platformApis.subtitle",
+    id: "capabilities",
+    titleKey: "home.capabilities.title",
+    subtitleKey: "home.capabilities.subtitle",
     Icon: PhoneAndroid,
   },
   {

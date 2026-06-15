@@ -52,8 +52,8 @@
   "home.storage.subtitle": "DataStore, LocalStorage",
   "home.database.title": "Database",
   "home.database.subtitle": "IndexedDB, local persistence",
-  "home.platformApis.title": "Platform APIs",
-  "home.platformApis.subtitle": "Share, Print, Clipboard",
+  "home.capabilities.title": "Capabilities",
+  "home.capabilities.subtitle": "Clipboard, Geolocation, Speech, Share & more",
   "home.scanner.title": "Scanner",
   "home.scanner.subtitle": "Generate and scan QR codes & barcodes",
   "home.calendar.title": "Calendar",
@@ -153,5 +153,47 @@
   "uiComponents.dialogs.confirmText": "The operation completed successfully.",
   "uiComponents.dialogs.snackbarMessage": "Saved successfully!",
 
-  "uiComponents.dividers": "Dividers"
+  "uiComponents.dividers": "Dividers",
+
+  "capabilities.clipboard.title": "Clipboard",
+  "capabilities.clipboard.subtitle": "Read and write text via the Clipboard API",
+  "capabilities.clipboard.copy": "Copy to clipboard",
+  "capabilities.clipboard.paste": "Paste from clipboard",
+  "capabilities.clipboard.copied": "Copied!",
+  "capabilities.clipboard.pasted": "Pasted: {text}",
+  "capabilities.clipboard.notSupported": "Clipboard API not supported",
+
+  "capabilities.geolocation.title": "Geolocation",
+  "capabilities.geolocation.subtitle": "Get current GPS coordinates",
+  "capabilities.geolocation.get": "Get location",
+  "capabilities.geolocation.result": "Lat: {lat}, Lng: {lng}",
+  "capabilities.geolocation.denied": "Permission denied",
+  "capabilities.geolocation.notSupported": "Geolocation not supported",
+
+  "capabilities.speech.title": "Speech Synthesis",
+  "capabilities.speech.subtitle": "Convert text to speech (TTS)",
+  "capabilities.speech.speak": "Speak",
+  "capabilities.speech.stop": "Stop",
+  "capabilities.speech.placeholder": "Enter text to speak...",
+  "capabilities.speech.notSupported": "Speech Synthesis not supported",
+
+  "capabilities.share.title": "Web Share",
+  "capabilities.share.subtitle": "Native OS share sheet",
+  "capabilities.share.button": "Share",
+  "capabilities.share.mobileOnly": "Web Share requires a mobile browser or Safari",
+  "capabilities.share.notSupported": "Web Share API not supported on this browser",
+
+  "capabilities.fullscreen.title": "Fullscreen",
+  "capabilities.fullscreen.subtitle": "Toggle browser fullscreen mode",
+  "capabilities.fullscreen.enter": "Enter fullscreen",
+  "capabilities.fullscreen.exit": "Exit fullscreen",
+
+  "capabilities.print.title": "Print",
+  "capabilities.print.subtitle": "Trigger the browser print dialog",
+  "capabilities.print.button": "Print page",
+
+  "capabilities.vibration.title": "Vibration",
+  "capabilities.vibration.subtitle": "Haptic feedback via Vibration API",
+  "capabilities.vibration.button": "Vibrate",
+  "capabilities.vibration.notSupported": "Vibration API not supported on this device"
 }
