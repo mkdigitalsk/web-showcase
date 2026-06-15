@@ -16,6 +16,7 @@ import { AuthProvider } from './shared/context'
 import { LoginPage } from './features/auth/login/LoginPage'
 import { RegisterPage } from './features/auth/register/RegisterPage'
 import { HomePage } from './features/home/HomePage'
+import { NetworkingPage } from './features/networking/NetworkingPage'
 import { Routes as AppRoutes } from './utils'
 import messages from './locales/en.json'
 import './index.css'
@@ -36,6 +37,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path={AppRoutes.REGISTER} element={<RegisterPage />} />
                 <Route element={<PrivateRoute />}>
                   <Route path={AppRoutes.HOME} element={<HomePage />} />
+                  <Route path={AppRoutes.NETWORKING} element={<NetworkingPage />} />
                 </Route>
               </Routes>
             </BrowserRouter>
