@@ -11,7 +11,7 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
 import { theme } from './shared/theme'
-import { PrivateRoute } from './shared/components'
+import { AppLayout, PrivateRoute } from './shared/components'
 import { AuthProvider } from './shared/context'
 import { LoginPage } from './features/auth/login/LoginPage'
 import { RegisterPage } from './features/auth/register/RegisterPage'
@@ -40,12 +40,14 @@ createRoot(document.getElementById('root')!).render(
                 <Route path={AppRoutes.LOGIN} element={<LoginPage />} />
                 <Route path={AppRoutes.REGISTER} element={<RegisterPage />} />
                 <Route element={<PrivateRoute />}>
-                  <Route path={AppRoutes.HOME} element={<HomePage />} />
-                  <Route path={AppRoutes.NETWORKING} element={<NetworkingPage />} />
-                  <Route path={AppRoutes.STORAGE} element={<StoragePage />} />
-                  <Route path={AppRoutes.DATABASE} element={<DatabasePage />} />
-                  <Route path={AppRoutes.UI_COMPONENTS} element={<UiComponentsPage />} />
-                  <Route path={AppRoutes.CAPABILITIES} element={<CapabilitiesPage />} />
+                  <Route element={<AppLayout />}>
+                    <Route path={AppRoutes.HOME} element={<HomePage />} />
+                    <Route path={AppRoutes.NETWORKING} element={<NetworkingPage />} />
+                    <Route path={AppRoutes.STORAGE} element={<StoragePage />} />
+                    <Route path={AppRoutes.DATABASE} element={<DatabasePage />} />
+                    <Route path={AppRoutes.UI_COMPONENTS} element={<UiComponentsPage />} />
+                    <Route path={AppRoutes.CAPABILITIES} element={<CapabilitiesPage />} />
+                  </Route>
                 </Route>
               </Routes>
             </BrowserRouter>

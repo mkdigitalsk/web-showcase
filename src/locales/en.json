@@ -1,4 +1,6 @@
 {
+  "app.name": "KMP Showcase",
+
   "common.loading": "Loading...",
   "common.error": "An error occurred",
   "common.retry": "Retry",
@@ -38,9 +40,13 @@
   "register.hasAccount": "Already have an account?",
   "register.login": "Login",
 
-  "home.title": "Features",
+  "home.title": "Home",
   "home.welcome": "Welcome",
+  "home.pickSection": "Pick a section from the sidebar to get started.",
   "home.logout": "Logout",
+  "home.accountSettings": "Account Settings",
+  "home.theme": "Theme",
+
   "home.uiComponents.title": "UI Components",
   "home.uiComponents.subtitle": "Buttons, Cards, Dialogs, Typography",
   "home.networking.title": "Networking",
@@ -52,7 +58,7 @@
   "home.storage.subtitle": "DataStore, LocalStorage",
   "home.database.title": "Database",
   "home.database.subtitle": "IndexedDB, local persistence",
-  "home.capabilities.title": "Browser Capabilities",
+  "home.capabilities.title": "Capabilities",
   "home.capabilities.subtitle": "Clipboard, Geolocation, Speech, Share & more",
   "home.scanner.title": "Scanner",
   "home.scanner.subtitle": "Generate and scan QR codes & barcodes",

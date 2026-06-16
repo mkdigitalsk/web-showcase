@@ -1,112 +1,17 @@
-import {
-  CalendarMonth,
-  Cloud,
-  Dataset,
-  Notifications,
-  Palette,
-  PhoneAndroid,
-  QrCode2,
-  Storage,
-} from "@mui/icons-material";
-import { AppBar, Box, Stack, Toolbar } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  TextBody1Neutral60,
-  TextH6BoldPrimary,
-} from "../../shared/components";
+import { Box } from "@mui/material";
+import { TextBody1Neutral60, TextH4Bold } from "../../shared/components";
 import { useAuth, useTranslation } from "../../shared/hooks";
-import { Routes } from "../../utils";
-import { FeatureCard } from "./FeatureCard";
-
-const features = [
-  {
-    id: "ui-components",
-    titleKey: "home.uiComponents.title",
-    subtitleKey: "home.uiComponents.subtitle",
-    Icon: Palette,
-  },
-  {
-    id: "networking",
-    titleKey: "home.networking.title",
-    subtitleKey: "home.networking.subtitle",
-    Icon: Cloud,
-  },
-  {
-    id: "storage",
-    titleKey: "home.storage.title",
-    subtitleKey: "home.storage.subtitle",
-    Icon: Storage,
-  },
-  {
-    id: "database",
-    titleKey: "home.database.title",
-    subtitleKey: "home.database.subtitle",
-    Icon: Dataset,
-  },
-  {
-    id: "capabilities",
-    titleKey: "home.capabilities.title",
-    subtitleKey: "home.capabilities.subtitle",
-    Icon: PhoneAndroid,
-  },
-  {
-    id: "scanner",
-    titleKey: "home.scanner.title",
-    subtitleKey: "home.scanner.subtitle",
-    Icon: QrCode2,
-  },
-  {
-    id: "calendar",
-    titleKey: "home.calendar.title",
-    subtitleKey: "home.calendar.subtitle",
-    Icon: CalendarMonth,
-  },
-  {
-    id: "notifications",
-    titleKey: "home.notifications.title",
-    subtitleKey: "home.notifications.subtitle",
-    Icon: Notifications,
-  },
-] as const;
 
 export function HomePage() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate(Routes.LOGIN);
-  };
+  const { user } = useAuth();
 
   return (
-    <Box>
-      <AppBar position="static" color="default" elevation={1}>
-        <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>
-            <TextH6BoldPrimary>{t("home.title")}</TextH6BoldPrimary>
-          </Box>
-          <TextBody1Neutral60 sx={{ mr: 2 }}>
-            {t("home.welcome")}, {user?.name}
-          </TextBody1Neutral60>
-          <Button onClick={handleLogout} variant="secondary">
-            {t("home.logout")}
-          </Button>
-        </Toolbar>
-      </AppBar>
-
-      <Stack spacing={2} sx={{ p: 2, pt: 4 }}>
-        {features.map((feature) => (
-          <FeatureCard
-            key={feature.id}
-            onClick={() => navigate(`/${feature.id}`)}
-            title={t(feature.titleKey)}
-            subtitle={t(feature.subtitleKey)}
-            Icon={feature.Icon}
-          />
-        ))}
-      </Stack>
+    <Box sx={{ p: 4 }}>
+      <TextH4Bold sx={{ mb: 1 }}>
+        {t("home.welcome")}, {user?.name}
+      </TextH4Bold>
+      <TextBody1Neutral60>{t("home.pickSection")}</TextBody1Neutral60>
     </Box>
   );
 }

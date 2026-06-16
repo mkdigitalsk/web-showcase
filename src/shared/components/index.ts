@@ -39,3 +39,6 @@ export { Checkbox, Switch, RadioButton, Slider } from './forms'
 
 // Dividers
 export { Divider, DividerPrimary } from './dividers'
+
+// Layout
+export { Sidebar, AppLayout } from './layout'
