@@ -72,8 +72,6 @@
   "home.capabilities.subtitle": "Clipboard, Geolocation, Speech, Share & more",
   "home.calendar.title": "Calendar",
   "home.calendar.subtitle": "Date range picker",
-  "home.notifications.title": "Notifications",
-  "home.notifications.subtitle": "Browser notifications",
 
   "storage.title": "Storage",
   "storage.subtitle": "localStorage vs sessionStorage — persistent and session-scoped data",
@@ -217,5 +215,20 @@
   "capabilities.vibration.title": "Vibration",
   "capabilities.vibration.subtitle": "Haptic feedback via Vibration API",
   "capabilities.vibration.button": "Vibrate",
-  "capabilities.vibration.notSupported": "Vibration API not supported on this device"
+  "capabilities.vibration.notSupported": "Vibration API not supported on this device",
+
+  "capabilities.notifications.title": "Notifications",
+  "capabilities.notifications.subtitle": "Show a system notification via the Notification API",
+  "capabilities.notifications.titleLabel": "Title",
+  "capabilities.notifications.bodyLabel": "Message",
+  "capabilities.notifications.defaultTitle": "KMP Showcase",
+  "capabilities.notifications.defaultBody": "Hello from the web app!",
+  "capabilities.notifications.send": "Send notification",
+  "capabilities.notifications.status": "Permission",
+  "capabilities.notifications.statusDefault": "Not requested yet",
+  "capabilities.notifications.statusGranted": "Granted",
+  "capabilities.notifications.statusDenied": "Denied",
+  "capabilities.notifications.sent": "Notification sent — check your system notifications",
+  "capabilities.notifications.denied": "Permission denied — enable notifications in your browser settings",
+  "capabilities.notifications.notSupported": "Notification API not supported on this browser"
 }

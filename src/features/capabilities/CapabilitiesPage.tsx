@@ -1,4 +1,4 @@
-import { ContentCopy, ContentPaste, Fullscreen, FullscreenExit, LocationOn, Print, RecordVoiceOver, Share, Vibration } from '@mui/icons-material'
+import { ContentCopy, ContentPaste, Fullscreen, FullscreenExit, LocationOn, NotificationsActive, Print, RecordVoiceOver, Share, Vibration } from '@mui/icons-material'
 import { Box, Stack } from '@mui/material'
 import { type ReactNode, useState } from 'react'
 import {
@@ -12,7 +12,7 @@ import {
   TextBody1Neutral80,
   TextH6Bold,
 } from '../../shared/components'
-import { useTranslation } from '../../shared/hooks'
+import { useNotification, useTranslation } from '../../shared/hooks'
 
 function detectBrowser(): string {
   const ua = navigator.userAgent
@@ -60,6 +60,12 @@ export function CapabilitiesPage() {
   const [isSpeaking, setIsSpeaking] = useState(false)
 
   const [isFullscreen, setIsFullscreen] = useState(false)
+
+  const { isSupported: notificationsSupported, permission: notifPermission, notify } = useNotification()
+  const [notifTitle, setNotifTitle] = useState(t('capabilities.notifications.defaultTitle'))
+  const [notifBody, setNotifBody] = useState(t('capabilities.notifications.defaultBody'))
+  const [notifResult, setNotifResult] = useState<string | null>(null)
+  const [notifError, setNotifError] = useState<string | null>(null)
 
   const handleCopy = async () => {
     setClipboardResult(null)
@@ -155,11 +161,31 @@ export function CapabilitiesPage() {
     navigator.vibrate([100, 50, 100])
   }
 
+  const handleNotify = async () => {
+    setNotifResult(null)
+    setNotifError(null)
+    const outcome = await notify(notifTitle, notifBody)
+    if (outcome === 'shown') {
+      setNotifResult(t('capabilities.notifications.sent'))
+    } else if (outcome === 'denied') {
+      setNotifError(t('capabilities.notifications.denied'))
+    } else {
+      setNotifError(t('capabilities.notifications.notSupported'))
+    }
+  }
+
   const speechSupported = typeof window !== 'undefined' && 'speechSynthesis' in window
   const shareSupported = typeof navigator !== 'undefined' && 'share' in navigator
   const vibrationSupported = typeof navigator !== 'undefined' && 'vibrate' in navigator
 
   const browser = detectBrowser()
+
+  const notifStatusLabel =
+    notifPermission === 'granted'
+      ? t('capabilities.notifications.statusGranted')
+      : notifPermission === 'denied'
+        ? t('capabilities.notifications.statusDenied')
+        : t('capabilities.notifications.statusDefault')
 
   return (
     <Box sx={{ p: 2 }}>
@@ -293,6 +319,39 @@ export function CapabilitiesPage() {
             </Button>
           ) : (
             <AlertInfo>{t('capabilities.vibration.notSupported')}</AlertInfo>
+          )}
+        </CapabilityCard>
+
+        <CapabilityCard
+          title={t('capabilities.notifications.title')}
+          subtitle={t('capabilities.notifications.subtitle')}
+        >
+          {notificationsSupported ? (
+            <Stack spacing={1}>
+              <InfoRow label={t('capabilities.notifications.status')} value={notifStatusLabel} />
+              <Input
+                value={notifTitle}
+                onChange={(e) => setNotifTitle(e.target.value)}
+                size="small"
+                label={t('capabilities.notifications.titleLabel')}
+              />
+              <Input
+                value={notifBody}
+                onChange={(e) => setNotifBody(e.target.value)}
+                size="small"
+                label={t('capabilities.notifications.bodyLabel')}
+              />
+              <Box>
+                <Button variant="outline" onClick={() => void handleNotify()}>
+                  <NotificationsActive sx={{ mr: 1, fontSize: 16 }} />
+                  {t('capabilities.notifications.send')}
+                </Button>
+              </Box>
+              {notifResult && <AlertSuccess>{notifResult}</AlertSuccess>}
+              {notifError && <AlertError>{notifError}</AlertError>}
+            </Stack>
+          ) : (
+            <AlertInfo>{t('capabilities.notifications.notSupported')}</AlertInfo>
           )}
         </CapabilityCard>
 

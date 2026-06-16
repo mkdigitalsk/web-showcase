@@ -6,7 +6,6 @@ import {
   Home as HomeIcon,
   Menu as MenuIcon,
   MenuOpen,
-  Notifications,
   Palette,
   Storage as StorageIcon,
 } from '@mui/icons-material'
@@ -28,7 +27,6 @@ const navItems = [
   { route: Routes.DATABASE, titleKey: 'home.database.title', Icon: Dataset },
   { route: Routes.CAPABILITIES, titleKey: 'home.capabilities.title', Icon: Extension },
   { route: '/calendar', titleKey: 'home.calendar.title', Icon: CalendarMonth },
-  { route: '/notifications', titleKey: 'home.notifications.title', Icon: Notifications },
 ] as const
 
 export function Sidebar() {
