@@ -4,19 +4,18 @@ import { useColorScheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth, useTranslation } from '../../hooks'
+import type { ThemeMode } from '../../types'
 import { Routes } from '../../../utils'
 import { Divider } from '../dividers'
 import { TextBody1Neutral60, TextBody1Neutral80 } from '../text'
-
-type ThemeMode = 'system' | 'light' | 'dark'
 
 const THEME_MODES: ThemeMode[] = ['system', 'light', 'dark']
 
 export function AccountMenu() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { user, logout } = useAuth()
-  const { mode = 'system', setMode } = useColorScheme()
+  const { user, logout, updateThemeMode } = useAuth()
+  const { mode = 'system' } = useColorScheme()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const [themeAnchor, setThemeAnchor] = useState<HTMLElement | null>(null)
 
@@ -34,9 +33,9 @@ export function AccountMenu() {
   }
 
   const handleSelectMode = (next: ThemeMode) => {
-    setMode(next)
     setThemeAnchor(null)
     setAnchor(null)
+    void updateThemeMode(next)
   }
 
   return (

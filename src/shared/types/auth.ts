@@ -1,3 +1,5 @@
+import type { ThemeMode } from './theme'
+
 export interface LoginRequest {
   email: string
   password: string
@@ -13,6 +15,7 @@ export interface AuthUser {
   id: number
   email: string
   name: string
+  themeMode: ThemeMode
 }
 
 export interface AuthResponse {

@@ -1,7 +1,8 @@
+import { useColorScheme } from '@mui/material/styles'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
-import type { AuthUser } from '../types'
-import { authService } from '../services'
+import type { AuthUser, ThemeMode } from '../types'
+import { authService, userService } from '../services'
 import { AuthContext, type AuthContextValue } from './AuthContext'
 
 function getStoredUser(): AuthUser | null {
@@ -19,12 +20,14 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(getStoredUser)
+  const { setMode } = useColorScheme()
 
   const login = async (credentials: Parameters<typeof authService.login>[0]) => {
     const response = await authService.login(credentials)
     localStorage.setItem('token', response.token)
     localStorage.setItem('user', JSON.stringify(response.user))
     setUser(response.user)
+    setMode(response.user.themeMode)
   }
 
   const register = async (data: Parameters<typeof authService.register>[0]) => {
@@ -32,12 +35,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.setItem('token', response.token)
     localStorage.setItem('user', JSON.stringify(response.user))
     setUser(response.user)
+    setMode(response.user.themeMode)
   }
 
   const logout = async () => {
     await authService.logout()
     localStorage.removeItem('user')
     setUser(null)
+    setMode('system')
+  }
+
+  const updateThemeMode = async (themeMode: ThemeMode) => {
+    setMode(themeMode)
+    try {
+      const updatedUser = await userService.updateThemeMode(themeMode)
+      localStorage.setItem('user', JSON.stringify(updatedUser))
+      setUser(updatedUser)
+    } catch {
+      // Theme preference sync is best-effort — UI already reflects the change via setMode.
+    }
   }
 
   const value: AuthContextValue = {
@@ -47,6 +63,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     login,
     register,
     logout,
+    updateThemeMode,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
