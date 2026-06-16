@@ -25,6 +25,7 @@
     "react-dom": "^19.2.6",
     "react-hook-form": "^7.79.0",
     "react-intl": "^10.1.13",
+    "react-resizable-panels": "^3.0.6",
     "react-router-dom": "^7.17.0",
     "zod": "^4.4.3"
   },

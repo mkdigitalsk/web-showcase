@@ -8,15 +8,12 @@ import {
   Palette,
   Storage as StorageIcon,
 } from '@mui/icons-material'
-import { Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Tooltip } from '@mui/material'
+import { Box, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Tooltip } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useLocalStorage, useTranslation } from '../../hooks'
+import { useTranslation } from '../../hooks'
 import { Routes } from '../../../utils'
 import { Divider } from '../dividers'
 import { TextH6BoldPrimary } from '../text'
-
-const EXPANDED_WIDTH = 240
-const COLLAPSED_WIDTH = 72
 
 const navItems = [
   { route: Routes.HOME, titleKey: 'home.title', Icon: HomeIcon },
@@ -27,32 +24,30 @@ const navItems = [
   { route: Routes.CAPABILITIES, titleKey: 'home.capabilities.title', Icon: Extension },
 ] as const
 
-export function Sidebar() {
+interface SidebarProps {
+  collapsed: boolean
+  onToggle: () => void
+}
+
+export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
-  const [collapsed, setCollapsed] = useLocalStorage('sidebar.collapsed', false)
 
   return (
-    <Drawer
-      variant="permanent"
+    <Box
       sx={{
-        width: collapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH,
-        flexShrink: 0,
-        transition: (theme) => theme.transitions.create('width'),
-        '& .MuiDrawer-paper': {
-          width: collapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH,
-          overflowX: 'hidden',
-          boxSizing: 'border-box',
-          transition: (theme) => theme.transitions.create('width'),
-          display: 'flex',
-          flexDirection: 'column',
-        },
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        bgcolor: 'background.paper',
       }}
     >
       <Toolbar sx={{ display: 'flex', justifyContent: collapsed ? 'center' : 'space-between', px: 2 }}>
         {!collapsed && <TextH6BoldPrimary noWrap>{t('app.name')}</TextH6BoldPrimary>}
-        <IconButton onClick={() => setCollapsed((c) => !c)} size="small">
+        <IconButton onClick={onToggle} size="small">
           {collapsed ? <MenuIcon /> : <MenuOpen />}
         </IconButton>
       </Toolbar>
@@ -75,7 +70,7 @@ export function Sidebar() {
                 {!collapsed && (
                   <ListItemText
                     primary={t(item.titleKey)}
-                    slotProps={{ primary: { color: isActive ? 'primary' : undefined } }}
+                    slotProps={{ primary: { color: isActive ? 'primary' : undefined, noWrap: true } }}
                   />
                 )}
               </ListItemButton>
@@ -83,6 +78,6 @@ export function Sidebar() {
           )
         })}
       </List>
-    </Drawer>
+    </Box>
   )
 }
