@@ -8,7 +8,6 @@ import {
   MenuOpen,
   Notifications,
   Palette,
-  QrCode2,
   Storage as StorageIcon,
 } from '@mui/icons-material'
 import { Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Tooltip } from '@mui/material'
@@ -28,7 +27,6 @@ const navItems = [
   { route: Routes.STORAGE, titleKey: 'home.storage.title', Icon: StorageIcon },
   { route: Routes.DATABASE, titleKey: 'home.database.title', Icon: Dataset },
   { route: Routes.CAPABILITIES, titleKey: 'home.capabilities.title', Icon: Extension },
-  { route: '/scanner', titleKey: 'home.scanner.title', Icon: QrCode2 },
   { route: '/calendar', titleKey: 'home.calendar.title', Icon: CalendarMonth },
   { route: '/notifications', titleKey: 'home.notifications.title', Icon: Notifications },
 ] as const

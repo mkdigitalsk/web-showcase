@@ -67,8 +67,6 @@
   "home.database.subtitle": "IndexedDB, local persistence",
   "home.capabilities.title": "Capabilities",
   "home.capabilities.subtitle": "Clipboard, Geolocation, Speech, Share & more",
-  "home.scanner.title": "Scanner",
-  "home.scanner.subtitle": "Generate and scan QR codes & barcodes",
   "home.calendar.title": "Calendar",
   "home.calendar.subtitle": "Date range picker",
   "home.notifications.title": "Notifications",
