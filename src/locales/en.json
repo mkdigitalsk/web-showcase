@@ -1,5 +1,5 @@
 {
-  "app.name": "KMP Showcase",
+  "app.name": "Web Showcase",
 
   "common.loading": "Loading...",
   "common.error": "An error occurred",
@@ -183,7 +183,7 @@
 
   "capabilities.clipboard.title": "Clipboard",
   "capabilities.clipboard.subtitle": "Read and write text via the Clipboard API",
-  "capabilities.clipboard.defaultText": "Hello from KMP Showcase!",
+  "capabilities.clipboard.defaultText": "Hello from Web Showcase!",
   "capabilities.clipboard.copy": "Copy to clipboard",
   "capabilities.clipboard.paste": "Paste from clipboard",
   "capabilities.clipboard.copied": "Copied!",
@@ -207,7 +207,7 @@
 
   "capabilities.share.title": "Web Share",
   "capabilities.share.subtitle": "Native OS share sheet",
-  "capabilities.share.text": "Check out this KMP Showcase app!",
+  "capabilities.share.text": "Check out this Web Showcase app!",
   "capabilities.share.button": "Share",
   "capabilities.share.mobileOnly": "Web Share requires a mobile browser or Safari",
   "capabilities.share.notSupported": "Web Share API not supported on this browser",
@@ -230,7 +230,7 @@
   "capabilities.notifications.subtitle": "Show a system notification via the Notification API",
   "capabilities.notifications.titleLabel": "Title",
   "capabilities.notifications.bodyLabel": "Message",
-  "capabilities.notifications.defaultTitle": "KMP Showcase",
+  "capabilities.notifications.defaultTitle": "Web Showcase",
   "capabilities.notifications.defaultBody": "Hello from the web app!",
   "capabilities.notifications.send": "Send notification",
   "capabilities.notifications.status": "Permission",

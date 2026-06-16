@@ -1,5 +1,5 @@
 {
-  "app.name": "KMP Showcase",
+  "app.name": "Web Showcase",
 
   "common.loading": "Načítava sa...",
   "common.error": "Vyskytla sa chyba",
@@ -183,7 +183,7 @@
 
   "capabilities.clipboard.title": "Schránka",
   "capabilities.clipboard.subtitle": "Čítanie a zápis textu cez Clipboard API",
-  "capabilities.clipboard.defaultText": "Ahoj z KMP Showcase!",
+  "capabilities.clipboard.defaultText": "Ahoj z Web Showcase!",
   "capabilities.clipboard.copy": "Kopírovať do schránky",
   "capabilities.clipboard.paste": "Vložiť zo schránky",
   "capabilities.clipboard.copied": "Skopírované!",
@@ -207,7 +207,7 @@
 
   "capabilities.share.title": "Web Share",
   "capabilities.share.subtitle": "Natívny OS dialóg zdieľania",
-  "capabilities.share.text": "Pozri si túto KMP Showcase aplikáciu!",
+  "capabilities.share.text": "Pozri si túto Web Showcase aplikáciu!",
   "capabilities.share.button": "Zdieľať",
   "capabilities.share.mobileOnly": "Web Share vyžaduje mobilný prehliadač alebo Safari",
   "capabilities.share.notSupported": "Web Share API nie je v tomto prehliadači podporované",
@@ -230,7 +230,7 @@
   "capabilities.notifications.subtitle": "Zobraziť systémovú notifikáciu cez Notification API",
   "capabilities.notifications.titleLabel": "Názov",
   "capabilities.notifications.bodyLabel": "Správa",
-  "capabilities.notifications.defaultTitle": "KMP Showcase",
+  "capabilities.notifications.defaultTitle": "Web Showcase",
   "capabilities.notifications.defaultBody": "Ahoj z webovej aplikácie!",
   "capabilities.notifications.send": "Odoslať notifikáciu",
   "capabilities.notifications.status": "Povolenie",
