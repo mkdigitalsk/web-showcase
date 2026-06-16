@@ -1,5 +1,4 @@
 import {
-  CalendarMonth,
   Cloud,
   Dataset,
   Extension,
@@ -26,7 +25,6 @@ const navItems = [
   { route: Routes.STORAGE, titleKey: 'home.storage.title', Icon: StorageIcon },
   { route: Routes.DATABASE, titleKey: 'home.database.title', Icon: Dataset },
   { route: Routes.CAPABILITIES, titleKey: 'home.capabilities.title', Icon: Extension },
-  { route: '/calendar', titleKey: 'home.calendar.title', Icon: CalendarMonth },
 ] as const
 
 export function Sidebar() {

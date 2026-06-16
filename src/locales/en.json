@@ -78,8 +78,6 @@
   "home.database.subtitle": "IndexedDB, local persistence",
   "home.capabilities.title": "Capabilities",
   "home.capabilities.subtitle": "Clipboard, Geolocation, Speech, Share & more",
-  "home.calendar.title": "Calendar",
-  "home.calendar.subtitle": "Date range picker",
 
   "storage.title": "Storage",
   "storage.subtitle": "localStorage vs sessionStorage — persistent and session-scoped data",

@@ -78,8 +78,6 @@
   "home.database.subtitle": "IndexedDB, lokální perzistence",
   "home.capabilities.title": "Funkce",
   "home.capabilities.subtitle": "Schránka, geolokace, řeč, sdílení a více",
-  "home.calendar.title": "Kalendář",
-  "home.calendar.subtitle": "Výběr rozsahu dat",
 
   "storage.title": "Úložiště",
   "storage.subtitle": "localStorage vs sessionStorage — trvalá a session data",

@@ -78,8 +78,6 @@
   "home.database.subtitle": "IndexedDB, lokale Persistenz",
   "home.capabilities.title": "Funktionen",
   "home.capabilities.subtitle": "Zwischenablage, Geolokalisierung, Sprache, Teilen & mehr",
-  "home.calendar.title": "Kalender",
-  "home.calendar.subtitle": "Datumsbereichsauswahl",
 
   "storage.title": "Speicher",
   "storage.subtitle": "localStorage vs. sessionStorage — dauerhafte und sitzungsbezogene Daten",
