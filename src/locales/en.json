@@ -52,7 +52,10 @@
   "home.responseTime": "I usually reply within 24h.",
   "home.logout": "Logout",
   "home.accountSettings": "Account Settings",
-  "home.theme": "Theme",
+  "home.theme": "Theme: {mode}",
+  "home.theme.system": "System",
+  "home.theme.light": "Light",
+  "home.theme.dark": "Dark",
 
   "home.uiComponents.title": "UI Components",
   "home.uiComponents.subtitle": "Buttons, Cards, Dialogs, Typography",

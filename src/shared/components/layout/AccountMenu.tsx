@@ -1,5 +1,6 @@
-import { Logout, Palette, Settings } from '@mui/icons-material'
+import { Check, ChevronRight, Logout, Palette, Settings } from '@mui/icons-material'
 import { Avatar, Box, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
+import { useColorScheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth, useTranslation } from '../../hooks'
@@ -7,11 +8,17 @@ import { Routes } from '../../../utils'
 import { Divider } from '../dividers'
 import { TextBody1Neutral60, TextBody1Neutral80 } from '../text'
 
+type ThemeMode = 'system' | 'light' | 'dark'
+
+const THEME_MODES: ThemeMode[] = ['system', 'light', 'dark']
+
 export function AccountMenu() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()
+  const { mode = 'system', setMode } = useColorScheme()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
+  const [themeAnchor, setThemeAnchor] = useState<HTMLElement | null>(null)
 
   const initials = user?.name
     ?.split(' ')
@@ -24,6 +31,12 @@ export function AccountMenu() {
     setAnchor(null)
     await logout()
     navigate(Routes.LOGIN)
+  }
+
+  const handleSelectMode = (next: ThemeMode) => {
+    setMode(next)
+    setThemeAnchor(null)
+    setAnchor(null)
   }
 
   return (
@@ -50,11 +63,12 @@ export function AccountMenu() {
           </ListItemIcon>
           {t('home.accountSettings')}
         </MenuItem>
-        <MenuItem onClick={() => setAnchor(null)}>
+        <MenuItem onClick={(e) => setThemeAnchor(e.currentTarget)}>
           <ListItemIcon>
             <Palette fontSize="small" />
           </ListItemIcon>
-          {t('home.theme')}
+          {t('home.theme', { mode: t(`home.theme.${mode}`) })}
+          <ChevronRight fontSize="small" sx={{ ml: 'auto' }} />
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => void handleLogout()}>
@@ -63,6 +77,21 @@ export function AccountMenu() {
           </ListItemIcon>
           {t('home.logout')}
         </MenuItem>
+      </Menu>
+
+      <Menu
+        anchorEl={themeAnchor}
+        open={!!themeAnchor}
+        onClose={() => setThemeAnchor(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+      >
+        {THEME_MODES.map((option) => (
+          <MenuItem key={option} selected={option === mode} onClick={() => handleSelectMode(option)}>
+            <ListItemIcon>{option === mode && <Check fontSize="small" />}</ListItemIcon>
+            {t(`home.theme.${option}`)}
+          </MenuItem>
+        ))}
       </Menu>
     </>
   )
