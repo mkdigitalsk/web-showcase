@@ -1,16 +1,17 @@
 import { Check } from '@mui/icons-material'
 import { Box, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { useState } from 'react'
-import { useLocale, useTranslation } from '../../hooks'
+import { useAuth, useLocale, useTranslation } from '../../hooks'
 
 export function LocaleSwitcher() {
   const { t } = useTranslation()
-  const { locale, setLocale, locales } = useLocale()
+  const { locale, locales } = useLocale()
+  const { updateLocale } = useAuth()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const current = locales.find((l) => l.code === locale)
 
   const handleSelect = (code: string) => {
-    setLocale(code)
+    void updateLocale(code)
     setAnchor(null)
   }
 

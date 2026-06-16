@@ -11,4 +11,8 @@ export class UserApi extends BaseApiService {
   updateThemeMode(themeMode: ThemeMode): Promise<User> {
     return this._put<User>(`${this.baseRoute}/me/theme-mode`, { themeMode })
   }
+
+  updateLocale(locale: string): Promise<User> {
+    return this._put<User>(`${this.baseRoute}/me/locale`, { locale })
+  }
 }

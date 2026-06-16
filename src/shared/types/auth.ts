@@ -16,6 +16,7 @@ export interface AuthUser {
   email: string
   name: string
   themeMode: ThemeMode
+  locale: string
 }
 
 export interface AuthResponse {

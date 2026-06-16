@@ -9,6 +9,7 @@ export interface AuthContextValue {
   register: (data: RegisterRequest) => Promise<void>
   logout: () => Promise<void>
   updateThemeMode: (themeMode: ThemeMode) => Promise<void>
+  updateLocale: (locale: string) => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
