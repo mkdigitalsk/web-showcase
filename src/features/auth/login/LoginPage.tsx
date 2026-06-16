@@ -1,22 +1,30 @@
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Container } from '@mui/material'
-import { Button, Input, TextH4Bold, TextBody1Neutral60, TextLinkPrimary, AlertError } from '../../../shared/components'
+import { Button, Input, TextH4Bold, TextBody1Neutral60, TextBody1Neutral80, TextLinkPrimary, AlertError } from '../../../shared/components'
 import { useTranslation } from '../../../shared/hooks'
 import { useLoginMutation } from './useLoginMutation'
 import { loginSchema, type LoginFormData } from '../schemas'
+
+const TEST_EMAIL = 'test01@test.com'
+const TEST_PASSWORD = 'Kmpshowcase1@'
 
 export function LoginPage() {
   const { t } = useTranslation()
   const loginMutation = useLoginMutation()
 
-  const { control, handleSubmit } = useForm<LoginFormData>({
+  const { control, handleSubmit, setValue } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: 'test@test.com',
-      password: 'Kmpshowcase1@',
+      email: '',
+      password: '',
     },
   })
+
+  const fillTestAccount = () => {
+    setValue('email', TEST_EMAIL, { shouldValidate: true })
+    setValue('password', TEST_PASSWORD, { shouldValidate: true })
+  }
 
   return (
     <Container maxWidth="sm">
@@ -73,6 +81,15 @@ export function LoginPage() {
 
           <Button type="submit" loading={loginMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
             {t('login.button')}
+          </Button>
+        </Box>
+
+        <Box sx={{ mt: 4, p: 2, bgcolor: 'action.hover', borderRadius: 2, textAlign: 'center' }}>
+          <TextBody1Neutral60>{t('login.testAccount.hint')}</TextBody1Neutral60>
+          <TextBody1Neutral80 sx={{ mt: 1 }}>{TEST_EMAIL}</TextBody1Neutral80>
+          <TextBody1Neutral80>{TEST_PASSWORD}</TextBody1Neutral80>
+          <Button type="button" variant="outline" onClick={fillTestAccount} sx={{ mt: 2 }}>
+            {t('login.testAccount.fill')}
           </Button>
         </Box>
 

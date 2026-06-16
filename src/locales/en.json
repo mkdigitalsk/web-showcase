@@ -22,6 +22,8 @@
   "login.error": "Invalid email or password",
   "login.noAccount": "Don't have an account?",
   "login.register": "Register",
+  "login.testAccount.hint": "Demo account — click to fill the form",
+  "login.testAccount.fill": "Fill test account",
 
   "register.title": "Create Account",
   "register.nameLabel": "Name",
