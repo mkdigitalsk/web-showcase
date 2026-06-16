@@ -56,7 +56,7 @@ export function HomePage() {
         </Button>
       </Stack>
 
-      <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", mb: 2 }}>
+      <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: "wrap", mb: 2 }}>
         <Button
           variant="outline"
           size="small"
@@ -81,7 +81,7 @@ export function HomePage() {
           variant="outline"
           size="small"
           startIcon={<GitHub />}
-          href="https://github.com/KusnirM/kmp-showcase"
+          href="https://github.com/KusnirM"
           target="_blank"
           rel="noopener noreferrer"
         >
