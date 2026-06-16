@@ -60,6 +60,10 @@
   "home.theme.system": "Systémové",
   "home.theme.light": "Světlé",
   "home.theme.dark": "Tmavé",
+  "home.skills.mobile": "Mobil",
+  "home.skills.web": "Web",
+  "home.skills.backend": "Backend",
+  "home.skills.foundations": "Základy",
 
   "home.uiComponents.title": "UI komponenty",
   "home.uiComponents.subtitle": "Tlačítka, karty, dialogy, typografie",

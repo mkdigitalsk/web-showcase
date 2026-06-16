@@ -1,9 +1,36 @@
 import { Download, GitHub, LinkedIn, Mail, WhatsApp } from "@mui/icons-material";
 import { Box, Stack } from "@mui/material";
-import { Button, Chip, TextBody1Neutral60, TextH4Bold } from "../../shared/components";
+import { Button, TextBody1Neutral60, TextH4Bold } from "../../shared/components";
 import { useAuth, useTranslation } from "../../shared/hooks";
+import { SkillGroup } from "./SkillGroup";
 
-const techStack = ["Kotlin Multiplatform", "Compose Multiplatform", "Ktor", "PostgreSQL", "Koin", "SQLDelight"];
+// Skills grouped by delivery area — categorical grouping is more scannable for
+// (often non-technical) recruiters than a flat tag cloud. Category labels are
+// i18n'd; tech names are proper nouns kept untranslated across locales.
+const skillGroups = [
+  {
+    labelKey: "home.skills.mobile",
+    items: [
+      "Android",
+      "iOS",
+      "Kotlin Multiplatform",
+      "Compose Multiplatform",
+      "Flutter",
+      "React Native",
+      "Jetpack Compose",
+      "SwiftUI",
+      "Kotlin",
+      "Swift",
+      "Dart",
+    ],
+  },
+  { labelKey: "home.skills.web", items: ["React", "TypeScript"] },
+  { labelKey: "home.skills.backend", items: ["Ktor", "PostgreSQL", "REST APIs"] },
+  {
+    labelKey: "home.skills.foundations",
+    items: ["Clean Architecture", "MVVM", "Koin", "SQLDelight", "CI/CD", "Firebase", "AI-assisted development"],
+  },
+];
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -17,9 +44,9 @@ export function HomePage() {
       <TextH4Bold sx={{ mb: 1 }}>{t("home.headline")}</TextH4Bold>
       <TextBody1Neutral60 sx={{ mb: 3 }}>{t("home.description")}</TextBody1Neutral60>
 
-      <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", mb: 4 }}>
-        {techStack.map((tech) => (
-          <Chip key={tech} label={tech} variant="outlined" />
+      <Stack spacing={2} sx={{ mb: 4 }}>
+        {skillGroups.map((group) => (
+          <SkillGroup key={group.labelKey} title={t(group.labelKey)} items={group.items} />
         ))}
       </Stack>
 

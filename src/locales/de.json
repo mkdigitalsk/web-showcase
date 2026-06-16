@@ -60,6 +60,10 @@
   "home.theme.system": "System",
   "home.theme.light": "Hell",
   "home.theme.dark": "Dunkel",
+  "home.skills.mobile": "Mobile",
+  "home.skills.web": "Web",
+  "home.skills.backend": "Backend",
+  "home.skills.foundations": "Grundlagen",
 
   "home.uiComponents.title": "UI-Komponenten",
   "home.uiComponents.subtitle": "Buttons, Karten, Dialoge, Typografie",
