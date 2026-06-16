@@ -25,6 +25,8 @@
   "login.testAccount.hint": "Demo account — click to fill the form",
   "login.testAccount.fill": "Fill test account",
 
+  "localeSwitcher.label": "Change language",
+
   "register.title": "Create Account",
   "register.nameLabel": "Name",
   "register.namePlaceholder": "Enter your name",
