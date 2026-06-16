@@ -83,7 +83,7 @@ export function UiComponentsPage() {
         </Section>
 
         <Section titleKey="uiComponents.buttons">
-          <Stack direction="row" spacing={2} sx={{ flexWrap: 'wrap' }}>
+          <Stack direction="row" useFlexGap spacing={2} sx={{ flexWrap: 'wrap' }}>
             <Button>{t('uiComponents.buttons.primary')}</Button>
             <Button variant="secondary">{t('uiComponents.buttons.secondary')}</Button>
             <Button variant="outline">{t('uiComponents.buttons.outline')}</Button>
@@ -114,7 +114,7 @@ export function UiComponentsPage() {
         </Section>
 
         <Section titleKey="uiComponents.chips">
-          <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
+          <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: 'wrap' }}>
             <Chip label={t('uiComponents.chips.default')} />
             <Chip label={t('uiComponents.chips.outlined')} variant="outlined" />
             <Chip label={t('uiComponents.chips.deletable')} onDelete={() => {}} />
