@@ -48,7 +48,7 @@ function CapabilityCard({ title, subtitle, children }: { title: string; subtitle
 export function CapabilitiesPage() {
   const { t } = useTranslation()
 
-  const [clipboardText, setClipboardText] = useState('Hello from KMP Showcase!')
+  const [clipboardText, setClipboardText] = useState(t('capabilities.clipboard.defaultText'))
   const [clipboardResult, setClipboardResult] = useState<string | null>(null)
   const [clipboardError, setClipboardError] = useState<string | null>(null)
 
@@ -56,7 +56,7 @@ export function CapabilitiesPage() {
   const [geoError, setGeoError] = useState<string | null>(null)
   const [geoLoading, setGeoLoading] = useState(false)
 
-  const [speechText, setSpeechText] = useState('Hello! This is a text to speech demo.')
+  const [speechText, setSpeechText] = useState(t('capabilities.speech.defaultText'))
   const [isSpeaking, setIsSpeaking] = useState(false)
 
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -137,8 +137,8 @@ export function CapabilitiesPage() {
     if (!navigator.share) return
     try {
       await navigator.share({
-        title: 'KMP Showcase',
-        text: 'Check out this KMP Showcase app!',
+        title: t('app.name'),
+        text: t('capabilities.share.text'),
         url: window.location.href,
       })
     } catch {

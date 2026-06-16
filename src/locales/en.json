@@ -181,6 +181,7 @@
 
   "capabilities.clipboard.title": "Clipboard",
   "capabilities.clipboard.subtitle": "Read and write text via the Clipboard API",
+  "capabilities.clipboard.defaultText": "Hello from KMP Showcase!",
   "capabilities.clipboard.copy": "Copy to clipboard",
   "capabilities.clipboard.paste": "Paste from clipboard",
   "capabilities.clipboard.copied": "Copied!",
@@ -196,6 +197,7 @@
 
   "capabilities.speech.title": "Speech Synthesis",
   "capabilities.speech.subtitle": "Convert text to speech (TTS)",
+  "capabilities.speech.defaultText": "Hello! This is a text to speech demo.",
   "capabilities.speech.speak": "Speak",
   "capabilities.speech.stop": "Stop",
   "capabilities.speech.placeholder": "Enter text to speak...",
@@ -203,6 +205,7 @@
 
   "capabilities.share.title": "Web Share",
   "capabilities.share.subtitle": "Native OS share sheet",
+  "capabilities.share.text": "Check out this KMP Showcase app!",
   "capabilities.share.button": "Share",
   "capabilities.share.mobileOnly": "Web Share requires a mobile browser or Safari",
   "capabilities.share.notSupported": "Web Share API not supported on this browser",
