@@ -3,6 +3,8 @@ import { Button as MuiButton, type ButtonProps as MuiButtonProps } from '@mui/ma
 interface ButtonProps extends Omit<MuiButtonProps, 'variant'> {
   variant?: 'primary' | 'secondary' | 'outline'
   loading?: boolean
+  target?: string
+  rel?: string
 }
 
 const variantMap = {

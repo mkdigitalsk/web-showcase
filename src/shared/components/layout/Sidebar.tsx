@@ -4,11 +4,12 @@ import {
   Dataset,
   Extension,
   Home as HomeIcon,
+  Menu as MenuIcon,
+  MenuOpen,
   Notifications,
   Palette,
   QrCode2,
   Storage as StorageIcon,
-  ViewSidebarOutlined,
 } from '@mui/icons-material'
 import { Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Tooltip } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -58,7 +59,7 @@ export function Sidebar() {
       <Toolbar sx={{ display: 'flex', justifyContent: collapsed ? 'center' : 'space-between', px: 2 }}>
         {!collapsed && <TextH6BoldPrimary noWrap>{t('app.name')}</TextH6BoldPrimary>}
         <IconButton onClick={() => setCollapsed((c) => !c)} size="small">
-          <ViewSidebarOutlined sx={{ transform: 'scaleX(-1)' }} />
+          {collapsed ? <MenuIcon /> : <MenuOpen />}
         </IconButton>
       </Toolbar>
 
