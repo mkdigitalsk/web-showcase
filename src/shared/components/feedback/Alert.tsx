@@ -2,7 +2,6 @@ import { Alert as MuiAlert, type AlertProps as MuiAlertProps } from '@mui/materi
 
 type AlertBaseProps = Omit<MuiAlertProps, 'severity'>
 
-// Base Alert - use severity variants in pages
 export function Alert({ sx, ...props }: MuiAlertProps) {
   return <MuiAlert sx={sx} {...props} />
 }

@@ -10,7 +10,6 @@ export interface LocaleOption {
   flag: string // emoji flag (swap to SVG lib if Windows rendering matters)
 }
 
-// Labels are in each language's own form (endonyms) — conventional for switchers.
 export const LOCALES: LocaleOption[] = [
   { code: Locale.EN_GB, label: 'English', flag: '🇬🇧' },
   { code: Locale.SK_SK, label: 'Slovenčina', flag: '🇸🇰' },

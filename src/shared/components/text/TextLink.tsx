@@ -6,7 +6,6 @@ type TextLinkProps = Omit<MuiLinkProps, 'component'> & {
   to: string
 }
 
-// Base TextLink - use color variants in pages
 export function TextLink({ to, sx, ...props }: TextLinkProps) {
   return <MuiLink component={RouterLink} to={to} sx={sx} {...props} />
 }
