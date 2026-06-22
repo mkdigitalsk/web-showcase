@@ -1,8 +1,9 @@
 import type { ThemeMode, User } from '../types'
 import { BaseApiService } from './BaseApiService'
+import { API_PREFIX } from './apiVersion'
 
 export class UserApi extends BaseApiService {
-  protected readonly baseRoute = '/api/users'
+  protected readonly baseRoute = `${API_PREFIX}/users`
 
   getUsers(): Promise<User[]> {
     return this._get<User[]>(this.baseRoute)
