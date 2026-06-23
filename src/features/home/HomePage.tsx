@@ -51,7 +51,7 @@ export function HomePage() {
       </Stack>
 
       <Stack direction="row" sx={{ mb: 2 }}>
-        <Button variant="primary" startIcon={<Mail />} href="mailto:mir.kusnir@gmail.com">
+        <Button variant="primary" startIcon={<Mail />} href="mailto:admin@mkdigital.sk">
           {t("home.contactCta")}
         </Button>
       </Stack>
