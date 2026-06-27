@@ -7,7 +7,7 @@ import { useLoginMutation } from './useLoginMutation'
 import { loginSchema, type LoginFormData } from '../schemas'
 
 const TEST_EMAIL = 'test01@mkdigital.sk'
-const TEST_PASSWORD = 'Kmpshowcase1@'
+const TEST_PASSWORD = 'MKDigitalTest1@'
 
 export function LoginPage() {
   const { t } = useTranslation()
