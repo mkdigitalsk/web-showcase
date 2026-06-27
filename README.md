@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# Web Showcase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-ready React web app showcasing modern frontend development with MUI, a wrapper-component design system, and the shared MK Digital brand tokens. The web counterpart of the [KMP mobile showcase](https://github.com/mkdigitalsk/kmp-showcase).
 
-Currently, two official plugins are available:
+[![React](https://img.shields.io/badge/React-19-61DAFB.svg?logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-7-646CFF.svg?logo=vite&logoColor=white)](https://vite.dev)
+[![MUI](https://img.shields.io/badge/MUI-9-007FFF.svg?logo=mui&logoColor=white)](https://mui.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+> 🔗 **[View it live →](#)** — it's a web app, just open it in a browser. No build, install, or device needed.
+> _(live URL added once deployed)_
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<table>
+<tr>
+<td style="width:50%">
 
-## Expanding the ESLint configuration
+### 🎨 UI & Components
+- MUI v9 + Material Design 3
+- Wrapper-component design system
+- Dark mode + theme toggle
+- Responsive, intent-based sizing
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+</td>
+<td style="width:50%">
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🔌 Data & Network
+- TanStack Query + Axios
+- Showcase API (`/api/v1`)
+- IndexedDB via Dexie
+- JWT auth (login)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+</td>
+</tr>
+<tr>
+<td style="width:50%">
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 📝 Forms & Validation
+- React Hook Form + Zod
+- i18n error messages
+- Type-safe schemas
+
+</td>
+<td style="width:50%">
+
+### 🌍 i18n & Theming
+- react-intl (en · sk · cs · de)
+- Enforced key parity
+- Server-synced locale per user
+
+</td>
+</tr>
+</table>
+
+---
+
+## Tech stack
+
+React · TypeScript · Vite · MUI v9 + Emotion · TanStack Query · Axios · Dexie (IndexedDB) · React Hook Form + Zod · react-intl · React Router · **[@mkdigitalsk/design-system](https://github.com/mkdigitalsk/design-system)**.
+
+## Design system
+
+Brand colors come from the shared **[@mkdigitalsk/design-system](https://github.com/mkdigitalsk/design-system)** package (single source → web + mobile). The MUI theme composes its palette from those tokens — no hardcoded brand colors.
+
+## Run locally
+
+> To just *see* it, use the live demo above — no setup needed. To develop:
+
+```bash
+npm install   # needs a GitHub Packages token for the private design-system (NODE_AUTH_TOKEN)
+npm run dev   # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| script | does |
+|--------|------|
+| `npm run dev` | dev server (HMR) |
+| `npm run build` | type-check + production build |
+| `npm run preview` | serve the production build |
+| `npm run lint` | ESLint |
+| `npm run check-locales` | verify locale key parity |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Architecture
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Feature-based — `src/features/<name>/`: `auth` · `home` · `ui-components` · `networking` · `storage` · `database` · `capabilities`. Shared code in `src/shared/` (components, hooks, theme, services).
