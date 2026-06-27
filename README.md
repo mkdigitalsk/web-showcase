@@ -7,8 +7,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 [![Vite](https://img.shields.io/badge/Vite-7-646CFF.svg?logo=vite&logoColor=white)](https://vite.dev)
 [![MUI](https://img.shields.io/badge/MUI-9-007FFF.svg?logo=mui&logoColor=white)](https://mui.com)
 
-> 🔗 **[View it live →](#)** — it's a web app, just open it in a browser. No build, install, or device needed.
-> _(live URL added once deployed)_
+> 🔗 **[View it live →](https://showcase.mkdigital.sk)** — it's a web app, just open it in a browser. No build, install, or device needed.
 
 ---
 
