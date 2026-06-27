@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import { Light, Dark } from '@mkdigitalsk/design-system'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -23,31 +24,32 @@ declare module '@mui/material/styles' {
   }
 }
 
-const Neutral0Light = '#FFFFFF'
-const Neutral20Light = '#C8C8C8'
-const Neutral40Light = '#919191'
-const Neutral60Light = '#5A5A5A'
-const Neutral80Light = '#232323'
-const Neutral100Light = '#000000'
+// Brand colors composed from the design system (@mkdigitalsk/design-system), not defined here.
+const Neutral0Light = Light.neutral[0]
+const Neutral20Light = Light.neutral[20]
+const Neutral40Light = Light.neutral[40]
+const Neutral60Light = Light.neutral[60]
+const Neutral80Light = Light.neutral[80]
+const Neutral100Light = Light.neutral[100]
 
-const PrimaryLight = '#6200EE'
-const SecondaryLight = '#03DAC6'
-const ErrorLight = '#FF1A1A'
-const SuccessLight = '#4CAF50'
-const WarningLight = '#FF9800'
+const PrimaryLight = Light.primary
+const SecondaryLight = Light.secondary
+const ErrorLight = Light.error
+const SuccessLight = Light.success
+const WarningLight = Light.warning
 
-const Neutral0Dark = '#121212'
-const Neutral20Dark = '#2C2C2C'
-const Neutral40Dark = '#717171'
-const Neutral60Dark = '#B0B0B0'
-const Neutral80Dark = '#ECECEC'
-const Neutral100Dark = '#FFFFFF'
+const Neutral0Dark = Dark.neutral[0]
+const Neutral20Dark = Dark.neutral[20]
+const Neutral40Dark = Dark.neutral[40]
+const Neutral60Dark = Dark.neutral[60]
+const Neutral80Dark = Dark.neutral[80]
+const Neutral100Dark = Dark.neutral[100]
 
-const PrimaryDark = '#BB86FC'
-const SecondaryDark = '#03DAC6'
-const ErrorDark = '#CF6679'
-const SuccessDark = '#81C784'
-const WarningDark = '#FFB74D'
+const PrimaryDark = Dark.primary
+const SecondaryDark = Dark.secondary
+const ErrorDark = Dark.error
+const SuccessDark = Dark.success
+const WarningDark = Dark.warning
 
 export const theme = createTheme({
   colorSchemes: {
