@@ -14,7 +14,6 @@ import { AppLayout, PrivateRoute } from './shared/components'
 import { AuthProvider, LocaleProvider } from './shared/context'
 import { LoginPage } from './features/auth/login/LoginPage'
 import { RegisterPage } from './features/auth/register/RegisterPage'
-import { HomePage } from './features/home/HomePage'
 import { NetworkingPage } from './features/networking/NetworkingPage'
 import { StoragePage } from './features/storage/StoragePage'
 import { DatabasePage } from './features/database/DatabasePage'
@@ -34,12 +33,11 @@ createRoot(document.getElementById('root')!).render(
           <AuthProvider>
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Navigate to={AppRoutes.HOME} replace />} />
+                <Route path="/" element={<Navigate to={AppRoutes.UI_COMPONENTS} replace />} />
                 <Route path={AppRoutes.LOGIN} element={<LoginPage />} />
                 <Route path={AppRoutes.REGISTER} element={<RegisterPage />} />
                 <Route element={<PrivateRoute />}>
                   <Route element={<AppLayout />}>
-                    <Route path={AppRoutes.HOME} element={<HomePage />} />
                     <Route path={AppRoutes.NETWORKING} element={<NetworkingPage />} />
                     <Route path={AppRoutes.STORAGE} element={<StoragePage />} />
                     <Route path={AppRoutes.DATABASE} element={<DatabasePage />} />

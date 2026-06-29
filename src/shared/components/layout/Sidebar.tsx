@@ -2,7 +2,6 @@ import {
   Cloud,
   Dataset,
   Extension,
-  Home as HomeIcon,
   Menu as MenuIcon,
   MenuOpen,
   Palette,
@@ -16,7 +15,6 @@ import { Divider } from '../dividers'
 import { TextH6BoldPrimary } from '../text'
 
 const navItems = [
-  { route: Routes.HOME, titleKey: 'home.title', Icon: HomeIcon },
   { route: Routes.UI_COMPONENTS, titleKey: 'home.uiComponents.title', Icon: Palette },
   { route: Routes.NETWORKING, titleKey: 'home.networking.title', Icon: Cloud },
   { route: Routes.STORAGE, titleKey: 'home.storage.title', Icon: StorageIcon },

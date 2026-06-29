@@ -9,6 +9,6 @@ export function useLoginMutation() {
 
   return useMutation({
     mutationFn: login,
-    onSuccess: () => navigate(Routes.HOME),
+    onSuccess: () => navigate(Routes.UI_COMPONENTS),
   })
 }

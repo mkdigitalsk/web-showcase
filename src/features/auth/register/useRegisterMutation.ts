@@ -9,6 +9,6 @@ export function useRegisterMutation() {
 
   return useMutation({
     mutationFn: register,
-    onSuccess: () => navigate(Routes.HOME),
+    onSuccess: () => navigate(Routes.UI_COMPONENTS),
   })
 }

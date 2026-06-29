@@ -8,7 +8,6 @@ export function paramRoute<P extends Record<string, string | number>>(
 }
 
 export const Routes = {
-  HOME: '/home',
   LOGIN: '/login',
   REGISTER: '/register',
   NETWORKING: '/networking',
