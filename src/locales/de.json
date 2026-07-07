@@ -45,11 +45,12 @@
   "register.login": "Anmelden",
 
   "home.logout": "Abmelden",
-  "home.accountSettings": "Kontoeinstellungen",
   "home.theme": "Design: {mode}",
   "home.theme.system": "System",
   "home.theme.light": "Hell",
   "home.theme.dark": "Dunkel",
+
+  "app.version": "v{version}",
 
   "home.uiComponents.title": "UI-Komponenten",
   "home.networking.title": "Netzwerk",

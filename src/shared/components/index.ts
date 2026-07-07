@@ -16,6 +16,9 @@ export {
   TextBody1Neutral80,
   TextBody1Neutral60,
   TextBody1Primary,
+  TextCaption,
+  TextCaptionNeutral60,
+  TextCaptionNeutral40,
   TextLink,
   TextLinkPrimary,
   TextTimestamp,
@@ -33,4 +36,4 @@ export { Checkbox, Switch, RadioButton, Slider } from './forms'
 
 export { Divider, DividerPrimary } from './dividers'
 
-export { Sidebar, AppLayout } from './layout'
+export { Sidebar, AppLayout, PageContainer } from './layout'

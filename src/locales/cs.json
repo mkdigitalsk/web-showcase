@@ -45,11 +45,12 @@
   "register.login": "Přihlásit se",
 
   "home.logout": "Odhlásit se",
-  "home.accountSettings": "Nastavení účtu",
   "home.theme": "Téma: {mode}",
   "home.theme.system": "Systémové",
   "home.theme.light": "Světlé",
   "home.theme.dark": "Tmavé",
+
+  "app.version": "v{version}",
 
   "home.uiComponents.title": "UI komponenty",
   "home.networking.title": "Síť",

@@ -23,6 +23,7 @@ import {
   Input,
   LinearProgress,
   LoadingView,
+  PageContainer,
   RadioButton,
   Slider,
   Snackbar,
@@ -64,7 +65,7 @@ export function UiComponentsPage() {
   const [filterSelected, setFilterSelected] = useState(false)
 
   return (
-    <Box sx={{ p: 2 }}>
+    <PageContainer maxWidth={1200}>
       <Stack spacing={4}>
 
         <Section titleKey="uiComponents.typography">
@@ -235,6 +236,6 @@ export function UiComponentsPage() {
         </Section>
 
       </Stack>
-    </Box>
+    </PageContainer>
   )
 }

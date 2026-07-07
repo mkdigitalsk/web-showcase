@@ -1,6 +1,6 @@
 import { Email, Refresh } from '@mui/icons-material'
 import { Box, CircularProgress, IconButton, Stack } from '@mui/material'
-import { AlertError, ElevatedCard, LoadingView, TextBody1Neutral60, TextBody1Neutral80, TextH6Bold } from '../../shared/components'
+import { AlertError, ElevatedCard, LoadingView, PageContainer, TextBody1Neutral60, TextBody1Neutral80, TextH6Bold } from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
 import { useGetUsersQuery } from './useGetUsersQuery'
 
@@ -14,7 +14,7 @@ export function NetworkingPage() {
   const showEmpty = !isLoading && !isError && !hasUsers
 
   return (
-    <Box sx={{ p: 2 }}>
+    <PageContainer>
       {showLoading && <LoadingView />}
       {showError && (
         <AlertError sx={{ mt: 2 }} action={
@@ -53,6 +53,6 @@ export function NetworkingPage() {
           </Stack>
         </>
       )}
-    </Box>
+    </PageContainer>
   )
 }

@@ -12,7 +12,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from '../../hooks'
 import { Routes } from '../../../utils'
 import { Divider } from '../dividers'
-import { TextH6BoldPrimary } from '../text'
 
 const navItems = [
   { route: Routes.UI_COMPONENTS, titleKey: 'home.uiComponents.title', Icon: Palette },
@@ -43,8 +42,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         bgcolor: 'background.paper',
       }}
     >
-      <Toolbar sx={{ display: 'flex', justifyContent: collapsed ? 'center' : 'space-between', px: 2 }}>
-        {!collapsed && <TextH6BoldPrimary noWrap>{t('app.name')}</TextH6BoldPrimary>}
+      <Toolbar sx={{ display: 'flex', justifyContent: collapsed ? 'center' : 'flex-end', px: 2, minHeight: 48 }}>
         <IconButton onClick={onToggle} size="small">
           {collapsed ? <MenuIcon /> : <MenuOpen />}
         </IconButton>

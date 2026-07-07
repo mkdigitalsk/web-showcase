@@ -1,4 +1,4 @@
-import { Check, ChevronRight, Logout, Palette, Settings } from '@mui/icons-material'
+import { Check, ChevronRight, Logout, Palette } from '@mui/icons-material'
 import { Avatar, Box, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { useColorScheme } from '@mui/material/styles'
 import { useState } from 'react'
@@ -56,12 +56,6 @@ export function AccountMenu() {
           <TextBody1Neutral60 noWrap>{user?.email}</TextBody1Neutral60>
         </Box>
         <Divider />
-        <MenuItem onClick={() => setAnchor(null)}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          {t('home.accountSettings')}
-        </MenuItem>
         <MenuItem onClick={(e) => setThemeAnchor(e.currentTarget)}>
           <ListItemIcon>
             <Palette fontSize="small" />

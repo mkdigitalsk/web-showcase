@@ -11,6 +11,8 @@ declare module '@mui/material/styles' {
       80: string
       100: string
     }
+    brandBar: string
+    onBrandBar: string
   }
   interface PaletteOptions {
     neutral?: {
@@ -21,6 +23,8 @@ declare module '@mui/material/styles' {
       80: string
       100: string
     }
+    brandBar?: string
+    onBrandBar?: string
   }
 }
 
@@ -60,6 +64,8 @@ export const theme = createTheme({
         error: { main: ErrorLight },
         success: { main: SuccessLight },
         warning: { main: WarningLight },
+        brandBar: Light.brandBar,
+        onBrandBar: Light.onBrandBar,
         neutral: {
           0: Neutral0Light,
           20: Neutral20Light,
@@ -79,6 +85,8 @@ export const theme = createTheme({
         error: { main: ErrorDark },
         success: { main: SuccessDark },
         warning: { main: WarningDark },
+        brandBar: Dark.brandBar,
+        onBrandBar: Dark.onBrandBar,
         neutral: {
           0: Neutral0Dark,
           20: Neutral20Dark,

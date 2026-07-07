@@ -1,0 +1,8 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MK Digital">
+  <!-- favicon / app icon: canonical 3-stack mark (bar 12, gap 4 — same ratio as the lockup) on a navy
+       rounded square → works on ANY background (light/dark tabs). -->
+  <rect width="64" height="64" rx="14" fill="#0E2A47"/>
+  <rect x="10" y="10" width="44" height="12" rx="3" fill="#ffffff"/>
+  <rect x="10" y="26" width="44" height="12" rx="3" fill="#7FB0E0"/>
+  <rect x="10" y="42" width="44" height="12" rx="3" fill="#37C2B4"/>
+</svg>

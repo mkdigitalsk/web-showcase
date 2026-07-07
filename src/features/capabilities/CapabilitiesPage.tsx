@@ -8,6 +8,7 @@ import {
   Button,
   ElevatedCard,
   Input,
+  PageContainer,
   TextBody1Neutral60,
   TextBody1Neutral80,
   TextH6Bold,
@@ -188,7 +189,7 @@ export function CapabilitiesPage() {
         : t('capabilities.notifications.statusDefault')
 
   return (
-    <Box sx={{ p: 2 }}>
+    <PageContainer>
       <Stack spacing={2}>
 
         <CapabilityCard
@@ -356,6 +357,6 @@ export function CapabilitiesPage() {
         </CapabilityCard>
 
       </Stack>
-    </Box>
+    </PageContainer>
   )
 }

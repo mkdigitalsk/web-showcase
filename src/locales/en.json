@@ -45,11 +45,12 @@
   "register.login": "Login",
 
   "home.logout": "Logout",
-  "home.accountSettings": "Account Settings",
   "home.theme": "Theme: {mode}",
   "home.theme.system": "System",
   "home.theme.light": "Light",
   "home.theme.dark": "Dark",
+
+  "app.version": "v{version}",
 
   "home.uiComponents.title": "UI Components",
   "home.networking.title": "Networking",

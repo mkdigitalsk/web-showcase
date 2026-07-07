@@ -1,6 +1,6 @@
 import { Add, Remove } from '@mui/icons-material'
 import { Box, IconButton, Stack } from '@mui/material'
-import { Button, ElevatedCard, TextBody1Neutral60, TextBody1Neutral80, TextH6Bold, TextH4BoldPrimary } from '../../shared/components'
+import { Button, ElevatedCard, PageContainer, TextBody1Neutral60, TextBody1Neutral80, TextH6Bold, TextH4BoldPrimary } from '../../shared/components'
 import { useLocalStorage, useSessionStorage, useTranslation } from '../../shared/hooks'
 import { StorageKey } from '../../shared/enums/storageKey'
 
@@ -10,7 +10,7 @@ export function StoragePage() {
   const [persistentCounter, setPersistentCounter] = usePersistentCounter()
 
   return (
-    <Box sx={{ p: 2 }}>
+    <PageContainer>
       <TextH4BoldPrimary sx={{ mb: 0.5 }}>{t('storage.title')}</TextH4BoldPrimary>
       <TextBody1Neutral60 sx={{ mb: 3 }}>{t('storage.subtitle')}</TextBody1Neutral60>
 
@@ -35,7 +35,7 @@ export function StoragePage() {
           {t('storage.clearSession')}
         </Button>
       </Stack>
-    </Box>
+    </PageContainer>
   )
 }
 

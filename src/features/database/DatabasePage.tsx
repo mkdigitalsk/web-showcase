@@ -7,6 +7,7 @@ import {
   ElevatedCard,
   Input,
   LoadingView,
+  PageContainer,
   TextBody1Neutral60,
   TextBody1Neutral80,
   TextH6Bold,
@@ -56,7 +57,7 @@ export function DatabasePage() {
   ];
 
   return (
-    <Box sx={{ p: 2 }}>
+    <PageContainer>
       <Stack spacing={2}>
         <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
           <Input
@@ -158,7 +159,7 @@ export function DatabasePage() {
           </Button>
         )}
       </Stack>
-    </Box>
+    </PageContainer>
   );
 }
 
