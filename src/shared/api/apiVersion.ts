@@ -5,4 +5,4 @@ export const ApiVersion = {
   CURRENT: 'v1',
 } as const
 
-export const API_PREFIX = `/api/${ApiVersion.CURRENT}` // -> /api/v1
+export const API_PREFIX = `/${ApiVersion.CURRENT}`
