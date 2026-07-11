@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   build:
-    name: Lint · Locales · Build
+    name: Lint · Locales · Test · Build
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     steps:
@@ -36,6 +36,9 @@ jobs:
 
       - name: Check locales
         run: npm run check-locales
+
+      - name: Unit tests
+        run: npm run test
 
       - name: Build (typecheck + bundle)
         run: npm run build
