@@ -5,18 +5,30 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { theme } from '../shared/theme'
 import { LocaleProvider } from '../shared/context/LocaleProvider'
+import { AuthProvider } from '../shared/context/AuthProvider'
 import { AuthContext, type AuthContextValue } from '../shared/context/AuthContext'
 
 type Options = Omit<RenderOptions, 'wrapper'> & {
   route?: string
   authValue?: AuthContextValue
+  // Wrap in the real AuthProvider so auth flows hit the network (MSW) — for integration tests.
+  useRealAuth?: boolean
 }
 
-export function renderWithProviders(ui: ReactElement, { route = '/', authValue, ...options }: Options = {}) {
+export function renderWithProviders(
+  ui: ReactElement,
+  { route = '/', authValue, useRealAuth, ...options }: Options = {},
+) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
 
   function Wrapper({ children }: { children: ReactNode }) {
-    const withAuth = authValue ? <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider> : children
+    const withAuth = useRealAuth ? (
+      <AuthProvider>{children}</AuthProvider>
+    ) : authValue ? (
+      <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
+    ) : (
+      children
+    )
     return (
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
