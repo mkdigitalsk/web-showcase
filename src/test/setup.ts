@@ -6,5 +6,6 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 afterEach(() => {
   server.resetHandlers()
   localStorage.clear()
+  sessionStorage.clear()
 })
 afterAll(() => server.close())

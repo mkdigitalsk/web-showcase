@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
-import { screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { renderWithProviders, fakeAuthValue } from '../../../test/renderWithProviders'
+import { Route, Routes } from 'react-router-dom'
+import { renderWithProviders, fakeAuthValue, screen, userEvent, server, http, HttpResponse } from '../../../test/test-utils'
 import { RegisterPage } from './RegisterPage'
 
 describe('RegisterPage', () => {
@@ -26,5 +25,36 @@ describe('RegisterPage', () => {
 
     expect(await screen.findByText('Password must be at least 6 characters')).toBeVisible()
     expect(register).not.toHaveBeenCalled()
+  })
+
+  it('registers and navigates to the app on valid input', async () => {
+    renderWithProviders(
+      <Routes>
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/ui-components" element={<div>UI Components Page</div>} />
+      </Routes>,
+      { route: '/register', useRealAuth: true },
+    )
+
+    await userEvent.type(screen.getByLabelText('Name'), 'Alice')
+    await userEvent.type(screen.getByLabelText('Email'), 'alice@mkdigital.sk')
+    await userEvent.type(screen.getByLabelText('Password'), 'strong-pass')
+    await userEvent.click(screen.getByRole('button', { name: 'Register' }))
+
+    expect(await screen.findByText('UI Components Page')).toBeVisible()
+    expect(localStorage.getItem('token')).toBe('fake.jwt.token')
+  })
+
+  it('surfaces an error when registration is rejected', async () => {
+    server.use(http.post('*/v1/auth/register', () => new HttpResponse(null, { status: 409 })))
+    renderWithProviders(<RegisterPage />, { route: '/register', useRealAuth: true })
+
+    await userEvent.type(screen.getByLabelText('Name'), 'Alice')
+    await userEvent.type(screen.getByLabelText('Email'), 'taken@mkdigital.sk')
+    await userEvent.type(screen.getByLabelText('Password'), 'strong-pass')
+    await userEvent.click(screen.getByRole('button', { name: 'Register' }))
+
+    expect(await screen.findByText('Registration failed. Please try again.')).toBeVisible()
+    expect(localStorage.getItem('token')).toBeNull()
   })
 })
