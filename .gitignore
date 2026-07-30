@@ -26,5 +26,3 @@ dist-ssr
 .vercel
 .env.local
 .env.*.local
-.claude/standards/
-.claude/.pre-commit-review-done
