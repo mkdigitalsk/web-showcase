@@ -15,15 +15,16 @@ describe('noteService', () => {
     const notes = await noteService.searchNotes('')
     expect(notes).toHaveLength(1)
     expect(notes[0]).toMatchObject({ title: 'Title', content: 'Body' })
-    expect(notes[0].createdAt).toBeGreaterThanOrEqual(before)
+    expect(notes[0]?.createdAt).toBeGreaterThanOrEqual(before)
   })
 
   it('filters case-insensitively across title and content', async () => {
     await noteService.addNote('Shopping', 'buy MILK')
     await noteService.addNote('Work', 'finish report')
 
-    expect(await noteService.searchNotes('milk')).toHaveLength(1)
-    expect((await noteService.searchNotes('milk'))[0].title).toBe('Shopping')
+    const milk = await noteService.searchNotes('milk')
+    expect(milk).toHaveLength(1)
+    expect(milk[0]?.title).toBe('Shopping')
     expect(await noteService.searchNotes('WORK')).toHaveLength(1)
     expect(await noteService.searchNotes('xyz')).toHaveLength(0)
   })
@@ -43,7 +44,7 @@ describe('noteService', () => {
 
     const notes = await noteService.searchNotes('')
     expect(notes).toHaveLength(1)
-    expect(notes[0].title).toBe('Keeper')
+    expect(notes[0]?.title).toBe('Keeper')
   })
 
   it('clears every note', async () => {

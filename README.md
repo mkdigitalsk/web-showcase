@@ -16,6 +16,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 <td style="width:50%">
 
 ### 🎨 UI & Components
+
 - MUI v9 + Material Design 3
 - Wrapper-component design system
 - Dark mode + theme toggle
@@ -25,6 +26,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 <td style="width:50%">
 
 ### 🔌 Data & Network
+
 - TanStack Query + Axios
 - Showcase API (`/v1`)
 - IndexedDB via Dexie
@@ -36,6 +38,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 <td style="width:50%">
 
 ### 📝 Forms & Validation
+
 - React Hook Form + Zod
 - i18n error messages
 - Type-safe schemas
@@ -44,6 +47,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 <td style="width:50%">
 
 ### 🌍 i18n & Theming
+
 - react-intl (en · sk · cs · de)
 - Enforced key parity
 - Server-synced locale per user
@@ -64,20 +68,20 @@ Brand colors come from the shared **[@mkdigitalsk/design-system](https://github.
 
 ## Run locally
 
-> To just *see* it, use the live demo above — no setup needed. To develop:
+> To just _see_ it, use the live demo above — no setup needed. To develop:
 
 ```bash
 npm install   # needs a GitHub Packages token for the private design-system (NODE_AUTH_TOKEN)
 npm run dev   # http://localhost:5173
 ```
 
-| script | does |
-|--------|------|
-| `npm run dev` | dev server (HMR) |
-| `npm run build` | type-check + production build |
-| `npm run preview` | serve the production build |
-| `npm run lint` | ESLint |
-| `npm run check-locales` | verify locale key parity |
+| script                  | does                          |
+| ----------------------- | ----------------------------- |
+| `npm run dev`           | dev server (HMR)              |
+| `npm run build`         | type-check + production build |
+| `npm run preview`       | serve the production build    |
+| `npm run lint`          | ESLint                        |
+| `npm run check-locales` | verify locale key parity      |
 
 ## Architecture
 

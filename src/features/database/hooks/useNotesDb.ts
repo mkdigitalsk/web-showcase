@@ -8,10 +8,14 @@ export type SortOption = 'DATE_DESC' | 'DATE_ASC' | 'TITLE_ASC' | 'TITLE_DESC'
 function sortNotes(notes: Note[], option: SortOption): Note[] {
   return [...notes].sort((a, b) => {
     switch (option) {
-      case 'DATE_DESC': return b.createdAt - a.createdAt
-      case 'DATE_ASC': return a.createdAt - b.createdAt
-      case 'TITLE_ASC': return a.title.localeCompare(b.title)
-      case 'TITLE_DESC': return b.title.localeCompare(a.title)
+      case 'DATE_DESC':
+        return b.createdAt - a.createdAt
+      case 'DATE_ASC':
+        return a.createdAt - b.createdAt
+      case 'TITLE_ASC':
+        return a.title.localeCompare(b.title)
+      case 'TITLE_DESC':
+        return b.title.localeCompare(a.title)
     }
   })
 }

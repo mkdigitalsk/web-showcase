@@ -11,7 +11,12 @@ export const handlers = [
 
   http.post(`${auth}/register`, () => HttpResponse.json(fakeAuthResponse())),
 
-  http.get(users, () => HttpResponse.json([fakeUser({ id: 1, name: 'Alice', email: 'alice@mkdigital.sk' }), fakeUser({ id: 2, name: 'Bob', email: 'bob@mkdigital.sk' })])),
+  http.get(users, () =>
+    HttpResponse.json([
+      fakeUser({ id: 1, name: 'Alice', email: 'alice@mkdigital.sk' }),
+      fakeUser({ id: 2, name: 'Bob', email: 'bob@mkdigital.sk' }),
+    ]),
+  ),
 
   http.put(`${users}/me/theme-mode`, async ({ request }) => {
     const { themeMode } = (await request.json()) as { themeMode: string }

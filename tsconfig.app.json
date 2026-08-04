@@ -5,6 +5,9 @@
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "isolatedModules": true,
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -15,9 +18,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    /* Unused locals and parameters are ESLint's, not the compiler's — it reports them as build failures
+       mid-edit, where the linter reports them where they belong. */
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },

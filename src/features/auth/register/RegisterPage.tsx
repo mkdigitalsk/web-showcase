@@ -85,9 +85,7 @@ export function RegisterPage() {
             )}
           />
 
-          {registerMutation.error && (
-            <AlertError sx={{ mt: 2 }}>{t('register.error')}</AlertError>
-          )}
+          {registerMutation.error && <AlertError sx={{ mt: 2 }}>{t('register.error')}</AlertError>}
 
           <Button type="submit" loading={registerMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
             {t('register.button')}
@@ -95,10 +93,7 @@ export function RegisterPage() {
         </Box>
 
         <TextBody1Neutral60 align="center" sx={{ mt: 3 }}>
-          {t('register.hasAccount')}{' '}
-          <TextLinkPrimary to="/login">
-            {t('register.login')}
-          </TextLinkPrimary>
+          {t('register.hasAccount')} <TextLinkPrimary to="/login">{t('register.login')}</TextLinkPrimary>
         </TextBody1Neutral60>
       </Box>
     </Container>

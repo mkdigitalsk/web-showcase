@@ -1,6 +1,14 @@
 import { Email, Refresh } from '@mui/icons-material'
 import { Box, CircularProgress, IconButton, Stack } from '@mui/material'
-import { AlertError, ElevatedCard, LoadingView, PageContainer, TextBody1Neutral60, TextBody1Neutral80, TextH6Bold } from '../../shared/components'
+import {
+  AlertError,
+  ElevatedCard,
+  LoadingView,
+  PageContainer,
+  TextBody1Neutral60,
+  TextBody1Neutral80,
+  TextH6Bold,
+} from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
 import { useGetUsersQuery } from './useGetUsersQuery'
 
@@ -17,9 +25,14 @@ export function NetworkingPage() {
     <PageContainer>
       {showLoading && <LoadingView />}
       {showError && (
-        <AlertError sx={{ mt: 2 }} action={
-          <IconButton size="small" onClick={() => void refetch()}>{t('common.retry')}</IconButton>
-        }>
+        <AlertError
+          sx={{ mt: 2 }}
+          action={
+            <IconButton size="small" onClick={() => void refetch()}>
+              {t('common.retry')}
+            </IconButton>
+          }
+        >
           {t('common.error')}
         </AlertError>
       )}

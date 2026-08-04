@@ -18,7 +18,9 @@ export function LocaleSwitcher() {
   return (
     <>
       <IconButton onClick={(e) => setAnchor(e.currentTarget)} size="small" aria-label={t('localeSwitcher.label')}>
-        <Box component="span" sx={{ fontSize: 20, lineHeight: 1 }}>{current?.flag}</Box>
+        <Box component="span" sx={{ fontSize: 20, lineHeight: 1 }}>
+          {current?.flag}
+        </Box>
       </IconButton>
 
       <Menu
@@ -30,7 +32,9 @@ export function LocaleSwitcher() {
       >
         {locales.map((option) => (
           <MenuItem key={option.code} selected={option.code === locale} onClick={() => handleSelect(option.code)}>
-            <Box component="span" sx={{ mr: 1.5, fontSize: 18 }}>{option.flag}</Box>
+            <Box component="span" sx={{ mr: 1.5, fontSize: 18 }}>
+              {option.flag}
+            </Box>
             {option.label}
             {option.code === locale && (
               <ListItemIcon sx={{ ml: 'auto', minWidth: 'auto' }}>

@@ -12,11 +12,6 @@ type FilterChipProps = Omit<MuiChipProps, 'variant' | 'color'> & {
 
 export function FilterChip({ selected, sx, ...props }: FilterChipProps) {
   return (
-    <MuiChip
-      variant={selected ? 'filled' : 'outlined'}
-      color={selected ? 'primary' : 'default'}
-      sx={sx}
-      {...props}
-    />
+    <MuiChip variant={selected ? 'filled' : 'outlined'} color={selected ? 'primary' : 'default'} sx={sx} {...props} />
   )
 }

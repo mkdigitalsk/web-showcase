@@ -36,7 +36,14 @@ export function Footer() {
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', columnGap: 2, rowGap: 0.5 }}>
         <TextCaption>© 2026 MK Digital s. r. o.</TextCaption>
         <TextCaption>{t('app.version', { version: __APP_VERSION__ })}</TextCaption>
-        <IconButton component="a" href={GITHUB} target="_blank" rel="noopener noreferrer" aria-label="GitHub" size="small">
+        <IconButton
+          component="a"
+          href={GITHUB}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          size="small"
+        >
           <GitHub fontSize="small" />
         </IconButton>
       </Box>

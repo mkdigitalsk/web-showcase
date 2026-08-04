@@ -13,22 +13,11 @@ const variantMap = {
   outline: { variant: 'outlined', color: 'primary' },
 } as const
 
-export function Button({
-  children,
-  variant = 'primary',
-  loading = false,
-  disabled,
-  ...props
-}: ButtonProps) {
+export function Button({ children, variant = 'primary', loading = false, disabled, ...props }: ButtonProps) {
   const muiVariant = variantMap[variant]
 
   return (
-    <MuiButton
-      variant={muiVariant.variant}
-      color={muiVariant.color}
-      disabled={disabled || loading}
-      {...props}
-    >
+    <MuiButton variant={muiVariant.variant} color={muiVariant.color} disabled={disabled || loading} {...props}>
       {loading ? 'Loading...' : children}
     </MuiButton>
   )

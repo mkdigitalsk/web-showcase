@@ -5,10 +5,7 @@ type LoadingViewProps = Omit<BoxProps, 'display' | 'justifyContent' | 'alignItem
 
 export function LoadingView({ sx, ...props }: LoadingViewProps) {
   return (
-    <Box
-      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', ...sx }}
-      {...props}
-    >
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', ...sx }} {...props}>
       <CircularProgress />
     </Box>
   )

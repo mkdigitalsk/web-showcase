@@ -15,9 +15,7 @@ interface UseNotificationResult {
  */
 export function useNotification(): UseNotificationResult {
   const isSupported = typeof window !== 'undefined' && 'Notification' in window
-  const [permission, setPermission] = useState<NotificationPermission>(
-    isSupported ? Notification.permission : 'denied',
-  )
+  const [permission, setPermission] = useState<NotificationPermission>(isSupported ? Notification.permission : 'denied')
 
   const notify = async (title: string, body?: string): Promise<NotifyOutcome> => {
     if (!isSupported) return 'unsupported'

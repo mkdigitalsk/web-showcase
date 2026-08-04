@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   build:
-    name: Lint · Locales · Test · Build
+    name: Format · Lint · Locales · Test · Build
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     steps:
@@ -30,6 +30,10 @@ jobs:
 
       - name: Install
         run: npm ci
+
+      # Lint cannot catch this — eslint-config-prettier disables every formatting rule.
+      - name: Format
+        run: npm run format:check
 
       - name: Lint
         run: npm run lint

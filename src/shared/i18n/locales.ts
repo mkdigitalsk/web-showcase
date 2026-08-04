@@ -26,6 +26,7 @@ export const MESSAGES: Record<string, Record<string, string>> = {
 
 export const DEFAULT_LOCALE: Locale = Locale.EN_GB
 
+// Not DEFAULT_LOCALE — that is the same open-key lookup and can miss in turn.
 export function messagesFor(locale: Locale): Record<string, string> {
-  return MESSAGES[locale] ?? MESSAGES[DEFAULT_LOCALE]
+  return MESSAGES[locale] ?? enMessages
 }

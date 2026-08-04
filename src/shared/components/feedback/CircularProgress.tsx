@@ -1,4 +1,7 @@
-import { CircularProgress as MuiCircularProgress, type CircularProgressProps as MuiCircularProgressProps } from '@mui/material'
+import {
+  CircularProgress as MuiCircularProgress,
+  type CircularProgressProps as MuiCircularProgressProps,
+} from '@mui/material'
 
 type CircularProgressProps = MuiCircularProgressProps
 

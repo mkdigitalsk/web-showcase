@@ -67,7 +67,6 @@ export function UiComponentsPage() {
   return (
     <PageContainer maxWidth={1200}>
       <Stack spacing={4}>
-
         <Section titleKey="uiComponents.typography">
           <Stack spacing={1}>
             <TextH4Bold>{t('uiComponents.typography.h4Bold')}</TextH4Bold>
@@ -188,7 +187,9 @@ export function UiComponentsPage() {
               ))}
             </Stack>
             <Box>
-              <TextBody1Neutral60 sx={{ mb: 1 }}>{t('uiComponents.forms.slider')}: {slider}</TextBody1Neutral60>
+              <TextBody1Neutral60 sx={{ mb: 1 }}>
+                {t('uiComponents.forms.slider')}: {slider}
+              </TextBody1Neutral60>
               <Slider value={slider} onChange={(_, v) => setSlider(v as number)} />
             </Box>
           </Stack>
@@ -234,7 +235,6 @@ export function UiComponentsPage() {
             <DividerPrimary />
           </Stack>
         </Section>
-
       </Stack>
     </PageContainer>
   )

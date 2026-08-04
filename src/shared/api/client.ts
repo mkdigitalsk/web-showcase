@@ -18,7 +18,7 @@ client.interceptors.request.use(
     }
     return config
   },
-  (error: AxiosError) => Promise.reject(error)
+  (error: AxiosError) => Promise.reject(error),
 )
 
 client.interceptors.response.use(
@@ -29,5 +29,5 @@ client.interceptors.response.use(
       window.location.href = Routes.LOGIN
     }
     return Promise.reject(error)
-  }
+  },
 )

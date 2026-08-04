@@ -1,4 +1,11 @@
-import { Dialog as MuiDialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material'
+import {
+  Dialog as MuiDialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from '@mui/material'
 
 type AlertDialogProps = {
   open: boolean
@@ -27,7 +34,9 @@ export function AlertDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={onDismiss}>{dismissText}</Button>
-        <Button onClick={onConfirm} autoFocus>{confirmText}</Button>
+        <Button onClick={onConfirm} autoFocus>
+          {confirmText}
+        </Button>
       </DialogActions>
     </MuiDialog>
   )
@@ -49,7 +58,9 @@ export function ConfirmDialog({ open, title, text, confirmText = 'OK', onConfirm
         <DialogContentText>{text}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onConfirm} autoFocus>{confirmText}</Button>
+        <Button onClick={onConfirm} autoFocus>
+          {confirmText}
+        </Button>
       </DialogActions>
     </MuiDialog>
   )

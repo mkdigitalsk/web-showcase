@@ -1,6 +1,14 @@
 import { describe, it, expect, vi } from 'vitest'
 import { Route, Routes } from 'react-router-dom'
-import { renderWithProviders, fakeAuthValue, screen, userEvent, server, http, HttpResponse } from '../../../test/test-utils'
+import {
+  renderWithProviders,
+  fakeAuthValue,
+  screen,
+  userEvent,
+  server,
+  http,
+  HttpResponse,
+} from '../../../test/test-utils'
 import { LoginPage } from './LoginPage'
 
 describe('LoginPage', () => {

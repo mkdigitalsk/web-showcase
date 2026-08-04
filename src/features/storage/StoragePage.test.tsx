@@ -2,12 +2,19 @@ import { describe, it, expect } from 'vitest'
 import { renderWithProviders, screen, userEvent } from '../../test/test-utils'
 import { StoragePage } from './StoragePage'
 
+// Says which card is missing instead of failing on `undefined` several lines later.
+function icon(name: string, index: number): HTMLElement {
+  const found = screen.getAllByTestId(name)[index]
+  if (!found) throw new Error(`no ${name} at index ${index} — the page rendered ${screen.getAllByTestId(name).length}`)
+  return found
+}
+
 // AddIcon[0]/RemoveIcon[0] belong to the Session card, [1] to the Persistent card (DOM order).
 describe('StoragePage', () => {
   it('increments the session counter and persists it to sessionStorage', async () => {
     renderWithProviders(<StoragePage />)
 
-    await userEvent.click(screen.getAllByTestId('AddIcon')[0])
+    await userEvent.click(icon('AddIcon', 0))
 
     expect(screen.getByText('1')).toBeVisible()
     expect(sessionStorage.getItem('storage.sessionCounter')).toBe('1')
@@ -16,7 +23,7 @@ describe('StoragePage', () => {
   it('increments the persistent counter and persists it to localStorage', async () => {
     renderWithProviders(<StoragePage />)
 
-    await userEvent.click(screen.getAllByTestId('AddIcon')[1])
+    await userEvent.click(icon('AddIcon', 1))
 
     expect(screen.getByText('1')).toBeVisible()
     expect(localStorage.getItem('storage.persistentCounter')).toBe('1')
@@ -25,7 +32,7 @@ describe('StoragePage', () => {
   it('decrements below zero', async () => {
     renderWithProviders(<StoragePage />)
 
-    await userEvent.click(screen.getAllByTestId('RemoveIcon')[0])
+    await userEvent.click(icon('RemoveIcon', 0))
 
     expect(screen.getByText('-1')).toBeVisible()
     expect(sessionStorage.getItem('storage.sessionCounter')).toBe('-1')
@@ -34,7 +41,7 @@ describe('StoragePage', () => {
   it('clears the session counter back to zero', async () => {
     renderWithProviders(<StoragePage />)
 
-    await userEvent.click(screen.getAllByTestId('AddIcon')[0])
+    await userEvent.click(icon('AddIcon', 0))
     expect(screen.getByText('1')).toBeVisible()
 
     await userEvent.click(screen.getByRole('button', { name: 'Clear Session' }))
