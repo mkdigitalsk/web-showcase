@@ -80,8 +80,19 @@ npm run dev   # http://localhost:5173
 | `npm run dev`           | dev server (HMR)              |
 | `npm run build`         | type-check + production build |
 | `npm run preview`       | serve the production build    |
+| `npm run format`        | Prettier, write               |
+| `npm run format:check`  | Prettier, verify (CI gates)   |
 | `npm run lint`          | ESLint                        |
 | `npm run check-locales` | verify locale key parity      |
+
+### The one advisory left open
+
+`npm audit --omit=dev` reports one high on `react-router`: [RSC Mode CSRF Bypass][rsc-csrf]. It does not
+reach this app — routing is `BrowserRouter` in the browser and no `@react-router/*` server package is
+installed, so there is no RSC mode to bypass. It is fixed only in react-router 8; npm's suggested fix
+downgrades to 7.11.0, which loses features for nothing.
+
+[rsc-csrf]: https://github.com/advisories/GHSA-qwww-vcr4-c8h2
 
 ## Architecture
 
