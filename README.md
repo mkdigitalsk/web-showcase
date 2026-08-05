@@ -6,6 +6,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-7-646CFF.svg?logo=vite&logoColor=white)](https://vite.dev)
 [![MUI](https://img.shields.io/badge/MUI-9-007FFF.svg?logo=mui&logoColor=white)](https://mui.com)
+[![CI](https://github.com/mkdigitalsk/web-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/mkdigitalsk/web-showcase/actions/workflows/ci.yml)
 
 > 🔗 **[View it live →](https://showcase.mkdigital.sk)** — it's a web app, just open it in a browser. No build, install, or device needed.
 
