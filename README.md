@@ -2,6 +2,7 @@
 
 A production-ready React web app showcasing modern frontend development with MUI, a wrapper-component design system, and the shared MK Digital brand tokens. The web counterpart of the [KMP mobile showcase](https://github.com/mkdigitalsk/kmp-showcase).
 
+[![CI](https://github.com/mkdigitalsk/web-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/mkdigitalsk/web-showcase/actions/workflows/ci.yml)
 [![React](https://img.shields.io/badge/React-19-61DAFB.svg?logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-7-646CFF.svg?logo=vite&logoColor=white)](https://vite.dev)
