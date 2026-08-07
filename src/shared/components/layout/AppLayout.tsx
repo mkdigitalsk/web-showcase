@@ -60,15 +60,14 @@ export function AppLayout() {
           </PanelResizeHandle>
 
           <Panel id="main" order={2}>
-            <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Outlet />
-              </Box>
-              <Footer />
+            <Box sx={{ height: '100%', overflow: 'auto' }}>
+              <Outlet />
             </Box>
           </Panel>
         </PanelGroup>
       </Box>
+
+      <Footer />
     </Box>
   )
 }
