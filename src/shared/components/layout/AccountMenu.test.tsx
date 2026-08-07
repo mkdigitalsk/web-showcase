@@ -31,7 +31,7 @@ describe('AccountMenu', () => {
     renderMenu({ logout })
 
     await userEvent.click(screen.getByRole('button'))
-    await userEvent.click(screen.getByRole('menuitem', { name: 'Logout' }))
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Sign Out' }))
 
     expect(logout).toHaveBeenCalledOnce()
     expect(await screen.findByText('Login Screen')).toBeVisible()

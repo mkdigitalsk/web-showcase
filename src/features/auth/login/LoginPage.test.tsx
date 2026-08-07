@@ -16,7 +16,7 @@ describe('LoginPage', () => {
     const login = vi.fn()
     renderWithProviders(<LoginPage />, { authValue: fakeAuthValue({ login }) })
 
-    await userEvent.click(screen.getByRole('button', { name: 'Login' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(await screen.findAllByText('This field is required')).toHaveLength(2)
     expect(login).not.toHaveBeenCalled()
@@ -43,7 +43,7 @@ describe('LoginPage', () => {
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'MKDigitalTest1@')
-    await userEvent.click(screen.getByRole('button', { name: 'Login' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(await screen.findByText('UI Components Page')).toBeVisible()
     expect(localStorage.getItem('token')).toBe('fake.jwt.token')
@@ -55,7 +55,7 @@ describe('LoginPage', () => {
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'wrong-password')
-    await userEvent.click(screen.getByRole('button', { name: 'Login' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(await screen.findByText('Invalid email or password')).toBeVisible()
     expect(localStorage.getItem('token')).toBeNull()
@@ -67,7 +67,7 @@ describe('LoginPage', () => {
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'MKDigitalTest1@')
-    await userEvent.click(screen.getByRole('button', { name: 'Login' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(await screen.findByText(/Can’t reach the server/)).toBeVisible()
     expect(screen.queryByText('Invalid email or password')).not.toBeInTheDocument()
