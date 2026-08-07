@@ -49,3 +49,8 @@ jobs:
 
       - name: Build (typecheck + bundle)
         run: npm run build
+        env:
+          # No env file is committed, so the build reads its URL from here. A variable rather than a
+          # secret: it is inlined into the bundle anyway, and masking it would only make an empty value
+          # harder to spot. This artifact gates a push and is never deployed — Vercel holds what ships.
+          API_URL: ${{ vars.API_URL }}

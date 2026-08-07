@@ -1,7 +1,9 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { Routes } from '../../utils'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+// Injected at build time from API_URL. Empty only in dev, where requests stay same-origin and the dev
+// server proxies them; a build without it fails in vite.config.ts rather than reaching here.
+const API_BASE_URL = __API_URL__
 
 export const client = axios.create({
   baseURL: API_BASE_URL,
