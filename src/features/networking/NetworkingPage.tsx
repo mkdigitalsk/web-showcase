@@ -47,7 +47,6 @@ export function NetworkingPage() {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Box>
               <TextH6Bold>{t('networking.title')}</TextH6Bold>
-              <TextBody1Neutral60>{t('networking.subtitle')}</TextBody1Neutral60>
             </Box>
             <IconButton onClick={() => void refetch()} disabled={isFetching}>
               {isFetching ? <CircularProgress size={20} /> : <Refresh />}

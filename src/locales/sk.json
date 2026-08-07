@@ -57,7 +57,6 @@
   "home.uiComponents.title": "UI komponenty",
   "home.networking.title": "Sieť",
   "networking.title": "Používatelia",
-  "networking.subtitle": "Načítané z lokálneho Ktor servera",
   "networking.empty": "Žiadni používatelia",
   "home.storage.title": "Úložisko",
   "home.database.title": "Databáza",

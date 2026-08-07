@@ -57,7 +57,6 @@
   "home.uiComponents.title": "UI-Komponenten",
   "home.networking.title": "Netzwerk",
   "networking.title": "Benutzer",
-  "networking.subtitle": "Vom lokalen Ktor-Server geladen",
   "networking.empty": "Keine Benutzer gefunden",
   "home.storage.title": "Speicher",
   "home.database.title": "Datenbank",
