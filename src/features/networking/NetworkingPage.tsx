@@ -10,11 +10,12 @@ import {
   TextH6Bold,
 } from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
+import { requestErrorKey } from '../../shared/api'
 import { useGetUsersQuery } from './useGetUsersQuery'
 
 export function NetworkingPage() {
   const { t } = useTranslation()
-  const { data: users, isLoading, isError, refetch, isFetching } = useGetUsersQuery()
+  const { data: users, isLoading, isError, error, refetch, isFetching } = useGetUsersQuery()
 
   const hasUsers = users && users.length > 0
   const showLoading = isLoading && !hasUsers
@@ -33,7 +34,7 @@ export function NetworkingPage() {
             </IconButton>
           }
         >
-          {t('common.error')}
+          {t(requestErrorKey(error, 'common.error'))}
         </AlertError>
       )}
       {showEmpty && (

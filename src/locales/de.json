@@ -3,6 +3,8 @@
 
   "common.loading": "Wird geladen...",
   "common.error": "Ein Fehler ist aufgetreten",
+  "errors.unreachable": "Server nicht erreichbar. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+  "errors.server": "Auf unserer Seite ist etwas schiefgelaufen. Versuchen Sie es gleich noch einmal.",
   "common.retry": "Erneut versuchen",
 
   "validation.required": "Dieses Feld ist erforderlich",

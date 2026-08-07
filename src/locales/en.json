@@ -3,6 +3,8 @@
 
   "common.loading": "Loading...",
   "common.error": "An error occurred",
+  "errors.unreachable": "Can’t reach the server. Check your connection and try again.",
+  "errors.server": "Something went wrong on our side. Try again shortly.",
   "common.retry": "Retry",
 
   "validation.required": "This field is required",

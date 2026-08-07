@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Container } from '@mui/material'
 import { Button, Input, TextH4Bold, TextBody1Neutral60, TextLinkPrimary, AlertError } from '../../../shared/components'
 import { useTranslation } from '../../../shared/hooks'
+import { requestErrorKey } from '../../../shared/api'
 import { useRegisterMutation } from './useRegisterMutation'
 import { registerSchema, type RegisterFormData } from '../schemas'
 
@@ -85,7 +86,9 @@ export function RegisterPage() {
             )}
           />
 
-          {registerMutation.error && <AlertError sx={{ mt: 2 }}>{t('register.error')}</AlertError>}
+          {registerMutation.error && (
+            <AlertError sx={{ mt: 2 }}>{t(requestErrorKey(registerMutation.error, 'register.error'))}</AlertError>
+          )}
 
           <Button type="submit" loading={registerMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
             {t('register.button')}

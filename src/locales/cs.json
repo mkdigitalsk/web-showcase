@@ -3,6 +3,8 @@
 
   "common.loading": "Načítání...",
   "common.error": "Došlo k chybě",
+  "errors.unreachable": "Server je nedostupný. Zkontrolujte připojení a zkuste to znovu.",
+  "errors.server": "Nastala chyba na naší straně. Zkuste to za chvíli.",
   "common.retry": "Zkusit znovu",
 
   "validation.required": "Toto pole je povinné",

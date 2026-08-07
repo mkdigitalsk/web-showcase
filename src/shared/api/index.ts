@@ -4,6 +4,7 @@ import { UserApi } from './UserApi'
 
 export { client } from './client'
 export { BaseApiService } from './BaseApiService'
+export { httpStatus, requestErrorKey } from './requestError'
 export { AuthApi } from './AuthApi'
 export { UserApi } from './UserApi'
 

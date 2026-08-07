@@ -11,11 +11,13 @@ import {
   AlertError,
 } from '../../../shared/components'
 import { useTranslation } from '../../../shared/hooks'
+import { httpStatus, requestErrorKey } from '../../../shared/api'
 import { useLoginMutation } from './useLoginMutation'
 import { loginSchema, type LoginFormData } from '../schemas'
 
 const TEST_EMAIL = 'test01@mkdigital.sk'
 const TEST_PASSWORD = 'MKDigitalTest1@'
+const HTTP_UNAUTHORIZED = 401
 
 export function LoginPage() {
   const { t } = useTranslation()
@@ -83,7 +85,15 @@ export function LoginPage() {
             )}
           />
 
-          {loginMutation.error && <AlertError sx={{ mt: 2 }}>{t('login.error')}</AlertError>}
+          {loginMutation.error && (
+            <AlertError sx={{ mt: 2 }}>
+              {t(
+                httpStatus(loginMutation.error) === HTTP_UNAUTHORIZED
+                  ? 'login.error'
+                  : requestErrorKey(loginMutation.error, 'common.error'),
+              )}
+            </AlertError>
+          )}
 
           <Button type="submit" loading={loginMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
             {t('login.button')}

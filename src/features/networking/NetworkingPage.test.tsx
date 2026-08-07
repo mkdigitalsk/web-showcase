@@ -14,7 +14,7 @@ describe('NetworkingPage', () => {
     server.use(http.get('*/v1/users', () => new HttpResponse(null, { status: 500 })))
     renderWithProviders(<NetworkingPage />)
 
-    expect(await screen.findByText('An error occurred')).toBeVisible()
+    expect(await screen.findByText(/Something went wrong on our side/)).toBeVisible()
     expect(screen.getByRole('button', { name: 'Retry' })).toBeVisible()
   })
 })

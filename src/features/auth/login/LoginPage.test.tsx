@@ -60,4 +60,16 @@ describe('LoginPage', () => {
     expect(await screen.findByText('Invalid email or password')).toBeVisible()
     expect(localStorage.getItem('token')).toBeNull()
   })
+
+  it('separates an unreachable server from a rejected credential', async () => {
+    server.use(http.post('*/v1/auth/login', () => HttpResponse.error()))
+    renderWithProviders(<LoginPage />, { route: '/login', useRealAuth: true })
+
+    await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
+    await userEvent.type(screen.getByLabelText('Password'), 'MKDigitalTest1@')
+    await userEvent.click(screen.getByRole('button', { name: 'Login' }))
+
+    expect(await screen.findByText(/Can’t reach the server/)).toBeVisible()
+    expect(screen.queryByText('Invalid email or password')).not.toBeInTheDocument()
+  })
 })
