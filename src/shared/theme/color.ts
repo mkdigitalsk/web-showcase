@@ -6,10 +6,10 @@ export { Brand }
 
 export const Light = {
   ...DsLight,
-  stack: [Brand.navy, Brand.blue, Brand.teal] as readonly string[],
+  stack: [Brand.navy, Brand.blue, Brand.teal] as const,
 }
 
 export const Dark = {
   ...DsDark,
-  stack: [Brand.white, Brand.blueLight, Brand.teal] as readonly string[],
+  stack: [Brand.white, Brand.blueLight, Brand.teal] as const,
 }

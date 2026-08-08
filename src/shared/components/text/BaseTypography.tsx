@@ -1,4 +1,4 @@
-import { Typography, type SxProps, type TypographyProps } from '@mui/material'
+import { Typography, type TypographyProps } from '@mui/material'
 import { type TextInternalProps } from './types'
 
 interface BaseTypographyProps extends TextInternalProps {
@@ -6,5 +6,5 @@ interface BaseTypographyProps extends TextInternalProps {
 }
 
 export function BaseTypography({ variant, internalSx, sx, ...props }: BaseTypographyProps) {
-  return <Typography variant={variant} sx={{ ...internalSx, ...sx } as SxProps} {...props} />
+  return <Typography variant={variant} sx={{ ...internalSx, ...sx }} {...props} />
 }

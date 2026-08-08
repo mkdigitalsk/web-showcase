@@ -34,7 +34,11 @@ export function RegisterPage() {
           {t('register.title')}
         </TextH4Bold>
 
-        <Box component="form" onSubmit={handleSubmit((data) => registerMutation.mutate(data))} sx={{ mt: 4 }}>
+        <Box
+          component="form"
+          onSubmit={(event) => void handleSubmit((data) => registerMutation.mutate(data))(event)}
+          sx={{ mt: 4 }}
+        >
           <Controller
             name="name"
             control={control}

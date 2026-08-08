@@ -53,7 +53,7 @@ describe('CapabilitiesPage', () => {
     const notificationCtor = vi.fn()
     class MockNotification {
       static permission: NotificationPermission = 'granted'
-      static requestPermission = vi.fn().mockResolvedValue('granted' as NotificationPermission)
+      static requestPermission = vi.fn().mockResolvedValue('granted')
       constructor(title: string, options?: NotificationOptions) {
         notificationCtor(title, options)
       }

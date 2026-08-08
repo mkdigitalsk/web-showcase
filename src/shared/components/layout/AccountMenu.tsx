@@ -29,7 +29,7 @@ export function AccountMenu() {
   const handleLogout = async () => {
     setAnchor(null)
     await logout()
-    navigate(Routes.LOGIN)
+    await navigate(Routes.LOGIN)
   }
 
   const handleSelectMode = (next: ThemeMode) => {

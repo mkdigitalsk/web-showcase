@@ -22,7 +22,8 @@ export function Logo({ variant = 'wordmark', height = 28, onDark = false, sx }: 
   const uid = useId().replace(/:/g, '')
   const isMark = variant === 'mark'
   const isLockup = variant === 'lockup'
-  const sxArray = Array.isArray(sx) ? sx : [sx]
+  // Array.isArray widens the union to any[]; the annotation restores the element type.
+  const sxArray: Extract<SxProps<Theme>, readonly unknown[]> = Array.isArray(sx) ? sx : sx ? [sx] : []
 
   const scheme = onDark
     ? [{ '--s0': Dark.stack[0], '--s1': Dark.stack[1], '--tl': Brand.teal }]

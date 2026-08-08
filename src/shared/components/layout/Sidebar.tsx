@@ -57,7 +57,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             <Tooltip key={item.route} title={collapsed ? t(item.titleKey) : ''} placement="right">
               <ListItemButton
                 selected={isActive}
-                onClick={() => navigate(item.route)}
+                onClick={() => void navigate(item.route)}
                 sx={{ justifyContent: collapsed ? 'center' : 'flex-start', px: collapsed ? 0 : 2 }}
               >
                 <ListItemIcon sx={{ minWidth: collapsed ? 0 : 40, justifyContent: 'center' }}>

@@ -1,19 +1,34 @@
 import { useColorScheme } from '@mui/material/styles'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
+import { z } from 'zod'
 import type { AuthUser, ThemeMode } from '../types'
 import { authService, userService } from '../services'
 import { useLocale } from '../hooks/useLocale'
 import { DEFAULT_LOCALE } from '../i18n/locales'
 import { AuthContext, type AuthContextValue } from './AuthContext'
 
+// Another tab or a stale release can leave anything under this key.
+const storedUserSchema = z.object({
+  id: z.number(),
+  email: z.string(),
+  name: z.string(),
+  themeMode: z.enum(['system', 'light', 'dark']),
+  locale: z.string(),
+}) satisfies z.ZodType<AuthUser>
+
 function getStoredUser(): AuthUser | null {
   const token = localStorage.getItem('token')
   const storedUser = localStorage.getItem('user')
-  if (token && storedUser) {
-    return JSON.parse(storedUser)
+  if (!token || !storedUser) return null
+
+  try {
+    const raw: unknown = JSON.parse(storedUser)
+    const parsed = storedUserSchema.safeParse(raw)
+    return parsed.success ? parsed.data : null
+  } catch {
+    return null
   }
-  return null
 }
 
 interface AuthProviderProps {

@@ -50,7 +50,11 @@ export function LoginPage() {
           {t('login.title')}
         </TextH4Bold>
 
-        <Box component="form" onSubmit={handleSubmit((data) => loginMutation.mutate(data))} sx={{ mt: 4 }}>
+        <Box
+          component="form"
+          onSubmit={(event) => void handleSubmit((data) => loginMutation.mutate(data))(event)}
+          sx={{ mt: 4 }}
+        >
           <Controller
             name="email"
             control={control}
