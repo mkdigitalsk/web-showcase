@@ -54,3 +54,14 @@ jobs:
           # secret: it is inlined into the bundle anyway, and masking it would only make an empty value
           # harder to spot. This artifact gates a push and is never deployed — Vercel holds what ships.
           API_URL: ${{ vars.API_URL }}
+
+      # CI gates main, Vercel deploys production. A promote that never happens is invisible until the
+      # live site turns out to be stale, so count the gap here rather than discover it in the bundle.
+      - name: Report unreleased commits
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ahead=$(gh api "repos/${{ github.repository }}/compare/production...main" --jq .ahead_by)
+          echo "**${ahead}** commit(s) on \`main\` not yet released to \`production\`" >> "$GITHUB_STEP_SUMMARY"
