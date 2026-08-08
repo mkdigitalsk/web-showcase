@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import '@fontsource/inter/300.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
@@ -12,16 +12,8 @@ import '@fontsource/plus-jakarta-sans/600.css'
 import '@fontsource/plus-jakarta-sans/800.css'
 
 import { theme } from './shared/theme'
-import { AppLayout, PrivateRoute } from './shared/components'
 import { AuthProvider, LocaleProvider } from './shared/context'
-import { LoginPage } from './features/auth/login/LoginPage'
-import { RegisterPage } from './features/auth/register/RegisterPage'
-import { NetworkingPage } from './features/networking/NetworkingPage'
-import { StoragePage } from './features/storage/StoragePage'
-import { DatabasePage } from './features/database/DatabasePage'
-import { UiComponentsPage } from './features/ui-components/UiComponentsPage'
-import { CapabilitiesPage } from './features/capabilities/CapabilitiesPage'
-import { Routes as AppRoutes } from './utils'
+import { AppRouter } from './AppRouter'
 import './index.css'
 
 const queryClient = new QueryClient()
@@ -34,20 +26,7 @@ createRoot(document.getElementById('root')!).render(
         <LocaleProvider>
           <AuthProvider>
             <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Navigate to={AppRoutes.UI_COMPONENTS} replace />} />
-                <Route path={AppRoutes.LOGIN} element={<LoginPage />} />
-                <Route path={AppRoutes.REGISTER} element={<RegisterPage />} />
-                <Route element={<PrivateRoute />}>
-                  <Route element={<AppLayout />}>
-                    <Route path={AppRoutes.NETWORKING} element={<NetworkingPage />} />
-                    <Route path={AppRoutes.STORAGE} element={<StoragePage />} />
-                    <Route path={AppRoutes.DATABASE} element={<DatabasePage />} />
-                    <Route path={AppRoutes.UI_COMPONENTS} element={<UiComponentsPage />} />
-                    <Route path={AppRoutes.CAPABILITIES} element={<CapabilitiesPage />} />
-                  </Route>
-                </Route>
-              </Routes>
+              <AppRouter />
             </BrowserRouter>
           </AuthProvider>
         </LocaleProvider>
