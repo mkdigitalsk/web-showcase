@@ -14,7 +14,6 @@ export function SignUpPage() {
   const { control, handleSubmit } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      name: '',
       email: '',
       password: '',
     },
@@ -39,23 +38,6 @@ export function SignUpPage() {
           onSubmit={(event) => void handleSubmit((data) => signUpMutation.mutate(data))(event)}
           sx={{ mt: 4 }}
         >
-          <Controller
-            name="name"
-            control={control}
-            render={({ field, fieldState: { error } }) => (
-              <Input
-                {...field}
-                label={t('signUp.nameLabel')}
-                type="text"
-                placeholder={t('signUp.namePlaceholder')}
-                error={!!error}
-                helperText={error?.message && t(`validation.${error.message}`)}
-                margin="normal"
-                fullWidth
-              />
-            )}
-          />
-
           <Controller
             name="email"
             control={control}

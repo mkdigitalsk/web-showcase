@@ -8,13 +8,11 @@ export interface SignInRequest {
 export interface SignUpRequest {
   email: string
   password: string
-  name: string
 }
 
 export interface AuthUser {
   id: number
   email: string
-  name: string
   themeMode: ThemeMode
   locale: string
 }

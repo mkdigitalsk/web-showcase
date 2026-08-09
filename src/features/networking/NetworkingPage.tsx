@@ -56,7 +56,6 @@ export function NetworkingPage() {
           <Stack spacing={2}>
             {users.map((user) => (
               <ElevatedCard key={user.id} sx={{ p: 2 }}>
-                <TextH6Bold sx={{ mb: 1 }}>{user.name}</TextH6Bold>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Email fontSize="small" color="primary" />
                   <TextBody1Neutral80>{user.email}</TextBody1Neutral80>

@@ -18,15 +18,13 @@ describe('SignUpPage', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
 
-    expect(await screen.findAllByText('This field is required')).toHaveLength(2)
+    expect(await screen.findAllByText('This field is required')).toHaveLength(1)
     expect(signUp).not.toHaveBeenCalled()
   })
 
   it('rejects a password shorter than six characters', async () => {
     const signUp = vi.fn()
     renderWithProviders(<SignUpPage />, { authValue: fakeAuthValue({ signUp }) })
-
-    await userEvent.type(screen.getByLabelText('Name'), 'Alice')
     await userEvent.type(screen.getByLabelText('Email'), 'alice@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), '123')
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
@@ -43,8 +41,6 @@ describe('SignUpPage', () => {
       </Routes>,
       { route: '/signUp', useRealAuth: true },
     )
-
-    await userEvent.type(screen.getByLabelText('Name'), 'Alice')
     await userEvent.type(screen.getByLabelText('Email'), 'alice@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'strong-pass')
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
@@ -56,8 +52,6 @@ describe('SignUpPage', () => {
   it('surfaces an error when sign-up is rejected', async () => {
     server.use(http.post('*/v1/auth/sign-up', () => new HttpResponse(null, { status: 409 })))
     renderWithProviders(<SignUpPage />, { route: '/signUp', useRealAuth: true })
-
-    await userEvent.type(screen.getByLabelText('Name'), 'Alice')
     await userEvent.type(screen.getByLabelText('Email'), 'taken@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'strong-pass')
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))

@@ -7,7 +7,7 @@ import { useAuth, useTranslation } from '../../hooks'
 import type { ThemeMode } from '../../types'
 import { Routes } from '../../../utils'
 import { Divider } from '../dividers'
-import { TextBody1Neutral60, TextBody1Neutral80 } from '../text'
+import { TextBody1Neutral80 } from '../text'
 
 const THEME_MODES: ThemeMode[] = ['system', 'light', 'dark']
 
@@ -19,12 +19,8 @@ export function AccountMenu() {
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const [themeAnchor, setThemeAnchor] = useState<HTMLElement | null>(null)
 
-  const initials = user?.name
-    ?.split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
+  // No name is collected, so the address is all there is to initial.
+  const initials = user?.email.slice(0, 2).toUpperCase()
 
   const handleSignOut = async () => {
     setAnchor(null)
@@ -52,8 +48,7 @@ export function AccountMenu() {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Box sx={{ px: 2, py: 1, minWidth: 200 }}>
-          <TextBody1Neutral80 noWrap>{user?.name}</TextBody1Neutral80>
-          <TextBody1Neutral60 noWrap>{user?.email}</TextBody1Neutral60>
+          <TextBody1Neutral80 noWrap>{user?.email}</TextBody1Neutral80>
         </Box>
         <Divider />
         <MenuItem onClick={(e) => setThemeAnchor(e.currentTarget)}>

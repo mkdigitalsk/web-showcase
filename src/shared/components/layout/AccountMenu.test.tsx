@@ -11,7 +11,7 @@ function renderMenu(overrides: Parameters<typeof fakeAuthValue>[0]) {
     </Routes>,
     {
       authValue: fakeAuthValue({
-        user: fakeAuthUser({ name: 'Test One', email: 'test01@mkdigital.sk' }),
+        user: fakeAuthUser({ email: 'test01@mkdigital.sk' }),
         isAuthenticated: true,
         ...overrides,
       }),
@@ -23,7 +23,7 @@ describe('AccountMenu', () => {
   it('shows the user initials on the avatar', () => {
     renderMenu({})
 
-    expect(screen.getByText('TO')).toBeVisible()
+    expect(screen.getByText('TE')).toBeVisible()
   })
 
   it('logs out and navigates to the signIn screen', async () => {

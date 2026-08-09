@@ -12,7 +12,6 @@ import { AuthContext, type AuthContextValue } from './AuthContext'
 const storedUserSchema = z.object({
   id: z.number(),
   email: z.string(),
-  name: z.string(),
   themeMode: z.enum(['system', 'light', 'dark']),
   locale: z.string(),
 }) satisfies z.ZodType<AuthUser>

@@ -6,7 +6,7 @@ describe('NetworkingPage', () => {
   it('renders the users fetched from the API', async () => {
     renderWithProviders(<NetworkingPage />)
 
-    expect(await screen.findByText('Alice')).toBeVisible()
+    expect(await screen.findByText('alice@mkdigital.sk')).toBeVisible()
     expect(screen.getByText('bob@mkdigital.sk')).toBeVisible()
   })
 

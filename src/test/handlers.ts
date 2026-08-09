@@ -13,8 +13,8 @@ export const handlers = [
 
   http.get(users, () =>
     HttpResponse.json([
-      fakeUser({ id: 1, name: 'Alice', email: 'alice@mkdigital.sk' }),
-      fakeUser({ id: 2, name: 'Bob', email: 'bob@mkdigital.sk' }),
+      fakeUser({ id: 1, email: 'alice@mkdigital.sk' }),
+      fakeUser({ id: 2, email: 'bob@mkdigital.sk' }),
     ]),
   ),
 

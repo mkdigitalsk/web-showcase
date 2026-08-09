@@ -20,7 +20,7 @@ describe('signInSchema', () => {
 
 describe('signUpSchema', () => {
   it('rejects a password shorter than six characters', () => {
-    const result = signUpSchema.safeParse({ name: 'Al', email: 'a@b.com', password: '123' })
+    const result = signUpSchema.safeParse({ email: 'a@b.com', password: '123' })
     expect(result.success).toBe(false)
     expect(result.error?.issues[0]?.message).toBe('passwordTooShort')
   })
