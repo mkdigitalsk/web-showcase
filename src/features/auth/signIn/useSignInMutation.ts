@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../shared/hooks'
 import { Routes } from '../../../utils'
 
-export function useLoginMutation() {
+export function useSignInMutation() {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { signIn } = useAuth()
 
   return useMutation({
-    mutationFn: login,
+    mutationFn: signIn,
     onSuccess: () => navigate(Routes.UI_COMPONENTS),
   })
 }

@@ -7,7 +7,7 @@ function renderMenu(overrides: Parameters<typeof fakeAuthValue>[0]) {
   return renderWithProviders(
     <Routes>
       <Route path="/" element={<AccountMenu />} />
-      <Route path="/login" element={<div>Login Screen</div>} />
+      <Route path="/sign-in" element={<div>SignIn Screen</div>} />
     </Routes>,
     {
       authValue: fakeAuthValue({
@@ -26,15 +26,15 @@ describe('AccountMenu', () => {
     expect(screen.getByText('TO')).toBeVisible()
   })
 
-  it('logs out and navigates to the login screen', async () => {
-    const logout = vi.fn().mockResolvedValue(undefined)
-    renderMenu({ logout })
+  it('logs out and navigates to the signIn screen', async () => {
+    const signOut = vi.fn().mockResolvedValue(undefined)
+    renderMenu({ signOut })
 
     await userEvent.click(screen.getByRole('button'))
     await userEvent.click(screen.getByRole('menuitem', { name: 'Sign Out' }))
 
-    expect(logout).toHaveBeenCalledOnce()
-    expect(await screen.findByText('Login Screen')).toBeVisible()
+    expect(signOut).toHaveBeenCalledOnce()
+    expect(await screen.findByText('SignIn Screen')).toBeVisible()
   })
 
   it('updates the theme mode from the theme submenu', async () => {

@@ -4,15 +4,15 @@ import { Box, Container } from '@mui/material'
 import { Button, Input, TextH4Bold, TextBody1Neutral60, TextLinkPrimary, AlertError } from '../../../shared/components'
 import { useTranslation } from '../../../shared/hooks'
 import { requestErrorKey } from '../../../shared/api'
-import { useRegisterMutation } from './useRegisterMutation'
-import { registerSchema, type RegisterFormData } from '../schemas'
+import { useSignUpMutation } from './useSignUpMutation'
+import { signUpSchema, type SignUpFormData } from '../schemas'
 
-export function RegisterPage() {
+export function SignUpPage() {
   const { t } = useTranslation()
-  const registerMutation = useRegisterMutation()
+  const signUpMutation = useSignUpMutation()
 
-  const { control, handleSubmit } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
+  const { control, handleSubmit } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -31,12 +31,12 @@ export function RegisterPage() {
         }}
       >
         <TextH4Bold align="center" gutterBottom>
-          {t('register.title')}
+          {t('signUp.title')}
         </TextH4Bold>
 
         <Box
           component="form"
-          onSubmit={(event) => void handleSubmit((data) => registerMutation.mutate(data))(event)}
+          onSubmit={(event) => void handleSubmit((data) => signUpMutation.mutate(data))(event)}
           sx={{ mt: 4 }}
         >
           <Controller
@@ -45,9 +45,9 @@ export function RegisterPage() {
             render={({ field, fieldState: { error } }) => (
               <Input
                 {...field}
-                label={t('register.nameLabel')}
+                label={t('signUp.nameLabel')}
                 type="text"
-                placeholder={t('register.namePlaceholder')}
+                placeholder={t('signUp.namePlaceholder')}
                 error={!!error}
                 helperText={error?.message && t(`validation.${error.message}`)}
                 margin="normal"
@@ -62,9 +62,9 @@ export function RegisterPage() {
             render={({ field, fieldState: { error } }) => (
               <Input
                 {...field}
-                label={t('register.emailLabel')}
+                label={t('signUp.emailLabel')}
                 type="email"
-                placeholder={t('register.emailPlaceholder')}
+                placeholder={t('signUp.emailPlaceholder')}
                 error={!!error}
                 helperText={error?.message && t(`validation.${error.message}`)}
                 margin="normal"
@@ -79,9 +79,9 @@ export function RegisterPage() {
             render={({ field, fieldState: { error } }) => (
               <Input
                 {...field}
-                label={t('register.passwordLabel')}
+                label={t('signUp.passwordLabel')}
                 type="password"
-                placeholder={t('register.passwordPlaceholder')}
+                placeholder={t('signUp.passwordPlaceholder')}
                 error={!!error}
                 helperText={error?.message && t(`validation.${error.message}`)}
                 margin="normal"
@@ -90,17 +90,17 @@ export function RegisterPage() {
             )}
           />
 
-          {registerMutation.error && (
-            <AlertError sx={{ mt: 2 }}>{t(requestErrorKey(registerMutation.error, 'register.error'))}</AlertError>
+          {signUpMutation.error && (
+            <AlertError sx={{ mt: 2 }}>{t(requestErrorKey(signUpMutation.error, 'signUp.error'))}</AlertError>
           )}
 
-          <Button type="submit" loading={registerMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
-            {t('register.button')}
+          <Button type="submit" loading={signUpMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
+            {t('signUp.button')}
           </Button>
         </Box>
 
         <TextBody1Neutral60 align="center" sx={{ mt: 3 }}>
-          {t('register.hasAccount')} <TextLinkPrimary to="/login">{t('register.login')}</TextLinkPrimary>
+          {t('signUp.hasAccount')} <TextLinkPrimary to="/signIn">{t('signUp.signIn')}</TextLinkPrimary>
         </TextBody1Neutral60>
       </Box>
     </Container>

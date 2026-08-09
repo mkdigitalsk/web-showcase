@@ -1,12 +1,12 @@
 import { authApi } from '../api'
-import type { LoginRequest, RegisterRequest } from '../types'
+import type { SignInRequest, SignUpRequest } from '../types'
 
 export const authService = {
-  login: (credentials: LoginRequest) => authApi.login(credentials),
+  signIn: (credentials: SignInRequest) => authApi.signIn(credentials),
 
-  register: (data: RegisterRequest) => authApi.register(data),
+  signUp: (data: SignUpRequest) => authApi.signUp(data),
 
-  logout: (): Promise<void> => {
+  signOut: (): Promise<void> => {
     localStorage.removeItem('token')
     return Promise.resolve()
   },

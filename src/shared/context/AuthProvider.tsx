@@ -40,8 +40,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const { setMode } = useColorScheme()
   const { setLocale } = useLocale()
 
-  const login = async (credentials: Parameters<typeof authService.login>[0]) => {
-    const response = await authService.login(credentials)
+  const signIn = async (credentials: Parameters<typeof authService.signIn>[0]) => {
+    const response = await authService.signIn(credentials)
     localStorage.setItem('token', response.token)
     localStorage.setItem('user', JSON.stringify(response.user))
     setUser(response.user)
@@ -49,8 +49,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setLocale(response.user.locale)
   }
 
-  const register = async (data: Parameters<typeof authService.register>[0]) => {
-    const response = await authService.register(data)
+  const signUp = async (data: Parameters<typeof authService.signUp>[0]) => {
+    const response = await authService.signUp(data)
     localStorage.setItem('token', response.token)
     localStorage.setItem('user', JSON.stringify(response.user))
     setUser(response.user)
@@ -58,8 +58,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setLocale(response.user.locale)
   }
 
-  const logout = async () => {
-    await authService.logout()
+  const signOut = async () => {
+    await authService.signOut()
     localStorage.removeItem('user')
     setUser(null)
     setMode('system')
@@ -92,9 +92,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     user,
     isLoading: false,
     isAuthenticated: !!user,
-    login,
-    register,
-    logout,
+    signIn,
+    signUp,
+    signOut,
     updateThemeMode,
     updateLocale,
   }

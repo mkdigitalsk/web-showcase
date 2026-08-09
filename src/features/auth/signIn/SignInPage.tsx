@@ -12,19 +12,19 @@ import {
 } from '../../../shared/components'
 import { useTranslation } from '../../../shared/hooks'
 import { httpStatus, requestErrorKey } from '../../../shared/api'
-import { useLoginMutation } from './useLoginMutation'
-import { loginSchema, type LoginFormData } from '../schemas'
+import { useSignInMutation } from './useSignInMutation'
+import { signInSchema, type SignInFormData } from '../schemas'
 
 const TEST_EMAIL = 'test01@mkdigital.sk'
 const TEST_PASSWORD = 'MKDigitalTest1@'
 const HTTP_UNAUTHORIZED = 401
 
-export function LoginPage() {
+export function SignInPage() {
   const { t } = useTranslation()
-  const loginMutation = useLoginMutation()
+  const signInMutation = useSignInMutation()
 
-  const { control, handleSubmit, setValue } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  const { control, handleSubmit, setValue } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -47,12 +47,12 @@ export function LoginPage() {
         }}
       >
         <TextH4Bold align="center" gutterBottom>
-          {t('login.title')}
+          {t('signIn.title')}
         </TextH4Bold>
 
         <Box
           component="form"
-          onSubmit={(event) => void handleSubmit((data) => loginMutation.mutate(data))(event)}
+          onSubmit={(event) => void handleSubmit((data) => signInMutation.mutate(data))(event)}
           sx={{ mt: 4 }}
         >
           <Controller
@@ -61,9 +61,9 @@ export function LoginPage() {
             render={({ field, fieldState: { error } }) => (
               <Input
                 {...field}
-                label={t('login.emailLabel')}
+                label={t('signIn.emailLabel')}
                 type="email"
-                placeholder={t('login.emailPlaceholder')}
+                placeholder={t('signIn.emailPlaceholder')}
                 error={!!error}
                 helperText={error?.message && t(`validation.${error.message}`)}
                 margin="normal"
@@ -78,9 +78,9 @@ export function LoginPage() {
             render={({ field, fieldState: { error } }) => (
               <Input
                 {...field}
-                label={t('login.passwordLabel')}
+                label={t('signIn.passwordLabel')}
                 type="password"
-                placeholder={t('login.passwordPlaceholder')}
+                placeholder={t('signIn.passwordPlaceholder')}
                 error={!!error}
                 helperText={error?.message && t(`validation.${error.message}`)}
                 margin="normal"
@@ -89,32 +89,32 @@ export function LoginPage() {
             )}
           />
 
-          {loginMutation.error && (
+          {signInMutation.error && (
             <AlertError sx={{ mt: 2 }}>
               {t(
-                httpStatus(loginMutation.error) === HTTP_UNAUTHORIZED
-                  ? 'login.error'
-                  : requestErrorKey(loginMutation.error, 'common.error'),
+                httpStatus(signInMutation.error) === HTTP_UNAUTHORIZED
+                  ? 'signIn.error'
+                  : requestErrorKey(signInMutation.error, 'common.error'),
               )}
             </AlertError>
           )}
 
-          <Button type="submit" loading={loginMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
-            {t('login.button')}
+          <Button type="submit" loading={signInMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
+            {t('signIn.button')}
           </Button>
         </Box>
 
         <Box sx={{ mt: 4, p: 2, bgcolor: 'action.hover', borderRadius: 2, textAlign: 'center' }}>
-          <TextBody1Neutral60>{t('login.testAccount.hint')}</TextBody1Neutral60>
+          <TextBody1Neutral60>{t('signIn.testAccount.hint')}</TextBody1Neutral60>
           <TextBody1Neutral80 sx={{ mt: 1 }}>{TEST_EMAIL}</TextBody1Neutral80>
           <TextBody1Neutral80>{TEST_PASSWORD}</TextBody1Neutral80>
           <Button type="button" variant="outline" onClick={fillTestAccount} sx={{ mt: 2 }}>
-            {t('login.testAccount.fill')}
+            {t('signIn.testAccount.fill')}
           </Button>
         </Box>
 
         <TextBody1Neutral60 align="center" sx={{ mt: 3 }}>
-          {t('login.noAccount')} <TextLinkPrimary to="/register">{t('login.register')}</TextLinkPrimary>
+          {t('signIn.noAccount')} <TextLinkPrimary to="/signUp">{t('signIn.signUp')}</TextLinkPrimary>
         </TextBody1Neutral60>
       </Box>
     </Container>

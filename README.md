@@ -32,7 +32,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 - TanStack Query + Axios
 - Showcase API (`/v1`)
 - IndexedDB via Dexie
-- JWT auth (login)
+- JWT auth (sign in)
 
 </td>
 </tr>

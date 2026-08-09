@@ -7,9 +7,9 @@ const auth = `*${API_PREFIX}/auth`
 const users = `*${API_PREFIX}/users`
 
 export const handlers = [
-  http.post(`${auth}/login`, () => HttpResponse.json(fakeAuthResponse())),
+  http.post(`${auth}/sign-in`, () => HttpResponse.json(fakeAuthResponse())),
 
-  http.post(`${auth}/register`, () => HttpResponse.json(fakeAuthResponse())),
+  http.post(`${auth}/sign-up`, () => HttpResponse.json(fakeAuthResponse())),
 
   http.get(users, () =>
     HttpResponse.json([

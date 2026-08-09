@@ -28,7 +28,7 @@ client.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
-      window.location.href = Routes.LOGIN
+      window.location.href = Routes.SIGN_IN
     }
     return Promise.reject(error)
   },

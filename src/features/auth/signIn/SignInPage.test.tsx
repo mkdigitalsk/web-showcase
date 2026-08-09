@@ -9,21 +9,21 @@ import {
   http,
   HttpResponse,
 } from '../../../test/test-utils'
-import { LoginPage } from './LoginPage'
+import { SignInPage } from './SignInPage'
 
-describe('LoginPage', () => {
+describe('SignInPage', () => {
   it('blocks submission and flags required fields when empty', async () => {
-    const login = vi.fn()
-    renderWithProviders(<LoginPage />, { authValue: fakeAuthValue({ login }) })
+    const signIn = vi.fn()
+    renderWithProviders(<SignInPage />, { authValue: fakeAuthValue({ signIn }) })
 
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(await screen.findAllByText('This field is required')).toHaveLength(2)
-    expect(login).not.toHaveBeenCalled()
+    expect(signIn).not.toHaveBeenCalled()
   })
 
   it('fills the credentials from the test-account shortcut', async () => {
-    renderWithProviders(<LoginPage />, { authValue: fakeAuthValue() })
+    renderWithProviders(<SignInPage />, { authValue: fakeAuthValue() })
 
     await userEvent.click(screen.getByRole('button', { name: 'Fill test account' }))
 
@@ -35,10 +35,10 @@ describe('LoginPage', () => {
   it('signs in and navigates to the app on valid credentials', async () => {
     renderWithProviders(
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signIn" element={<SignInPage />} />
         <Route path="/ui-components" element={<div>UI Components Page</div>} />
       </Routes>,
-      { route: '/login', useRealAuth: true },
+      { route: '/signIn', useRealAuth: true },
     )
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
@@ -50,8 +50,8 @@ describe('LoginPage', () => {
   })
 
   it('shows an error message when the credentials are rejected', async () => {
-    server.use(http.post('*/v1/auth/login', () => new HttpResponse(null, { status: 401 })))
-    renderWithProviders(<LoginPage />, { route: '/login', useRealAuth: true })
+    server.use(http.post('*/v1/auth/sign-in', () => new HttpResponse(null, { status: 401 })))
+    renderWithProviders(<SignInPage />, { route: '/signIn', useRealAuth: true })
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'wrong-password')
@@ -62,8 +62,8 @@ describe('LoginPage', () => {
   })
 
   it('separates an unreachable server from a rejected credential', async () => {
-    server.use(http.post('*/v1/auth/login', () => HttpResponse.error()))
-    renderWithProviders(<LoginPage />, { route: '/login', useRealAuth: true })
+    server.use(http.post('*/v1/auth/sign-in', () => HttpResponse.error()))
+    renderWithProviders(<SignInPage />, { route: '/signIn', useRealAuth: true })
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'MKDigitalTest1@')

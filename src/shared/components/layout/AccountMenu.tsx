@@ -14,7 +14,7 @@ const THEME_MODES: ThemeMode[] = ['system', 'light', 'dark']
 export function AccountMenu() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { user, logout, updateThemeMode } = useAuth()
+  const { user, signOut, updateThemeMode } = useAuth()
   const { mode = 'system' } = useColorScheme()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const [themeAnchor, setThemeAnchor] = useState<HTMLElement | null>(null)
@@ -26,10 +26,10 @@ export function AccountMenu() {
     .slice(0, 2)
     .toUpperCase()
 
-  const handleLogout = async () => {
+  const handleSignOut = async () => {
     setAnchor(null)
-    await logout()
-    await navigate(Routes.LOGIN)
+    await signOut()
+    await navigate(Routes.SIGN_IN)
   }
 
   const handleSelectMode = (next: ThemeMode) => {
@@ -64,11 +64,11 @@ export function AccountMenu() {
           <ChevronRight fontSize="small" sx={{ ml: 'auto' }} />
         </MenuItem>
         <Divider />
-        <MenuItem onClick={() => void handleLogout()}>
+        <MenuItem onClick={() => void handleSignOut()}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          {t('home.logout')}
+          {t('home.signOut')}
         </MenuItem>
       </Menu>
 

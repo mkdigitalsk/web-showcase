@@ -6,7 +6,7 @@ import { PrivateRoute } from './PrivateRoute'
 function renderGuarded(authValue: ReturnType<typeof fakeAuthValue>) {
   return renderWithProviders(
     <Routes>
-      <Route path="/login" element={<div>Login Screen</div>} />
+      <Route path="/signIn" element={<div>SignIn Screen</div>} />
       <Route element={<PrivateRoute />}>
         <Route path="/secret" element={<div>Secret Content</div>} />
       </Route>
@@ -16,10 +16,10 @@ function renderGuarded(authValue: ReturnType<typeof fakeAuthValue>) {
 }
 
 describe('PrivateRoute', () => {
-  it('redirects an unauthenticated visitor to the login screen', () => {
+  it('redirects an unauthenticated visitor to the signIn screen', () => {
     renderGuarded(fakeAuthValue({ isAuthenticated: false }))
 
-    expect(screen.getByText('Login Screen')).toBeVisible()
+    expect(screen.getByText('SignIn Screen')).toBeVisible()
     expect(screen.queryByText('Secret Content')).not.toBeInTheDocument()
   })
 

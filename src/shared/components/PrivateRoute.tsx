@@ -10,7 +10,7 @@ export function PrivateRoute() {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />
+    return <Navigate to="/signIn" state={{ from: location }} replace />
   }
 
   return <Outlet />

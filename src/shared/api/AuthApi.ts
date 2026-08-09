@@ -1,15 +1,15 @@
-import type { AuthResponse, LoginRequest, RegisterRequest } from '../types'
+import type { AuthResponse, SignInRequest, SignUpRequest } from '../types'
 import { BaseApiService } from './BaseApiService'
 import { API_PREFIX } from './apiVersion'
 
 export class AuthApi extends BaseApiService {
   protected readonly baseRoute = `${API_PREFIX}/auth`
 
-  login(credentials: LoginRequest): Promise<AuthResponse> {
-    return this._post<AuthResponse>(`${this.baseRoute}/login`, credentials)
+  signIn(credentials: SignInRequest): Promise<AuthResponse> {
+    return this._post<AuthResponse>(`${this.baseRoute}/sign-in`, credentials)
   }
 
-  register(data: RegisterRequest): Promise<AuthResponse> {
-    return this._post<AuthResponse>(`${this.baseRoute}/register`, data)
+  signUp(data: SignUpRequest): Promise<AuthResponse> {
+    return this._post<AuthResponse>(`${this.baseRoute}/sign-up`, data)
   }
 }

@@ -1,11 +1,11 @@
 import type { ThemeMode } from './theme'
 
-export interface LoginRequest {
+export interface SignInRequest {
   email: string
   password: string
 }
 
-export interface RegisterRequest {
+export interface SignUpRequest {
   email: string
   password: string
   name: string
