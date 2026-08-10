@@ -62,6 +62,21 @@ describe('SignInPage', () => {
     expect(localStorage.getItem('token')).toBeNull()
   })
 
+  // The 401 interceptor answers an expired session by clearing the token and loading the sign-in
+  // document, which discards this error before it can be read. A rejected credential is not that.
+  it('keeps the session when it is the sign-in itself that is rejected', async () => {
+    localStorage.setItem('token', 'still.valid.token')
+    server.use(http.post('*/v1/auth/sign-in', () => new HttpResponse(null, { status: 401 })))
+    renderWithProviders(<SignInPage />, { route: AppRoutes.SIGN_IN, useRealAuth: true })
+
+    await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
+    await userEvent.type(screen.getByLabelText('Password'), 'wrong-password')
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
+
+    expect(await screen.findByText('Invalid email or password')).toBeVisible()
+    expect(localStorage.getItem('token')).toBe('still.valid.token')
+  })
+
   it('separates an unreachable server from a rejected credential', async () => {
     server.use(http.post('*/v1/auth/sign-in', () => HttpResponse.error()))
     renderWithProviders(<SignInPage />, { route: AppRoutes.SIGN_IN, useRealAuth: true })

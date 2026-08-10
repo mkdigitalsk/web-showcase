@@ -1,5 +1,6 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { Routes } from '../../utils'
+import { API_PREFIX } from './apiVersion'
 
 // Injected at build time from API_URL. Empty only in dev, where requests stay same-origin and the dev
 // server proxies them; a build without it fails in vite.config.ts rather than reaching here.
@@ -23,10 +24,14 @@ client.interceptors.request.use(
   (error: AxiosError) => Promise.reject(error),
 )
 
+// A 401 from the auth routes is a rejected credential the form has to show. Everywhere else it is a
+// session that has expired, and only that case earns the document load that discards the app's state.
+const isAuthRequest = (url: string | undefined) => url?.startsWith(`${API_PREFIX}/auth/`) === true
+
 client.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && !isAuthRequest(error.config?.url)) {
       localStorage.removeItem('token')
       window.location.href = Routes.SIGN_IN
     }
