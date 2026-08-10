@@ -45,11 +45,14 @@ export default defineConfig(({ command, mode }): Config => {
     test: {
       environment: 'jsdom',
       globals: true,
+      // The 5s default is tuned for unit tests. Ours are integration tests that type through real MUI
+      // re-renders into a live Dexie query, which alone spends seconds before anything is asserted.
+      testTimeout: 15000,
       setupFiles: ['./src/test/setup.ts'],
-      server: {
-        // @mui/material's ESM does a directory import of react-transition-group that
-        // Node can't externalise-resolve; inlining lets vite resolve it.
-        deps: { inline: [/@mui\//, 'react-transition-group'] },
+      deps: {
+        optimizer: {
+          client: { enabled: true, include: ['@mui/material', '@mui/icons-material', 'react-transition-group'] },
+        },
       },
     },
   }
