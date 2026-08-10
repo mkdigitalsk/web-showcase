@@ -8,6 +8,7 @@ export function paramRoute<P extends Record<string, string | number>>(
 }
 
 export const Routes = {
+  ROOT: '/',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
   PRIVACY: '/privacy',
@@ -17,3 +18,7 @@ export const Routes = {
   UI_COMPONENTS: '/ui-components',
   CAPABILITIES: '/capabilities',
 } as const
+
+// Every path the app serves, as a type. A component that takes this instead of `string` cannot be
+// handed a route the router never registered.
+export type AppRoute = (typeof Routes)[keyof typeof Routes]

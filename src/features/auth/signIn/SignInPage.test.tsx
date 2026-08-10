@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { Route, Routes } from 'react-router-dom'
+import { Routes as AppRoutes } from '../../../utils'
 import {
   renderWithProviders,
   fakeAuthValue,
@@ -35,10 +36,10 @@ describe('SignInPage', () => {
   it('signs in and navigates to the app on valid credentials', async () => {
     renderWithProviders(
       <Routes>
-        <Route path="/signIn" element={<SignInPage />} />
-        <Route path="/ui-components" element={<div>UI Components Page</div>} />
+        <Route path={AppRoutes.SIGN_IN} element={<SignInPage />} />
+        <Route path={AppRoutes.UI_COMPONENTS} element={<div>UI Components Page</div>} />
       </Routes>,
-      { route: '/signIn', useRealAuth: true },
+      { route: AppRoutes.SIGN_IN, useRealAuth: true },
     )
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
@@ -51,7 +52,7 @@ describe('SignInPage', () => {
 
   it('shows an error message when the credentials are rejected', async () => {
     server.use(http.post('*/v1/auth/sign-in', () => new HttpResponse(null, { status: 401 })))
-    renderWithProviders(<SignInPage />, { route: '/signIn', useRealAuth: true })
+    renderWithProviders(<SignInPage />, { route: AppRoutes.SIGN_IN, useRealAuth: true })
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'wrong-password')
@@ -63,7 +64,7 @@ describe('SignInPage', () => {
 
   it('separates an unreachable server from a rejected credential', async () => {
     server.use(http.post('*/v1/auth/sign-in', () => HttpResponse.error()))
-    renderWithProviders(<SignInPage />, { route: '/signIn', useRealAuth: true })
+    renderWithProviders(<SignInPage />, { route: AppRoutes.SIGN_IN, useRealAuth: true })
 
     await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'MKDigitalTest1@')

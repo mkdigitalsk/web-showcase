@@ -9,10 +9,10 @@ function renderGuarded(authValue: ReturnType<typeof fakeAuthValue>) {
     <Routes>
       <Route path={AppRoutes.SIGN_IN} element={<div>Sign In Screen</div>} />
       <Route element={<PrivateRoute />}>
-        <Route path="/secret" element={<div>Secret Content</div>} />
+        <Route path={AppRoutes.DATABASE} element={<div>Guarded Content</div>} />
       </Route>
     </Routes>,
-    { route: '/secret', authValue },
+    { route: AppRoutes.DATABASE, authValue },
   )
 }
 
@@ -21,12 +21,12 @@ describe('PrivateRoute', () => {
     renderGuarded(fakeAuthValue({ isAuthenticated: false }))
 
     expect(screen.getByText('Sign In Screen')).toBeVisible()
-    expect(screen.queryByText('Secret Content')).not.toBeInTheDocument()
+    expect(screen.queryByText('Guarded Content')).not.toBeInTheDocument()
   })
 
   it('renders the guarded content for an authenticated user', () => {
     renderGuarded(fakeAuthValue({ isAuthenticated: true }))
 
-    expect(screen.getByText('Secret Content')).toBeVisible()
+    expect(screen.getByText('Guarded Content')).toBeVisible()
   })
 })

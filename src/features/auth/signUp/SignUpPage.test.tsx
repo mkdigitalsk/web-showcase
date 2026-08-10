@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { Route, Routes } from 'react-router-dom'
+import { Routes as AppRoutes } from '../../../utils'
 import {
   renderWithProviders,
   fakeAuthValue,
@@ -36,10 +37,10 @@ describe('SignUpPage', () => {
   it('signs up and navigates to the app on valid input', async () => {
     renderWithProviders(
       <Routes>
-        <Route path="/signUp" element={<SignUpPage />} />
-        <Route path="/ui-components" element={<div>UI Components Page</div>} />
+        <Route path={AppRoutes.SIGN_UP} element={<SignUpPage />} />
+        <Route path={AppRoutes.UI_COMPONENTS} element={<div>UI Components Page</div>} />
       </Routes>,
-      { route: '/signUp', useRealAuth: true },
+      { route: AppRoutes.SIGN_UP, useRealAuth: true },
     )
     await userEvent.type(screen.getByLabelText('Email'), 'alice@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'strong-pass')
@@ -51,7 +52,7 @@ describe('SignUpPage', () => {
 
   it('surfaces an error when sign-up is rejected', async () => {
     server.use(http.post('*/v1/auth/sign-up', () => new HttpResponse(null, { status: 409 })))
-    renderWithProviders(<SignUpPage />, { route: '/signUp', useRealAuth: true })
+    renderWithProviders(<SignUpPage />, { route: AppRoutes.SIGN_UP, useRealAuth: true })
     await userEvent.type(screen.getByLabelText('Email'), 'taken@mkdigital.sk')
     await userEvent.type(screen.getByLabelText('Password'), 'strong-pass')
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))

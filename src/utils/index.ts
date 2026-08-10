@@ -1,4 +1,5 @@
 export { Routes, paramRoute } from './routes'
+export type { AppRoute } from './routes'
 export { formatDate } from './dateFormat'
 export { DateFormats } from './dateFormats'
 export { requireContext } from './requireContext'

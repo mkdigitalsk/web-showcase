@@ -24,7 +24,24 @@ export default defineConfig([
       // Type-aware linting: without it the any ban and every no-unsafe-* rule silently pass.
       parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
     },
+    rules: {
+      // A path written as a literal agrees with routes.ts only until one of them changes, and the
+      // disagreement surfaces as a link to a route the router never registered.
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'JSXAttribute[name.name=/^(to|path|href)$/] > Literal[value=/^\\//]',
+          message: 'Use a Routes constant from src/utils/routes.ts, never a path literal.',
+        },
+        {
+          selector: 'CallExpression[callee.name="navigate"] > Literal[value=/^\\//]',
+          message: 'Use a Routes constant from src/utils/routes.ts, never a path literal.',
+        },
+      ],
+    },
   },
+  // routes.ts is where the literals are declared, so the rule cannot apply to it.
+  { files: ['src/utils/routes.ts'], rules: { 'no-restricted-syntax': 'off' } },
   // Last: turn off ESLint stylistic rules that would fight Prettier (formatting is Prettier's job).
   eslintConfigPrettier,
 ])

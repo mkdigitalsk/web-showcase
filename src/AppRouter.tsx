@@ -23,7 +23,7 @@ export function AppRouter() {
   return (
     <Suspense fallback={<LoadingView sx={{ minHeight: '100vh' }} />}>
       <Routes>
-        <Route path="/" element={<Navigate to={AppRoutes.UI_COMPONENTS} replace />} />
+        <Route path={AppRoutes.ROOT} element={<Navigate to={AppRoutes.UI_COMPONENTS} replace />} />
         <Route element={<PublicLayout />}>
           <Route path={AppRoutes.SIGN_IN} element={<SignInPage />} />
           <Route path={AppRoutes.SIGN_UP} element={<SignUpPage />} />
@@ -38,6 +38,8 @@ export function AppRouter() {
             <Route path={AppRoutes.CAPABILITIES} element={<CapabilitiesPage />} />
           </Route>
         </Route>
+        {/* Without this an unmatched path renders nothing, which reads as a crash rather than a typo. */}
+        <Route path="*" element={<Navigate to={AppRoutes.ROOT} replace />} />
       </Routes>
     </Suspense>
   )

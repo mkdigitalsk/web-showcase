@@ -1,13 +1,14 @@
 import { describe, it, expect, vi } from 'vitest'
 import { Route, Routes } from 'react-router-dom'
+import { Routes as AppRoutes } from '../../../utils'
 import { renderWithProviders, fakeAuthValue, fakeAuthUser, screen, userEvent } from '../../../test/test-utils'
 import { AccountMenu } from './AccountMenu'
 
 function renderMenu(overrides: Parameters<typeof fakeAuthValue>[0]) {
   return renderWithProviders(
     <Routes>
-      <Route path="/" element={<AccountMenu />} />
-      <Route path="/sign-in" element={<div>SignIn Screen</div>} />
+      <Route path={AppRoutes.ROOT} element={<AccountMenu />} />
+      <Route path={AppRoutes.SIGN_IN} element={<div>Sign In Screen</div>} />
     </Routes>,
     {
       authValue: fakeAuthValue({
@@ -26,7 +27,7 @@ describe('AccountMenu', () => {
     expect(screen.getByText('TE')).toBeVisible()
   })
 
-  it('logs out and navigates to the signIn screen', async () => {
+  it('logs out and navigates to the sign-in screen', async () => {
     const signOut = vi.fn().mockResolvedValue(undefined)
     renderMenu({ signOut })
 
@@ -34,7 +35,7 @@ describe('AccountMenu', () => {
     await userEvent.click(screen.getByRole('menuitem', { name: 'Sign Out' }))
 
     expect(signOut).toHaveBeenCalledOnce()
-    expect(await screen.findByText('SignIn Screen')).toBeVisible()
+    expect(await screen.findByText('Sign In Screen')).toBeVisible()
   })
 
   it('updates the theme mode from the theme submenu', async () => {

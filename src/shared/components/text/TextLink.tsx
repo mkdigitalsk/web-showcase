@@ -1,9 +1,10 @@
 import { Link as MuiLink, type LinkProps as MuiLinkProps } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
+import type { AppRoute } from '../../../utils'
 
 type TextLinkProps = Omit<MuiLinkProps, 'component'> & {
-  to: string
+  to: AppRoute
 }
 
 export function TextLink({ to, sx, ...props }: TextLinkProps) {
