@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { Routes as AppRoutes } from '../../utils'
 import { Route, Routes } from 'react-router-dom'
 import { renderWithProviders, fakeAuthValue, screen } from '../../test/test-utils'
 import { PrivateRoute } from './PrivateRoute'
@@ -6,7 +7,7 @@ import { PrivateRoute } from './PrivateRoute'
 function renderGuarded(authValue: ReturnType<typeof fakeAuthValue>) {
   return renderWithProviders(
     <Routes>
-      <Route path="/signIn" element={<div>SignIn Screen</div>} />
+      <Route path={AppRoutes.SIGN_IN} element={<div>Sign In Screen</div>} />
       <Route element={<PrivateRoute />}>
         <Route path="/secret" element={<div>Secret Content</div>} />
       </Route>
@@ -16,10 +17,10 @@ function renderGuarded(authValue: ReturnType<typeof fakeAuthValue>) {
 }
 
 describe('PrivateRoute', () => {
-  it('redirects an unauthenticated visitor to the signIn screen', () => {
+  it('redirects an unauthenticated visitor to the sign-in screen', () => {
     renderGuarded(fakeAuthValue({ isAuthenticated: false }))
 
-    expect(screen.getByText('SignIn Screen')).toBeVisible()
+    expect(screen.getByText('Sign In Screen')).toBeVisible()
     expect(screen.queryByText('Secret Content')).not.toBeInTheDocument()
   })
 

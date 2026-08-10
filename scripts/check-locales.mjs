@@ -11,6 +11,15 @@ import { dirname, join } from 'node:path'
 const localesDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'locales')
 const REFERENCE = 'en.json'
 
+// The privacy notice is legal text, translated only where we can stand behind the wording — Slovak is
+// the original, English the one translation. Czech and German deliberately fall back to English via
+// messagesFor(), so their absence here is a decision, not a gap. `privacy.link` is UI, not legal text,
+// and is translated everywhere.
+const UNTRANSLATED = {
+  'cs.json': (key) => key.startsWith('privacy.') && key !== 'privacy.link',
+  'de.json': (key) => key.startsWith('privacy.') && key !== 'privacy.link',
+}
+
 const load = (file) => JSON.parse(readFileSync(join(localesDir, file), 'utf8'))
 const placeholders = (value) => new Set([...String(value).matchAll(/\{(\w+)\}/g)].map((m) => m[1]))
 
@@ -34,8 +43,9 @@ for (const file of others) {
   const problems = []
   const flag = (msg) => problems.push(msg)
 
+  const exempt = UNTRANSLATED[file] ?? (() => false)
   for (const key of refKeys) {
-    if (!keys.has(key)) flag(`missing key: ${key}`)
+    if (!keys.has(key) && !exempt(key)) flag(`missing key: ${key}`)
   }
   for (const key of keys) {
     if (!refKeySet.has(key)) flag(`extra key (not in ${REFERENCE}): ${key}`)

@@ -1,4 +1,5 @@
 import { useForm, Controller } from 'react-hook-form'
+import { Routes } from '../../../utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Container } from '@mui/material'
 import { Button, Input, TextH4Bold, TextBody1Neutral60, TextLinkPrimary, AlertError } from '../../../shared/components'
@@ -23,7 +24,7 @@ export function SignUpPage() {
     <Container maxWidth="sm">
       <Box
         sx={{
-          minHeight: '100vh',
+          flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -82,7 +83,7 @@ export function SignUpPage() {
         </Box>
 
         <TextBody1Neutral60 align="center" sx={{ mt: 3 }}>
-          {t('signUp.hasAccount')} <TextLinkPrimary to="/signIn">{t('signUp.signIn')}</TextLinkPrimary>
+          {t('signUp.hasAccount')} <TextLinkPrimary to={Routes.SIGN_IN}>{t('signUp.signIn')}</TextLinkPrimary>
         </TextBody1Neutral60>
       </Box>
     </Container>

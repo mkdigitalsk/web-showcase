@@ -27,6 +27,8 @@ export const MESSAGES: Record<string, Record<string, string>> = {
 export const DEFAULT_LOCALE: Locale = Locale.EN_GB
 
 // Not DEFAULT_LOCALE — that is the same open-key lookup and can miss in turn.
+// English underneath every locale: the privacy notice is deliberately only Slovak and English, so a
+// Czech or German reader gets the English text rather than a raw message id.
 export function messagesFor(locale: Locale): Record<string, string> {
-  return MESSAGES[locale] ?? enMessages
+  return { ...enMessages, ...(MESSAGES[locale] ?? {}) }
 }

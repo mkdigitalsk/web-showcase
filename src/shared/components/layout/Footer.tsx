@@ -1,11 +1,24 @@
 import { GitHub } from '@mui/icons-material'
 import { Box, IconButton } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { Link } from 'react-router-dom'
+import { useTheme, type Theme } from '@mui/material/styles'
 import { useTranslation } from '../../hooks'
+import { Routes } from '../../../utils'
 import { Logo } from '../icons/Logo'
 import { TextCaption } from '../text'
 
 const GITHUB = 'https://github.com/mkdigitalsk'
+
+// Caption-sized to sit level with the © and version lines beside it, without their neutral dimming.
+const linkSx = (theme: Theme) => ({
+  fontSize: theme.typography.caption.fontSize,
+  color: 'inherit',
+  opacity: 0.85,
+  textDecoration: 'none',
+  transition: 'opacity 0.2s ease',
+  '&:hover': { opacity: 1, textDecoration: 'underline' },
+  '&:focus-visible': { opacity: 1, textDecoration: 'underline' },
+})
 
 // Slim brand footer on the same navy surface as the top bar — closes the shell and carries the one
 // piece of app-level meta a dashboard needs visible: company + version (bug-report reference).
@@ -36,6 +49,9 @@ export function Footer() {
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', columnGap: 2, rowGap: 0.5 }}>
         <TextCaption>© 2026 MK Digital s. r. o.</TextCaption>
         <TextCaption>{t('app.version', { version: __APP_VERSION__ })}</TextCaption>
+        <Box component={Link} to={Routes.PRIVACY} sx={linkSx}>
+          {t('privacy.link')}
+        </Box>
         <IconButton
           component="a"
           href={GITHUB}

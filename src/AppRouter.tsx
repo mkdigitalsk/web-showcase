@@ -1,9 +1,10 @@
 import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { AppLayout, LoadingView, PrivateRoute } from './shared/components'
+import { AppLayout, LoadingView, PrivateRoute, PublicLayout } from './shared/components'
 import { Routes as AppRoutes } from './utils'
 
 // One chunk per route: a visitor landing on SignIn pays for SignIn, not for every screen behind the gate.
+const PrivacyPage = lazy(() => import('./features/privacy/PrivacyPage').then((m) => ({ default: m.PrivacyPage })))
 const SignInPage = lazy(() => import('./features/auth/signIn/SignInPage').then((m) => ({ default: m.SignInPage })))
 const SignUpPage = lazy(() => import('./features/auth/signUp/SignUpPage').then((m) => ({ default: m.SignUpPage })))
 const NetworkingPage = lazy(() =>
@@ -23,8 +24,11 @@ export function AppRouter() {
     <Suspense fallback={<LoadingView sx={{ minHeight: '100vh' }} />}>
       <Routes>
         <Route path="/" element={<Navigate to={AppRoutes.UI_COMPONENTS} replace />} />
-        <Route path={AppRoutes.SIGN_IN} element={<SignInPage />} />
-        <Route path={AppRoutes.SIGN_UP} element={<SignUpPage />} />
+        <Route element={<PublicLayout />}>
+          <Route path={AppRoutes.SIGN_IN} element={<SignInPage />} />
+          <Route path={AppRoutes.SIGN_UP} element={<SignUpPage />} />
+          <Route path={AppRoutes.PRIVACY} element={<PrivacyPage />} />
+        </Route>
         <Route element={<PrivateRoute />}>
           <Route element={<AppLayout />}>
             <Route path={AppRoutes.NETWORKING} element={<NetworkingPage />} />

@@ -189,5 +189,6 @@
   "capabilities.notifications.statusDenied": "Verweigert",
   "capabilities.notifications.sent": "Benachrichtigung gesendet — sieh in deinen Systembenachrichtigungen nach",
   "capabilities.notifications.denied": "Berechtigung verweigert — aktiviere Benachrichtigungen in den Browsereinstellungen",
-  "capabilities.notifications.notSupported": "Notification-API wird in diesem Browser nicht unterstützt"
+  "capabilities.notifications.notSupported": "Notification-API wird in diesem Browser nicht unterstützt",
+  "privacy.link": "Datenschutz"
 }

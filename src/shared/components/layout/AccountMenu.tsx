@@ -4,7 +4,7 @@ import { useColorScheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth, useTranslation } from '../../hooks'
-import type { ThemeMode } from '../../types'
+import type { AuthUser, ThemeMode } from '../../types'
 import { Routes } from '../../../utils'
 import { Divider } from '../dividers'
 import { TextBody1Neutral80 } from '../text'
@@ -12,15 +12,19 @@ import { TextBody1Neutral80 } from '../text'
 const THEME_MODES: ThemeMode[] = ['system', 'light', 'dark']
 
 export function AccountMenu() {
+  const { user } = useAuth()
+  return user ? <SignedInAccountMenu user={user} /> : null
+}
+
+function SignedInAccountMenu({ user }: { user: AuthUser }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { user, signOut, updateThemeMode } = useAuth()
+  const { signOut, updateThemeMode } = useAuth()
   const { mode = 'system' } = useColorScheme()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const [themeAnchor, setThemeAnchor] = useState<HTMLElement | null>(null)
 
-  // No name is collected, so the address is all there is to initial.
-  const initials = user?.email.slice(0, 2).toUpperCase()
+  const initials = user.email.slice(0, 2).toUpperCase()
 
   const handleSignOut = async () => {
     setAnchor(null)
@@ -48,7 +52,7 @@ export function AccountMenu() {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Box sx={{ px: 2, py: 1, minWidth: 200 }}>
-          <TextBody1Neutral80 noWrap>{user?.email}</TextBody1Neutral80>
+          <TextBody1Neutral80 noWrap>{user.email}</TextBody1Neutral80>
         </Box>
         <Divider />
         <MenuItem onClick={(e) => setThemeAnchor(e.currentTarget)}>

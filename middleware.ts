@@ -3,11 +3,9 @@ import { next } from '@vercel/functions'
 const ACCESS_COOKIE = 'site_access'
 const ONE_YEAR = 60 * 60 * 24 * 365
 
-// Pre-launch privacy gate — mirrors the portfolio's HTTP Basic Auth. The whole site is locked
-// behind Basic Auth whenever SITE_PASSWORD is set. Unset it (at launch) to make the site public —
-// no code change. To skip the prompt on your own devices: set SITE_BYPASS_TOKEN and visit
-// `/?access=<token>` once (drops a long-lived cookie); that magic link also grants access without
-// handing out the password.
+// Basic Auth whenever SITE_PASSWORD is set; unsetting it opens the site with no code change.
+// SITE_BYPASS_TOKEN plus a one-off visit to `/?access=<token>` drops a long-lived cookie, so a
+// known device skips the prompt without being told the password.
 export default function middleware(request: Request) {
   const password = process.env.SITE_PASSWORD
   if (!password) return next()

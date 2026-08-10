@@ -1,4 +1,5 @@
 export { Sidebar } from './Sidebar'
 export { AppLayout } from './AppLayout'
+export { PublicLayout } from './PublicLayout'
 export { AccountMenu } from './AccountMenu'
 export { PageContainer } from './PageContainer'

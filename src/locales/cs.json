@@ -189,5 +189,6 @@
   "capabilities.notifications.statusDenied": "Zamítnuto",
   "capabilities.notifications.sent": "Notifikace odeslána — podívej se na systémové notifikace",
   "capabilities.notifications.denied": "Povolení zamítnuto — povol notifikace v nastavení prohlížeče",
-  "capabilities.notifications.notSupported": "Notification API není v tomto prohlížeči podporováno"
+  "capabilities.notifications.notSupported": "Notification API není v tomto prohlížeči podporováno",
+  "privacy.link": "Ochrana osobních údajů"
 }

@@ -10,6 +10,7 @@ export function paramRoute<P extends Record<string, string | number>>(
 export const Routes = {
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
+  PRIVACY: '/privacy',
   NETWORKING: '/networking',
   STORAGE: '/storage',
   DATABASE: '/database',

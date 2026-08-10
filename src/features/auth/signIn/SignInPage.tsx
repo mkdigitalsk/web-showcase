@@ -1,4 +1,5 @@
 import { useForm, Controller } from 'react-hook-form'
+import { Routes } from '../../../utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Container } from '@mui/material'
 import {
@@ -40,7 +41,7 @@ export function SignInPage() {
     <Container maxWidth="sm">
       <Box
         sx={{
-          minHeight: '100vh',
+          flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -114,7 +115,7 @@ export function SignInPage() {
         </Box>
 
         <TextBody1Neutral60 align="center" sx={{ mt: 3 }}>
-          {t('signIn.noAccount')} <TextLinkPrimary to="/signUp">{t('signIn.signUp')}</TextLinkPrimary>
+          {t('signIn.noAccount')} <TextLinkPrimary to={Routes.SIGN_UP}>{t('signIn.signUp')}</TextLinkPrimary>
         </TextBody1Neutral60>
       </Box>
     </Container>
