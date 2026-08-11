@@ -15,7 +15,9 @@ const REFERENCE = 'en.json'
 // the original, English the one translation. Czech and German deliberately fall back to English via
 // messagesFor(), so their absence here is a decision, not a gap. `privacy.link` is UI, not legal text,
 // and is translated everywhere.
+// Slovak is the original, so the sentence naming it as the original is only shown to the translations.
 const UNTRANSLATED = {
+  'sk.json': (key) => key === 'privacy.prevailing',
   'cs.json': (key) => key.startsWith('privacy.') && key !== 'privacy.link',
   'de.json': (key) => key.startsWith('privacy.') && key !== 'privacy.link',
 }

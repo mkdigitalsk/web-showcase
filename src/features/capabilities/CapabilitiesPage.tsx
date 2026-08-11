@@ -316,7 +316,7 @@ export function CapabilitiesPage() {
           subtitle={t('capabilities.notifications.subtitle')}
         >
           {notificationsSupported ? (
-            <Stack spacing={1}>
+            <Stack spacing={2}>
               <InfoRow label={t('capabilities.notifications.status')} value={notifStatusLabel} />
               <Input
                 value={notifTitle}

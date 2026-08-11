@@ -1,6 +1,6 @@
 import { Refresh } from '@mui/icons-material'
 import { Box, CircularProgress, IconButton, Stack } from '@mui/material'
-import { AlertError, LoadingView, PageContainer, TextBody1Neutral60, TextH6Bold } from '../../shared/components'
+import { AlertError, LoadingView, PageContainer, PageHeader, TextBody1Neutral60 } from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
 import { requestErrorKey } from '../../shared/api'
 import { CreateNote } from './components/CreateNote'
@@ -19,8 +19,8 @@ export function NetworkingPage() {
 
   return (
     <PageContainer>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <TextH6Bold>{t('networking.title')}</TextH6Bold>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 2 }}>
+        <PageHeader title={t('networking.title')} description={t('networking.subtitle')} />
         <IconButton onClick={() => void refetch()} disabled={isFetching} aria-label={t('common.retry')}>
           {isFetching ? <CircularProgress size={20} /> : <Refresh aria-hidden />}
         </IconButton>

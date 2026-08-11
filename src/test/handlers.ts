@@ -14,13 +14,6 @@ export const handlers = [
 
   http.post(`${auth}/sign-up`, () => HttpResponse.json(fakeAuthResponse())),
 
-  http.get(users, () =>
-    HttpResponse.json([
-      fakeUser({ id: 1, email: 'alice@mkdigital.sk' }),
-      fakeUser({ id: 2, email: 'bob@mkdigital.sk' }),
-    ]),
-  ),
-
   http.put(`${users}/me/theme-mode`, async ({ request }) => {
     const { themeMode } = (await request.json()) as { themeMode: string }
     return HttpResponse.json(fakeUser({ themeMode: themeMode as never }))

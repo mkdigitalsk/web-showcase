@@ -1,5 +1,6 @@
 import { Box, Container, Stack } from '@mui/material'
 import { useTranslation } from '../../shared/hooks'
+import { Locale } from '../../shared/enums/locale'
 import { TextBody1Neutral60, TextCaptionNeutral60, TextH4Bold, TextH6Bold } from '../../shared/components'
 
 const SECTIONS = [
@@ -17,7 +18,7 @@ const SECTIONS = [
 ] as const
 
 export function PrivacyPage() {
-  const { t } = useTranslation()
+  const { t, intl } = useTranslation()
 
   return (
     <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
@@ -39,6 +40,7 @@ export function PrivacyPage() {
               ))}
           </Box>
         ))}
+        {intl.locale !== Locale.SK_SK && <TextCaptionNeutral60>{t('privacy.prevailing')}</TextCaptionNeutral60>}
       </Stack>
     </Container>
   )

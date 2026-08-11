@@ -49,4 +49,4 @@ export { Checkbox, Switch, RadioButton, Slider } from './forms'
 
 export { Divider, DividerPrimary } from './dividers'
 
-export { Sidebar, AppLayout, PublicLayout, PageContainer } from './layout'
+export { Sidebar, AppLayout, PublicLayout, PageContainer, PageHeader } from './layout'

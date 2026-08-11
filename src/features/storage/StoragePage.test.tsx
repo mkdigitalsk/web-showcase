@@ -44,7 +44,7 @@ describe('StoragePage', () => {
     await userEvent.click(icon('AddIcon', 0))
     expect(screen.getByText('1')).toBeVisible()
 
-    await userEvent.click(screen.getByRole('button', { name: 'Clear Session' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear this tab' }))
 
     expect(screen.queryByText('1')).not.toBeInTheDocument()
     expect(sessionStorage.getItem('storage.sessionCounter')).toBeNull()

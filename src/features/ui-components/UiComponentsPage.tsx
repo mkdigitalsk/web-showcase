@@ -52,6 +52,11 @@ function Section({ titleKey, children }: { titleKey: string; children: ReactNode
   )
 }
 
+// A field and a card are read at a human measure; the panel they sit in is not the measure. Mobile
+// fills the width because there is nothing else to fill.
+const FORM_MEASURE = 480
+const CARD_MEASURE = 720
+
 export function UiComponentsPage() {
   const { t } = useTranslation()
 
@@ -93,7 +98,7 @@ export function UiComponentsPage() {
         </Section>
 
         <Section titleKey="uiComponents.input">
-          <Stack spacing={2}>
+          <Stack spacing={2} sx={{ maxWidth: FORM_MEASURE }}>
             <Input label={t('uiComponents.input.default')} placeholder={t('uiComponents.input.placeholder')} />
             <Input label={t('uiComponents.input.error')} error helperText={t('uiComponents.input.errorText')} />
             <Input label={t('uiComponents.input.disabled')} disabled />
@@ -101,7 +106,7 @@ export function UiComponentsPage() {
         </Section>
 
         <Section titleKey="uiComponents.cards">
-          <Stack spacing={2}>
+          <Stack spacing={2} sx={{ maxWidth: CARD_MEASURE }}>
             <Card sx={{ p: 2 }}>
               <TextH6Bold>{t('uiComponents.cards.outlined')}</TextH6Bold>
               <TextBody1Neutral60>{t('uiComponents.cards.outlinedDesc')}</TextBody1Neutral60>
