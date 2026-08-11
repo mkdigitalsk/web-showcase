@@ -223,7 +223,7 @@
   "uiComponents.progress.circular": "Kruhový priebeh",
   "uiComponents.progress.linear": "Lineárny priebeh (60%)",
   "uiComponents.progress.loadingView": "LoadingView (vycentrovaný spinner)",
-  "uiComponents.subtitle": "Komponenty MUI, po jednom, vo zvolenej téme.",
+  "uiComponents.subtitle": "Tlačidlá, karty, dialógy a typografia — po jednom, vo zvolenej téme.",
   "uiComponents.title": "UI komponenty",
   "uiComponents.typography": "Typografia",
   "uiComponents.typography.body1": "Body 1 — predvolené",

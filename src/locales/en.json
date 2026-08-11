@@ -224,7 +224,7 @@
   "uiComponents.progress.circular": "Circular progress",
   "uiComponents.progress.linear": "Linear progress (60%)",
   "uiComponents.progress.loadingView": "LoadingView (centered spinner)",
-  "uiComponents.subtitle": "MUI components, one of each, in the theme you have chosen.",
+  "uiComponents.subtitle": "Buttons, cards, dialogs and typography — one of each, in the theme you have chosen.",
   "uiComponents.title": "UI Components",
   "uiComponents.typography": "Typography",
   "uiComponents.typography.body1": "Body 1 — default",
