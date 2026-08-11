@@ -1,5 +1,6 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { Routes } from '../../utils'
+import { StorageKey } from '../enums/storageKey'
 import { API_PREFIX } from './apiVersion'
 
 // Injected at build time from API_URL. Empty only in dev, where requests stay same-origin and the dev
@@ -15,7 +16,7 @@ export const client = axios.create({
 
 client.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem(StorageKey.TOKEN)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -32,7 +33,7 @@ client.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401 && !isAuthRequest(error.config?.url)) {
-      localStorage.removeItem('token')
+      localStorage.removeItem(StorageKey.TOKEN)
       window.location.href = Routes.SIGN_IN
     }
     return Promise.reject(error)

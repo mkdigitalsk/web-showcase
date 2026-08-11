@@ -2,6 +2,7 @@ import {
   Cloud,
   Dataset,
   Extension,
+  ManageAccounts,
   Menu as MenuIcon,
   MenuOpen,
   Palette,
@@ -19,6 +20,7 @@ const navItems = [
   { route: Routes.STORAGE, titleKey: 'home.storage.title', Icon: StorageIcon },
   { route: Routes.DATABASE, titleKey: 'home.database.title', Icon: Dataset },
   { route: Routes.CAPABILITIES, titleKey: 'home.capabilities.title', Icon: Extension },
+  { route: Routes.ACCOUNT, titleKey: 'home.account.title', Icon: ManageAccounts },
 ] as const
 
 interface SidebarProps {

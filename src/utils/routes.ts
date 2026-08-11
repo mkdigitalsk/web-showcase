@@ -17,6 +17,7 @@ export const Routes = {
   DATABASE: '/database',
   UI_COMPONENTS: '/ui-components',
   CAPABILITIES: '/capabilities',
+  ACCOUNT: '/account',
 } as const
 
 // Every path the app serves, as a type. A component that takes this instead of `string` cannot be

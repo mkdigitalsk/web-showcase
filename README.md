@@ -98,4 +98,4 @@ downgrades to 7.11.0, which loses features for nothing.
 
 ## Architecture
 
-Feature-based — `src/features/<name>/`: `auth` · `home` · `ui-components` · `networking` · `storage` · `database` · `capabilities`. Shared code in `src/shared/` (components, hooks, theme, services).
+Feature-based — `src/features/<name>/`: `auth` · `home` · `ui-components` · `networking` · `storage` · `database` · `capabilities` · `account`. Shared code in `src/shared/` (components, hooks, theme, services).

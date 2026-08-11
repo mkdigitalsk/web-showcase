@@ -23,4 +23,6 @@ export const handlers = [
     const { locale } = (await request.json()) as { locale: string }
     return HttpResponse.json(fakeUser({ locale }))
   }),
+
+  http.delete(`${users}/me`, () => new HttpResponse(null, { status: 204 })),
 ]

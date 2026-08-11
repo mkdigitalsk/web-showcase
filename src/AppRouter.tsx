@@ -18,6 +18,7 @@ const UiComponentsPage = lazy(() =>
 const CapabilitiesPage = lazy(() =>
   import('./features/capabilities/CapabilitiesPage').then((m) => ({ default: m.CapabilitiesPage })),
 )
+const AccountPage = lazy(() => import('./features/account/AccountPage').then((m) => ({ default: m.AccountPage })))
 
 export function AppRouter() {
   return (
@@ -36,6 +37,7 @@ export function AppRouter() {
             <Route path={AppRoutes.DATABASE} element={<DatabasePage />} />
             <Route path={AppRoutes.UI_COMPONENTS} element={<UiComponentsPage />} />
             <Route path={AppRoutes.CAPABILITIES} element={<CapabilitiesPage />} />
+            <Route path={AppRoutes.ACCOUNT} element={<AccountPage />} />
           </Route>
         </Route>
         {/* Without this an unmatched path renders nothing, which reads as a crash rather than a typo. */}

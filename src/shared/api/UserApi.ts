@@ -12,4 +12,8 @@ export class UserApi extends BaseApiService {
   updateLocale(locale: string): Promise<User> {
     return this._put<User>(`${this.baseRoute}/me/locale`, { locale })
   }
+
+  deleteAccount(): Promise<void> {
+    return this._delete<void>(`${this.baseRoute}/me`)
+  }
 }

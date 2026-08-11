@@ -8,6 +8,7 @@ export interface AuthContextValue {
   signIn: (credentials: SignInRequest) => Promise<void>
   signUp: (data: SignUpRequest) => Promise<void>
   signOut: () => Promise<void>
+  deleteAccount: () => Promise<void>
   updateThemeMode: (themeMode: ThemeMode) => Promise<void>
   updateLocale: (locale: string) => Promise<void>
 }

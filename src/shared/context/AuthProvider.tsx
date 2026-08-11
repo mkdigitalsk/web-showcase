@@ -1,9 +1,11 @@
 import { useColorScheme } from '@mui/material/styles'
+import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { z } from 'zod'
 import type { AuthUser, ThemeMode } from '../types'
-import { authService, userService } from '../services'
+import { authService, clearLocalUserData, userService } from '../services'
+import { StorageKey } from '../enums/storageKey'
 import { useLocale } from '../hooks/useLocale'
 import { DEFAULT_LOCALE } from '../i18n/locales'
 import { AuthContext, type AuthContextValue } from './AuthContext'
@@ -17,8 +19,8 @@ const storedUserSchema = z.object({
 }) satisfies z.ZodType<AuthUser>
 
 function getStoredUser(): AuthUser | null {
-  const token = localStorage.getItem('token')
-  const storedUser = localStorage.getItem('user')
+  const token = localStorage.getItem(StorageKey.TOKEN)
+  const storedUser = localStorage.getItem(StorageKey.USER)
   if (!token || !storedUser) return null
 
   try {
@@ -38,11 +40,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(getStoredUser)
   const { setMode } = useColorScheme()
   const { setLocale } = useLocale()
+  const queryClient = useQueryClient()
 
   const signIn = async (credentials: Parameters<typeof authService.signIn>[0]) => {
     const response = await authService.signIn(credentials)
-    localStorage.setItem('token', response.token)
-    localStorage.setItem('user', JSON.stringify(response.user))
+    localStorage.setItem(StorageKey.TOKEN, response.token)
+    localStorage.setItem(StorageKey.USER, JSON.stringify(response.user))
     setUser(response.user)
     setMode(response.user.themeMode)
     setLocale(response.user.locale)
@@ -50,26 +53,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signUp = async (data: Parameters<typeof authService.signUp>[0]) => {
     const response = await authService.signUp(data)
-    localStorage.setItem('token', response.token)
-    localStorage.setItem('user', JSON.stringify(response.user))
+    localStorage.setItem(StorageKey.TOKEN, response.token)
+    localStorage.setItem(StorageKey.USER, JSON.stringify(response.user))
     setUser(response.user)
     setMode(response.user.themeMode)
     setLocale(response.user.locale)
   }
 
   const signOut = async () => {
-    await authService.signOut()
-    localStorage.removeItem('user')
+    await clearLocalUserData(queryClient)
     setUser(null)
     setMode('system')
     setLocale(DEFAULT_LOCALE)
+  }
+
+  // The call goes first, while the token clearing it away is still there to authorize it. Once the
+  // server answers, the account is gone — a local store that will not clear cannot turn that into
+  // "deletion failed" and park the person on an account that no longer exists.
+  const deleteAccount = async () => {
+    await userService.deleteAccount()
+    await signOut().catch(() => undefined)
   }
 
   const updateThemeMode = async (themeMode: ThemeMode) => {
     setMode(themeMode)
     try {
       const updatedUser = await userService.updateThemeMode(themeMode)
-      localStorage.setItem('user', JSON.stringify(updatedUser))
+      localStorage.setItem(StorageKey.USER, JSON.stringify(updatedUser))
       setUser(updatedUser)
     } catch {
       // Theme preference sync is best-effort — UI already reflects the change via setMode.
@@ -80,7 +90,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setLocale(locale)
     try {
       const updatedUser = await userService.updateLocale(locale)
-      localStorage.setItem('user', JSON.stringify(updatedUser))
+      localStorage.setItem(StorageKey.USER, JSON.stringify(updatedUser))
       setUser(updatedUser)
     } catch {
       // Locale preference sync is best-effort — UI already reflects the change via setLocale.
@@ -94,6 +104,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     signIn,
     signUp,
     signOut,
+    deleteAccount,
     updateThemeMode,
     updateLocale,
   }

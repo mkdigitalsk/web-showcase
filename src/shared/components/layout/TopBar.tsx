@@ -5,6 +5,7 @@ import { Logo } from '../icons/Logo'
 import { TextBody1 } from '../text'
 import { AccountMenu } from './AccountMenu'
 import { LocaleSwitcher } from './LocaleSwitcher'
+import { ThemeModeToggle } from './ThemeModeToggle'
 
 // Full-bleed navy brand bar (Jira/Confluence app-shell): product identity + global actions on top,
 // neutral contextual sidebar below. brandBar/onBrandBar are the shared design-system tokens, so the
@@ -43,6 +44,7 @@ export function TopBar() {
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <LocaleSwitcher />
+        <ThemeModeToggle />
         <AccountMenu />
       </Box>
     </Box>
