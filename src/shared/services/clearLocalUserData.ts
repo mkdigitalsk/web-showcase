@@ -2,7 +2,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import { StorageKey } from '../enums/storageKey'
 import { db } from './db'
 
-/** Theme mode stays: it describes the device, not whoever was using it. */
+/** Theme is the account's here, not the device's, so signOut resets it rather than this clearing it. */
 export async function clearLocalUserData(queryClient: QueryClient): Promise<void> {
   // Emptying the table rather than dropping the database: `db.delete()` strands the Dexie singleton
   // and every live query already subscribed to it.

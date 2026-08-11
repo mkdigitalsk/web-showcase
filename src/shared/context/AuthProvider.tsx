@@ -78,6 +78,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const updateThemeMode = async (themeMode: ThemeMode) => {
     setMode(themeMode)
+    // The toggle rides in the top bar, which public pages render too. With nobody signed in there is
+    // nothing to save it against, and the request would 401 into the interceptor's hard reload.
+    if (!user) return
     try {
       const updatedUser = await userService.updateThemeMode(themeMode)
       localStorage.setItem(StorageKey.USER, JSON.stringify(updatedUser))

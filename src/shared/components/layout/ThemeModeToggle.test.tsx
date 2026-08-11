@@ -1,5 +1,15 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { renderWithProviders, fakeAuthValue, fakeAuthUser, screen, userEvent } from '../../../test/test-utils'
+import {
+  renderWithProviders,
+  fakeAuthValue,
+  fakeAuthUser,
+  screen,
+  userEvent,
+  server,
+  http,
+  HttpResponse,
+} from '../../../test/test-utils'
+import { API_PREFIX } from '../../api/apiVersion'
 import type { ThemeMode } from '../../types'
 import { ThemeModeToggle } from './ThemeModeToggle'
 
@@ -14,6 +24,21 @@ afterEach(() => {
 })
 
 describe('ThemeModeToggle', () => {
+  it('does not reach the server when nobody is signed in', async () => {
+    let called = false
+    server.use(
+      http.put(`*${API_PREFIX}/users/me/theme-mode`, () => {
+        called = true
+        return new HttpResponse(null, { status: 401 })
+      }),
+    )
+    renderWithProviders(<ThemeModeToggle />, { useRealAuth: true })
+
+    await userEvent.click(screen.getByRole('button', { name: 'Toggle theme' }))
+
+    expect(called).toBe(false)
+  })
+
   it('leaves the system and picks the opposite of what the system resolved to', async () => {
     const updateThemeMode = vi.fn().mockResolvedValue(undefined)
     renderToggle(updateThemeMode)
