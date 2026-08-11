@@ -144,7 +144,7 @@
   "privacy.purpose.h": "3. Purposes and legal basis",
   "privacy.recipients.body": "These processors handle the data on our behalf: Railway Corporation (USA) — application server; Neon (Databricks, Inc., USA) — the database the account is stored in; Vercel Inc. (USA) — hosting for this web application.\n\nThe mobile showcase apps (Android, iOS, React Native) additionally use Google (Firebase) for notification delivery and crash reporting. This web application uses none of those.\n\nWe do not give or sell the data to anyone else.",
   "privacy.recipients.h": "5. Who we share it with",
-  "privacy.retention.body": "We keep the data while you have an account. When you delete the account, we delete it.\n\nThese are demonstration applications, so we also remove inactive accounts without waiting for you to ask. Backups are overwritten on the ordinary backup cycle.",
+  "privacy.retention.body": "We keep the data while you have an account. When you delete the account, we delete it.\n\nThese are demonstration applications, so we also remove inactive accounts without waiting for you to ask: if nobody opens an account for 30 days, we delete it and the notes in it. Backups are overwritten on the ordinary backup cycle.",
   "privacy.retention.h": "7. How long we keep it",
   "privacy.rights.body": "Under the GDPR you have the right of access (Art 15), rectification (Art 16), erasure (Art 17), restriction of processing (Art 18) and data portability (Art 20). You may object under Art 21 to the processing we base on legitimate interest (the timestamps).\n\nYou can delete your account in the app itself. For the other rights, write to admin@mkdigital.sk.",
   "privacy.rights.h": "8. Your rights",

@@ -143,7 +143,7 @@
   "privacy.purpose.h": "3. Na aké účely a na akom právnom základe",
   "privacy.recipients.body": "Údaje spracúvajú v našom mene títo sprostredkovatelia: Railway Corporation (USA) — aplikačný server; Neon (Databricks, Inc., USA) — databáza, v ktorej je účet uložený; Vercel Inc. (USA) — hosting tejto webovej aplikácie.\n\nMobilné ukážkové aplikácie (Android, iOS, React Native) navyše používajú služby Google (Firebase) na doručovanie oznámení a hlásenie pádov aplikácie. Táto webová aplikácia žiadnu z týchto služieb nepoužíva.\n\nIným tretím stranám údaje neposkytujeme ani nepredávame.",
   "privacy.recipients.h": "5. Komu údaje sprístupňujeme",
-  "privacy.retention.body": "Údaje uchovávame, kým máte účet. Keď účet zmažete, odstránime ich.\n\nIde o ukážkové aplikácie, preto neaktívne účty odstraňujeme aj priebežne bez vášho podnetu. Zálohy sa prepisujú v rámci bežného cyklu záloh.",
+  "privacy.retention.body": "Údaje uchovávame, kým máte účet. Keď účet zmažete, odstránime ich.\n\nIde o ukážkové aplikácie, preto neaktívne účty odstraňujeme aj priebežne bez vášho podnetu: ak účet nikto neotvorí 30 dní, zmažeme ho aj s poznámkami v ňom. Zálohy sa prepisujú v rámci bežného cyklu záloh.",
   "privacy.retention.h": "7. Ako dlho údaje uchovávame",
   "privacy.rights.body": "Podľa GDPR máte právo na prístup k údajom (čl. 15), ich opravu (čl. 16), vymazanie (čl. 17), obmedzenie spracúvania (čl. 18) a na prenosnosť údajov (čl. 20). Proti spracúvaniu, ktoré staviame na oprávnenom záujme (časové značky), môžete namietať podľa čl. 21.\n\nÚčet môžete zmazať priamo v aplikácii. Ostatné práva uplatníte e-mailom na admin@mkdigital.sk.",
   "privacy.rights.h": "8. Aké máte práva",
