@@ -47,6 +47,6 @@ export default function middleware(request: Request) {
 }
 
 export const config = {
-  // Gate everything except Vite's hashed static assets + favicon.
-  matcher: ['/((?!assets/|favicon).*)'],
+  // Gate everything except Vite's hashed static assets, favicon, and the notice the apps point at.
+  matcher: ['/((?!assets/|favicon|privacy).*)'],
 }
