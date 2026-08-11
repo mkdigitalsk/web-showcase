@@ -7,6 +7,7 @@ import {
   ElevatedCard,
   PageContainer,
   PageHeader,
+  TextBody1Neutral60,
   TextBody1Neutral80,
   TextCaptionNeutral60,
 } from '../../shared/components'
@@ -50,9 +51,13 @@ export function AccountPage() {
         </Box>
 
         <Box>
-          <Button color="error" startIcon={<DeleteForever />} onClick={() => setIsConfirming(true)}>
-            {t('account.delete')}
-          </Button>
+          {user?.demo ? (
+            <TextBody1Neutral60>{t('account.deleteDemo')}</TextBody1Neutral60>
+          ) : (
+            <Button color="error" startIcon={<DeleteForever />} onClick={() => setIsConfirming(true)}>
+              {t('account.delete')}
+            </Button>
+          )}
         </Box>
       </Stack>
 

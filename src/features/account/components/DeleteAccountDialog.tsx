@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import { AlertError, Button, CircularProgress, Dialog, TextBody1Neutral60 } from '../../../shared/components'
 import { useTranslation } from '../../../shared/hooks'
-import { requestErrorKey } from '../../../shared/api'
+import { httpStatus, requestErrorKey } from '../../../shared/api'
 
 interface DeleteAccountDialogProps {
   error: Error | null
@@ -10,8 +10,13 @@ interface DeleteAccountDialogProps {
   onConfirm: () => void
 }
 
+const REFUSED = 403
+
 export function DeleteAccountDialog({ error, isDeleting, onCancel, onConfirm }: DeleteAccountDialogProps) {
   const { t } = useTranslation()
+
+  // The server refuses a demo account outright, so the retry the fallback asks for can never succeed.
+  const errorKey = httpStatus(error) === REFUSED ? 'account.deleteDemo' : requestErrorKey(error, 'account.deleteFailed')
 
   return (
     <Dialog
@@ -37,7 +42,7 @@ export function DeleteAccountDialog({ error, isDeleting, onCancel, onConfirm }: 
     >
       <Stack spacing={2}>
         <TextBody1Neutral60>{t('account.deleteBody')}</TextBody1Neutral60>
-        {error && <AlertError>{t(requestErrorKey(error, 'account.deleteFailed'))}</AlertError>}
+        {error && <AlertError>{t(errorKey)}</AlertError>}
       </Stack>
     </Dialog>
   )

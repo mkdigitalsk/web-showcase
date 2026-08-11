@@ -3,6 +3,7 @@
   "account.deleteBody": "This deletes your account and the notes on the server. Notes saved on this device go too. It cannot be undone.",
   "account.deleteCancel": "Cancel",
   "account.deleteConfirm": "Delete",
+  "account.deleteDemo": "This is a demo account, so it cannot be deleted.",
   "account.deleteFailed": "Your account could not be deleted. Try again.",
   "account.deleteTitle": "Delete your account?",
   "account.email": "Email",

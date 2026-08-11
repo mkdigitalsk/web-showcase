@@ -3,6 +3,7 @@
   "account.deleteBody": "Zmaže sa váš účet aj poznámky na serveri. Poznámky uložené v tomto zariadení zmiznú tiež. Túto akciu nie je možné vrátiť späť.",
   "account.deleteCancel": "Zrušiť",
   "account.deleteConfirm": "Zmazať",
+  "account.deleteDemo": "Toto je ukážkový účet, preto ho nie je možné zmazať.",
   "account.deleteFailed": "Váš účet sa nepodarilo zmazať. Skúste to znova.",
   "account.deleteTitle": "Zmazať účet?",
   "account.email": "Email",

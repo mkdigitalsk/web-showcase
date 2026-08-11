@@ -6,4 +6,5 @@ export interface User {
   createdAt: number
   themeMode: ThemeMode
   locale: string
+  demo: boolean
 }

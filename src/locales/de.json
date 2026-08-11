@@ -3,6 +3,7 @@
   "account.deleteBody": "Damit werden Ihr Konto und die Notizen auf dem Server gelöscht. Auch die auf diesem Gerät gespeicherten Notizen verschwinden. Das lässt sich nicht rückgängig machen.",
   "account.deleteCancel": "Abbrechen",
   "account.deleteConfirm": "Löschen",
+  "account.deleteDemo": "Dies ist ein Demokonto und kann nicht gelöscht werden.",
   "account.deleteFailed": "Ihr Konto konnte nicht gelöscht werden. Versuchen Sie es erneut.",
   "account.deleteTitle": "Konto löschen?",
   "account.email": "E-Mail",

@@ -18,6 +18,7 @@ import {
 } from '../../test/test-utils'
 import { Routes as AppRoutes } from '../../utils'
 import { AccountPage } from './AccountPage'
+import type { AuthUser } from '../../shared/types'
 
 const account = `*${API_PREFIX}/users/me`
 
@@ -25,9 +26,9 @@ afterEach(async () => {
   await db.notes.clear()
 })
 
-async function signIn() {
+async function signIn(user: Partial<AuthUser> = {}) {
   localStorage.setItem(StorageKey.TOKEN, 'fake.jwt.token')
-  localStorage.setItem(StorageKey.USER, JSON.stringify(fakeAuthUser()))
+  localStorage.setItem(StorageKey.USER, JSON.stringify(fakeAuthUser(user)))
   localStorage.setItem(StorageKey.PERSISTENT_COUNTER, '3')
   sessionStorage.setItem(StorageKey.SESSION_COUNTER, '2')
   await db.notes.add(fakeNote())
@@ -55,6 +56,32 @@ describe('AccountPage', () => {
 
     expect(screen.getByRole('heading', { level: 1, name: 'Account' })).toBeInTheDocument()
     expect(screen.getByText('test01@mkdigital.sk')).toBeVisible()
+  })
+
+  it('offers deletion on a normal account', async () => {
+    await signIn()
+    renderAccountPage()
+
+    expect(screen.getByRole('button', { name: 'Delete account' })).toBeVisible()
+    expect(screen.queryByText('This is a demo account, so it cannot be deleted.')).not.toBeInTheDocument()
+  })
+
+  it('explains itself instead of offering deletion on a demo account', async () => {
+    await signIn({ demo: true })
+    renderAccountPage()
+
+    expect(screen.getByText('This is a demo account, so it cannot be deleted.')).toBeVisible()
+    expect(screen.queryByRole('button', { name: 'Delete account' })).not.toBeInTheDocument()
+  })
+
+  it('restores a session cached before the demo flag shipped', async () => {
+    const { id, email, themeMode, locale } = fakeAuthUser()
+    await signIn()
+    localStorage.setItem(StorageKey.USER, JSON.stringify({ id, email, themeMode, locale }))
+    renderAccountPage()
+
+    expect(screen.getByText('test01@mkdigital.sk')).toBeVisible()
+    expect(screen.getByRole('button', { name: 'Delete account' })).toBeVisible()
   })
 
   // The bearer proves the order: the call went out before the teardown took the token away.
@@ -94,6 +121,17 @@ describe('AccountPage', () => {
     expect(await db.notes.toArray()).toHaveLength(0)
   })
 
+  it('explains a refusal instead of asking for a retry that cannot work', async () => {
+    server.use(http.delete(account, () => new HttpResponse(null, { status: 403 })))
+    await signIn()
+    renderAccountPage()
+
+    await confirmDeletion()
+
+    expect(await screen.findByText('This is a demo account, so it cannot be deleted.')).toBeVisible()
+    expect(screen.queryByText('Your account could not be deleted. Try again.')).not.toBeInTheDocument()
+  })
+
   it('keeps the person and their local data when the route is not there', async () => {
     server.use(http.delete(account, () => new HttpResponse(null, { status: 404 })))
     await signIn()
@@ -117,14 +155,14 @@ describe('AccountPage', () => {
     clear.mockRestore()
   })
 
-  it('keeps the person and their local data when the server refuses', async () => {
-    server.use(http.delete(account, () => new HttpResponse(null, { status: 403 })))
+  it('keeps the person and their local data when the server fails', async () => {
+    server.use(http.delete(account, () => new HttpResponse(null, { status: 500 })))
     await signIn()
     renderAccountPage()
 
     await confirmDeletion()
 
-    expect(await screen.findByText('Your account could not be deleted. Try again.')).toBeVisible()
+    expect(await screen.findByText('Something went wrong on our side. Try again shortly.')).toBeVisible()
     expect(screen.queryByText('Sign In Screen')).not.toBeInTheDocument()
     expect(localStorage.getItem(StorageKey.TOKEN)).toBe('fake.jwt.token')
     expect(localStorage.getItem(StorageKey.PERSISTENT_COUNTER)).toBe('3')

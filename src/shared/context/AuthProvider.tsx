@@ -16,6 +16,7 @@ const storedUserSchema = z.object({
   email: z.string(),
   themeMode: z.enum(['system', 'light', 'dark']),
   locale: z.string(),
+  demo: z.boolean().default(false),
 }) satisfies z.ZodType<AuthUser>
 
 function getStoredUser(): AuthUser | null {
