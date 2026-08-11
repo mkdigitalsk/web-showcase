@@ -16,8 +16,6 @@ interface NoteConflictDialogProps {
   onOverwrite: () => void
 }
 
-// Both versions, side by side, and the choice is the person's. Merging them would pick a winner
-// without saying so, and only they know which edit was the one that mattered.
 export function NoteConflictDialog({ theirs, yours, onReload, onOverwrite }: NoteConflictDialogProps) {
   const { t } = useTranslation()
 

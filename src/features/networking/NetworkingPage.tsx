@@ -7,8 +7,6 @@ import { CreateNote } from './components/CreateNote'
 import { NoteRow } from './components/NoteRow'
 import { useNotesQuery } from './useNotes'
 
-// The remote counterpart to the Database screen: the same note, kept on the server rather than on the
-// device. Only the signed-in account's own notes are reachable — the server scopes the query.
 export function NetworkingPage() {
   const { t } = useTranslation()
   const { data: notes, isLoading, isError, error, refetch, isFetching } = useNotesQuery()

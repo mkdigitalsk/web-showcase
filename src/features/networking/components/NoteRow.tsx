@@ -21,8 +21,7 @@ export function NoteRow({ note }: { note: RemoteNote }) {
   const update = useUpdateNote()
   const remove = useDeleteNote()
 
-  // The tag is captured here, when editing starts, and not re-read on save. Re-reading it would
-  // adopt whatever landed meanwhile and the write would overwrite an edit this person never saw.
+  // Captured when editing starts; re-reading it on save would overwrite an unseen edit.
   const startEditing = () => setDraft({ title: note.title, content: note.content, etag: note.etag })
 
   const save = (etag: string) => {
@@ -86,8 +85,6 @@ export function NoteRow({ note }: { note: RemoteNote }) {
         <NoteConflictDialog
           theirs={conflict}
           yours={{ title: draft.title, content: draft.content }}
-          // Reload drops our edit for theirs. Overwrite keeps ours and retries against the tag the
-          // server just handed back, which is the only one that can succeed now.
           onReload={() => {
             update.reset()
             setDraft(null)
