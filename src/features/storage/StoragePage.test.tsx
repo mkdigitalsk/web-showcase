@@ -11,6 +11,12 @@ function icon(name: string, index: number): HTMLElement {
 
 // AddIcon[0]/RemoveIcon[0] belong to the Session card, [1] to the Persistent card (DOM order).
 describe('StoragePage', () => {
+  it('names itself with a heading', () => {
+    renderWithProviders(<StoragePage />)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Storage' })).toBeInTheDocument()
+  })
+
   it('increments the session counter and persists it to sessionStorage', async () => {
     renderWithProviders(<StoragePage />)
 

@@ -20,6 +20,7 @@ import {
   ElevatedCard,
   Input,
   PageContainer,
+  PageHeader,
   TextBody1Neutral60,
   TextBody1Neutral80,
   TextH6Bold,
@@ -203,6 +204,7 @@ export function CapabilitiesPage() {
 
   return (
     <PageContainer>
+      <PageHeader title={t('capabilities.title')} description={t('capabilities.subtitle')} />
       <Stack spacing={2}>
         <CapabilityCard title={t('capabilities.browser.title')} subtitle={t('capabilities.browser.subtitle')}>
           <Stack spacing={0.5}>

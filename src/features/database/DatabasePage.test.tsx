@@ -12,6 +12,12 @@ afterEach(async () => {
 })
 
 describe('DatabasePage', () => {
+  it('names itself with a heading', () => {
+    renderWithProviders(<DatabasePage />)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Database' })).toBeInTheDocument()
+  })
+
   it('shows the empty state, then the note the user adds', async () => {
     renderWithProviders(<DatabasePage />)
 

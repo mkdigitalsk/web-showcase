@@ -24,6 +24,7 @@ import {
   LinearProgress,
   LoadingView,
   PageContainer,
+  PageHeader,
   RadioButton,
   Slider,
   Snackbar,
@@ -71,6 +72,7 @@ export function UiComponentsPage() {
 
   return (
     <PageContainer maxWidth={1200}>
+      <PageHeader title={t('uiComponents.title')} description={t('uiComponents.subtitle')} />
       <Stack spacing={4}>
         <Section titleKey="uiComponents.typography">
           <Stack spacing={1}>

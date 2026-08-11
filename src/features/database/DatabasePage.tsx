@@ -8,6 +8,7 @@ import {
   Input,
   LoadingView,
   PageContainer,
+  PageHeader,
   TextBody1Neutral60,
   TextBody1Neutral80,
   TextH6Bold,
@@ -58,6 +59,7 @@ export function DatabasePage() {
 
   return (
     <PageContainer>
+      <PageHeader title={t('database.title')} description={t('database.subtitle')} />
       <Stack spacing={2}>
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
           <Input
@@ -92,15 +94,15 @@ export function DatabasePage() {
         <ElevatedCard sx={{ p: 2 }}>
           <Stack spacing={2}>
             <Input
-              label={t('database.title.label')}
-              placeholder={t('database.title.hint')}
+              label={t('database.noteTitle.label')}
+              placeholder={t('database.noteTitle.hint')}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               fullWidth
             />
             <Input
-              label={t('database.content.label')}
-              placeholder={t('database.content.hint')}
+              label={t('database.noteContent.label')}
+              placeholder={t('database.noteContent.hint')}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               fullWidth

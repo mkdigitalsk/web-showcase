@@ -14,6 +14,12 @@ afterEach(() => {
 })
 
 describe('CapabilitiesPage', () => {
+  it('names itself with a heading', () => {
+    renderWithProviders(<CapabilitiesPage />)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Capabilities' })).toBeInTheDocument()
+  })
+
   it('copies the text to the clipboard and confirms success', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined)
     stubNavigator('clipboard', { writeText, readText: vi.fn() })

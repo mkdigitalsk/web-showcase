@@ -14,6 +14,12 @@ import { NetworkingPage } from './NetworkingPage'
 const notes = `*${API_PREFIX}/notes`
 
 describe('NetworkingPage', () => {
+  it('names itself with a heading', () => {
+    renderWithProviders(<NetworkingPage />)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Notes on the server' })).toBeInTheDocument()
+  })
+
   it('renders the notes the account owns', async () => {
     renderWithProviders(<NetworkingPage />)
 
