@@ -43,7 +43,7 @@ export { Card, ElevatedCard } from './cards'
 
 export { Chip, FilterChip } from './chips'
 
-export { AlertDialog, ConfirmDialog } from './dialogs'
+export { Dialog, AlertDialog, ConfirmDialog } from './dialogs'
 
 export { Checkbox, Switch, RadioButton, Slider } from './forms'
 

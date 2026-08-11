@@ -1,3 +1,4 @@
+import type { RemoteNote } from '../shared/types'
 import type { AuthResponse, AuthUser, User } from '../shared/types'
 import type { Note } from '../features/database/types'
 
@@ -22,4 +23,8 @@ export function fakeUser(overrides: Partial<User> = {}): User {
     locale: 'en-GB',
     ...overrides,
   }
+}
+
+export function fakeRemoteNote(overrides: Partial<RemoteNote> = {}): RemoteNote {
+  return { id: 1, title: 'Buy milk', content: 'two litres', createdAt: 0, updatedAt: 0, etag: '"0"', ...overrides }
 }

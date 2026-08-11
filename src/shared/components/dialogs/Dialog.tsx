@@ -1,70 +1,20 @@
-import {
-  Dialog as MuiDialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-} from '@mui/material'
+import { type ReactNode } from 'react'
+import { Dialog as MuiDialog, DialogTitle, DialogContent, DialogActions } from '@mui/material'
 
-type AlertDialogProps = {
+type DialogProps = {
   open: boolean
   title?: string
-  text: string
-  confirmText?: string
-  dismissText?: string
-  onConfirm: () => void
-  onDismiss: () => void
+  onClose: () => void
+  actions: ReactNode
+  children: ReactNode
 }
 
-export function AlertDialog({
-  open,
-  title,
-  text,
-  confirmText = 'OK',
-  dismissText = 'Cancel',
-  onConfirm,
-  onDismiss,
-}: AlertDialogProps) {
+export function Dialog({ open, title, onClose, actions, children }: DialogProps) {
   return (
-    <MuiDialog open={open} onClose={onDismiss}>
+    <MuiDialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent>
-        <DialogContentText>{text}</DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onDismiss}>{dismissText}</Button>
-        {/* no-autofocus guards against focus stealing on page load; focus belongs inside an open modal. */}
-        {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
-        <Button onClick={onConfirm} autoFocus>
-          {confirmText}
-        </Button>
-      </DialogActions>
-    </MuiDialog>
-  )
-}
-
-type ConfirmDialogProps = {
-  open: boolean
-  title?: string
-  text: string
-  confirmText?: string
-  onConfirm: () => void
-}
-
-export function ConfirmDialog({ open, title, text, confirmText = 'OK', onConfirm }: ConfirmDialogProps) {
-  return (
-    <MuiDialog open={open} onClose={onConfirm}>
-      {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent>
-        <DialogContentText>{text}</DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
-        <Button onClick={onConfirm} autoFocus>
-          {confirmText}
-        </Button>
-      </DialogActions>
+      <DialogContent>{children}</DialogContent>
+      <DialogActions>{actions}</DialogActions>
     </MuiDialog>
   )
 }

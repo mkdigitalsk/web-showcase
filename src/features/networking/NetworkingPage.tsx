@@ -1,69 +1,46 @@
-import { Email, Refresh } from '@mui/icons-material'
+import { Refresh } from '@mui/icons-material'
 import { Box, CircularProgress, IconButton, Stack } from '@mui/material'
-import {
-  AlertError,
-  ElevatedCard,
-  LoadingView,
-  PageContainer,
-  TextBody1Neutral60,
-  TextBody1Neutral80,
-  TextH6Bold,
-} from '../../shared/components'
+import { AlertError, LoadingView, PageContainer, TextBody1Neutral60, TextH6Bold } from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
 import { requestErrorKey } from '../../shared/api'
-import { useGetUsersQuery } from './useGetUsersQuery'
+import { CreateNote } from './components/CreateNote'
+import { NoteRow } from './components/NoteRow'
+import { useNotesQuery } from './useNotes'
 
+// The remote counterpart to the Database screen: the same note, kept on the server rather than on the
+// device. Only the signed-in account's own notes are reachable — the server scopes the query.
 export function NetworkingPage() {
   const { t } = useTranslation()
-  const { data: users, isLoading, isError, error, refetch, isFetching } = useGetUsersQuery()
+  const { data: notes, isLoading, isError, error, refetch, isFetching } = useNotesQuery()
 
-  const hasUsers = users && users.length > 0
-  const showLoading = isLoading && !hasUsers
-  const showError = isError && !hasUsers
-  const showEmpty = !isLoading && !isError && !hasUsers
+  const hasNotes = notes && notes.length > 0
+  const showLoading = isLoading && !notes
+  const showError = isError && !notes
 
   return (
     <PageContainer>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <TextH6Bold>{t('networking.title')}</TextH6Bold>
+        <IconButton onClick={() => void refetch()} disabled={isFetching} aria-label={t('common.retry')}>
+          {isFetching ? <CircularProgress size={20} /> : <Refresh aria-hidden />}
+        </IconButton>
+      </Box>
+
+      <CreateNote />
+
       {showLoading && <LoadingView />}
-      {showError && (
-        <AlertError
-          sx={{ mt: 2 }}
-          action={
-            <IconButton size="small" onClick={() => void refetch()}>
-              {t('common.retry')}
-            </IconButton>
-          }
-        >
-          {t(requestErrorKey(error, 'common.error'))}
-        </AlertError>
-      )}
-      {showEmpty && (
+      {showError && <AlertError sx={{ mt: 2 }}>{t(requestErrorKey(error, 'common.error'))}</AlertError>}
+      {!showLoading && !showError && !hasNotes && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
           <TextBody1Neutral60>{t('networking.empty')}</TextBody1Neutral60>
         </Box>
       )}
-      {hasUsers && (
-        <>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Box>
-              <TextH6Bold>{t('networking.title')}</TextH6Bold>
-            </Box>
-            <IconButton onClick={() => void refetch()} disabled={isFetching}>
-              {isFetching ? <CircularProgress size={20} /> : <Refresh />}
-            </IconButton>
-          </Box>
-
-          <Stack spacing={2}>
-            {users.map((user) => (
-              <ElevatedCard key={user.id} sx={{ p: 2 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Email fontSize="small" color="primary" />
-                  <TextBody1Neutral80>{user.email}</TextBody1Neutral80>
-                </Box>
-              </ElevatedCard>
-            ))}
-          </Stack>
-        </>
+      {hasNotes && (
+        <Stack spacing={2}>
+          {notes.map((note) => (
+            <NoteRow key={note.id} note={note} />
+          ))}
+        </Stack>
       )}
     </PageContainer>
   )
