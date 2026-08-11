@@ -21,13 +21,16 @@ export function SignUpPage() {
   })
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <Box
         sx={{
-          flexGrow: 1,
+          // Auto margins rather than justifyContent: centred content that outgrows the viewport
+          // overflows equally at both ends under `center`, and the top is then unreachable by
+          // scrolling. Auto margins collapse to zero instead, so a short screen scrolls to the title.
+          my: 'auto',
+          py: 4,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
         }}
       >
         <TextH4Bold align="center" gutterBottom>
