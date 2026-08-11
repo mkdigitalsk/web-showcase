@@ -93,7 +93,7 @@
   "input.showPassword": "Zobrazit heslo",
   "localeSwitcher.label": "Změnit jazyk",
   "networking.empty": "Zatím žádné poznámky — přidejte ji výše",
-  "networking.subtitle": "Uložené na serveru a vázané na váš účet, takže vás provázejí na každém zařízení. Obrazovka Databáze si poznámky ponechává jen v tomto zařízení.",
+  "networking.subtitle": "Ukázka práce se vzdáleným serverem — tyto poznámky žijí v API a provázejí váš účet na každém zařízení.",
   "networking.title": "Poznámky na serveru",
   "notes.add": "Přidat poznámku",
   "notes.cancel": "Zrušit",

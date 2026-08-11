@@ -93,7 +93,7 @@
   "input.showPassword": "Passwort anzeigen",
   "localeSwitcher.label": "Sprache ändern",
   "networking.empty": "Noch keine Notizen — fügen Sie oben eine hinzu",
-  "networking.subtitle": "Auf dem Server gespeichert und mit Ihrem Konto verknüpft, also auf jedem Gerät verfügbar. Der Datenbank-Bildschirm behält seine Notizen dagegen auf diesem Gerät.",
+  "networking.subtitle": "Eine Demonstration des entfernten Servers — diese Notizen leben in der API und folgen Ihrem Konto auf jedes Gerät.",
   "networking.title": "Notizen auf dem Server",
   "notes.add": "Notiz hinzufügen",
   "notes.cancel": "Abbrechen",
