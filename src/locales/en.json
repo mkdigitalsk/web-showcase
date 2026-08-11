@@ -93,6 +93,7 @@
   "input.showPassword": "Show password",
   "localeSwitcher.label": "Change language",
   "networking.empty": "No notes yet — add one above",
+  "networking.refresh": "Refresh notes",
   "networking.subtitle": "A remote server demonstration — these notes live in the API and follow your account to any device.",
   "networking.title": "Notes on the server",
   "notes.add": "Add note",

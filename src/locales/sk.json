@@ -93,6 +93,7 @@
   "input.showPassword": "Zobraziť heslo",
   "localeSwitcher.label": "Zmeniť jazyk",
   "networking.empty": "Zatiaľ žiadne poznámky — pridajte ju vyššie",
+  "networking.refresh": "Obnoviť poznámky",
   "networking.subtitle": "Ukážka práce so vzdialeným serverom — tieto poznámky žijú v API a sprevádzajú váš účet na každom zariadení.",
   "networking.title": "Poznámky na serveri",
   "notes.add": "Pridať poznámku",
