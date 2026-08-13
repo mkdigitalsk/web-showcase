@@ -91,6 +91,8 @@
   "database.sort.titleDesc": "Titel — Z bis A",
   "database.subtitle": "Notizen in der eigenen Datenbank des Browsers — diese bleiben auf diesem Gerät, anders als die auf dem Server.",
   "database.title": "Datenbank",
+  "errors.routeBody": "Diese Seite konnte nicht angezeigt werden. Versuchen Sie es erneut und melden Sie sich bei uns, falls es weiterhin auftritt.",
+  "errors.routeTitle": "Etwas ist schiefgelaufen",
   "errors.server": "Auf unserer Seite ist etwas schiefgelaufen. Versuchen Sie es gleich noch einmal.",
   "errors.unreachable": "Server nicht erreichbar. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
   "home.account.title": "Konto",

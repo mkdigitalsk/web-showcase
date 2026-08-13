@@ -1,6 +1,8 @@
 export { Button } from './Button'
 export { Input } from './Input'
 export { PrivateRoute } from './PrivateRoute'
+export { RouteErrorBoundary } from './RouteErrorBoundary'
+export { RouteError } from './RouteError'
 
 export {
   TextH1Bold,

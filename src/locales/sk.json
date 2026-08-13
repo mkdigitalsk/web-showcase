@@ -91,6 +91,8 @@
   "database.sort.titleDesc": "Názov — Z po A",
   "database.subtitle": "Poznámky vo vlastnej databáze prehliadača — tie zostávajú na tomto zariadení, na rozdiel od tých na serveri.",
   "database.title": "Databáza",
+  "errors.routeBody": "Túto stránku sa nepodarilo zobraziť. Skúste to znova a ozvite sa nám, ak sa to bude opakovať.",
+  "errors.routeTitle": "Niečo sa pokazilo",
   "errors.server": "Nastala chyba na našej strane. Skúste to o chvíľu.",
   "errors.unreachable": "Server je nedostupný. Skontrolujte pripojenie a skúste to znova.",
   "home.account.title": "Účet",

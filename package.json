@@ -30,6 +30,7 @@
     "dexie-react-hooks": "^4.4.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-error-boundary": "^6.1.2",
     "react-hook-form": "^7.79.0",
     "react-intl": "^10.1.13",
     "react-resizable-panels": "^3.0.6",

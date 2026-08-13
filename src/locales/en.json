@@ -91,6 +91,8 @@
   "database.sort.titleDesc": "Title — Z to A",
   "database.subtitle": "Notes in the browser's own database — these stay on this device, unlike the ones on the server.",
   "database.title": "Database",
+  "errors.routeBody": "This page could not be shown. Try again, and contact us if it keeps happening.",
+  "errors.routeTitle": "Something went wrong",
   "errors.server": "Something went wrong on our side. Try again shortly.",
   "errors.unreachable": "Can’t reach the server. Check your connection and try again.",
   "home.account.title": "Account",

@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { Outlet } from 'react-router-dom'
+import { RouteErrorBoundary } from '../RouteErrorBoundary'
 import { Footer } from './Footer'
 import { TopBar } from './TopBar'
 
@@ -10,7 +11,9 @@ export function PublicLayout() {
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <TopBar />
       <Box component="main" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Outlet />
+        <RouteErrorBoundary>
+          <Outlet />
+        </RouteErrorBoundary>
       </Box>
       <Footer />
     </Box>

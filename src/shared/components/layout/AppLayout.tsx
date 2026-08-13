@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import { useRef, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Panel, PanelGroup, PanelResizeHandle, type ImperativePanelHandle } from 'react-resizable-panels'
+import { RouteErrorBoundary } from '../RouteErrorBoundary'
 import { Footer } from './Footer'
 import { Sidebar } from './Sidebar'
 import { TopBar } from './TopBar'
@@ -61,7 +62,9 @@ export function AppLayout() {
 
           <Panel id="main" order={2}>
             <Box sx={{ height: '100%', overflow: 'auto' }}>
-              <Outlet />
+              <RouteErrorBoundary>
+                <Outlet />
+              </RouteErrorBoundary>
             </Box>
           </Panel>
         </PanelGroup>
