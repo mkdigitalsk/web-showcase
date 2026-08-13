@@ -47,13 +47,12 @@ jobs:
       - name: Unit tests
         run: npm run test
 
+      # The URL rides the command so this step and `seed gate` are one string. It was a repo variable,
+      # which CI could read and a local gate could not — and dev needs API_URL empty for the proxy to
+      # match, so no committed env file can supply it either. Inlined into the bundle regardless, and
+      # this artifact gates a push and is never deployed — Vercel holds what ships.
       - name: Build (typecheck + bundle)
-        run: npm run build
-        env:
-          # No env file is committed, so the build reads its URL from here. A variable rather than a
-          # secret: it is inlined into the bundle anyway, and masking it would only make an empty value
-          # harder to spot. This artifact gates a push and is never deployed — Vercel holds what ships.
-          API_URL: ${{ vars.API_URL }}
+        run: API_URL=https://api.showcase.mkdigital.sk npm run build
 
       # CI gates main, Vercel deploys production. A promote that never happens is invisible until the
       # live site turns out to be stale, so count the gap here rather than discover it in the bundle.
