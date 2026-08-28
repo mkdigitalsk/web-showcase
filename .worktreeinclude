@@ -1,0 +1,3 @@
+# Copied into every worktree Claude Code creates — gitignored files are otherwise absent,
+# and a worktree session without .claude/ runs with no rules at all.
+.claude/**
