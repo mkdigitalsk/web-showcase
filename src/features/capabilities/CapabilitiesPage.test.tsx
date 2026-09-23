@@ -74,10 +74,9 @@ describe('CapabilitiesPage', () => {
     expect(notificationCtor).toHaveBeenCalledWith('Web Showcase', { body: 'Hello from the web app!' })
   })
 
-  it('flags capabilities the browser lacks as unsupported', () => {
+  it('flags speech, share and vibrate, which jsdom lacks, as unsupported', () => {
     renderWithProviders(<CapabilitiesPage />)
 
-    // jsdom exposes none of speechSynthesis / share / vibrate → the info fallbacks render.
     expect(screen.getByText('Speech Synthesis not supported')).toBeVisible()
     expect(screen.getByText('Web Share API not supported on this browser')).toBeVisible()
     expect(screen.getByText('Vibration API not supported on this device')).toBeVisible()

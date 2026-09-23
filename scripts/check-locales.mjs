@@ -1,21 +1,22 @@
 #!/usr/bin/env node
-// Locale consistency check. en.json is the reference; every other src/locales/*.json
-// must have EXACTLY the same keys, no empty values, and the same ICU placeholders
-// ({name}) per value. Exits non-zero on any mismatch — wired into pre-commit.
-//
-// Run: npm run check-locales   (from web/)
 import { readFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
 const localesDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'locales')
+/**
+ * Every other src/locales/*.json must carry exactly this file's keys, no empty values and the same ICU
+ * placeholders (`{name}`) per value; any mismatch fails the run.
+ */
 const REFERENCE = 'en.json'
 
-// The privacy notice is legal text, translated only where we can stand behind the wording — Slovak is
-// the original, English the one translation. Czech and German deliberately fall back to English via
-// messagesFor(), so their absence here is a decision, not a gap. `privacy.link` is UI, not legal text,
-// and is translated everywhere.
-// Slovak is the original, so the sentence naming it as the original is only shown to the translations.
+/**
+ * Keys a locale may leave out. The privacy notice is legal text, translated only where we can stand
+ * behind the wording — Slovak is the original, English the one translation. Czech and German fall back
+ * to English via messagesFor(), so their absence here is a decision, not a gap; `privacy.link` is UI,
+ * not legal text, and is translated everywhere. The sentence naming Slovak as the original is only
+ * shown to the translations, so Slovak itself leaves it out.
+ */
 const UNTRANSLATED = {
   'sk.json': (key) => key === 'privacy.prevailing',
   'cs.json': (key) => key.startsWith('privacy.') && key !== 'privacy.link',

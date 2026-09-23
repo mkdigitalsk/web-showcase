@@ -7,7 +7,8 @@ import { Locale } from '../enums/locale'
 export interface LocaleOption {
   code: Locale
   label: string
-  flag: string // emoji flag (swap to SVG lib if Windows rendering matters)
+  /** An emoji flag; swap to an SVG library if Windows rendering matters. */
+  flag: string
 }
 
 export const LOCALES: LocaleOption[] = [
@@ -26,9 +27,11 @@ export const MESSAGES: Record<string, Record<string, string>> = {
 
 export const DEFAULT_LOCALE: Locale = Locale.EN_GB
 
-// Not DEFAULT_LOCALE — that is the same open-key lookup and can miss in turn.
-// English underneath every locale: the privacy notice is deliberately only Slovak and English, so a
-// Czech or German reader gets the English text rather than a raw message id.
+/**
+ * English underneath every locale: the privacy notice is deliberately only Slovak and English, so a
+ * Czech or German reader gets the English text rather than a raw message id. Not DEFAULT_LOCALE — that
+ * is the same open-key lookup and can miss in turn.
+ */
 export function messagesFor(locale: Locale): Record<string, string> {
   return { ...enMessages, ...(MESSAGES[locale] ?? {}) }
 }

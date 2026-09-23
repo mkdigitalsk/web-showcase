@@ -4,7 +4,7 @@ import { useSessionStorage } from './useSessionStorage'
 
 afterEach(() => sessionStorage.clear())
 
-// Session-scoped twin of useLocalStorage — same contract, different backing store.
+/** Session-scoped twin of useLocalStorage — same contract, different backing store. */
 describe('useSessionStorage', () => {
   it('hydrates from and persists to sessionStorage', () => {
     sessionStorage.setItem('count', '3')

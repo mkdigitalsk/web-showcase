@@ -12,11 +12,16 @@ interface DeleteAccountDialogProps {
 
 const REFUSED = 403
 
+/** The server refuses a demo account outright, so the retry the fallback asks for can never succeed. */
+const deleteErrorKey = (error: Error | null) =>
+  httpStatus(error) === REFUSED ? 'account.deleteDemo' : requestErrorKey(error, 'account.deleteFailed')
+
+/** A spinner in the icon slot, not the wrapper's `loading`, which swaps the label for an English literal in every locale. */
+const deletingIndicator = <CircularProgress size={16} color="inherit" />
+
 export function DeleteAccountDialog({ error, isDeleting, onCancel, onConfirm }: DeleteAccountDialogProps) {
   const { t } = useTranslation()
-
-  // The server refuses a demo account outright, so the retry the fallback asks for can never succeed.
-  const errorKey = httpStatus(error) === REFUSED ? 'account.deleteDemo' : requestErrorKey(error, 'account.deleteFailed')
+  const errorKey = deleteErrorKey(error)
 
   return (
     <Dialog
@@ -28,12 +33,11 @@ export function DeleteAccountDialog({ error, isDeleting, onCancel, onConfirm }: 
           <Button variant="outline" onClick={onCancel} disabled={isDeleting}>
             {t('account.deleteCancel')}
           </Button>
-          {/* Not the wrapper's `loading`, which swaps the label for an English literal in every locale. */}
           <Button
             color="error"
             onClick={onConfirm}
             disabled={isDeleting}
-            startIcon={isDeleting ? <CircularProgress size={16} color="inherit" /> : undefined}
+            startIcon={isDeleting ? deletingIndicator : undefined}
           >
             {t('account.deleteConfirm')}
           </Button>

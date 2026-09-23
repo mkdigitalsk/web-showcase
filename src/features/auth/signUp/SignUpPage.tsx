@@ -6,6 +6,7 @@ import { Button, Input, TextH4Bold, TextBody1Neutral60, TextLinkPrimary, AlertEr
 import { useTranslation } from '../../../shared/hooks'
 import { requestErrorKey } from '../../../shared/api'
 import { useSignUpMutation } from './useSignUpMutation'
+import { centredColumnSx } from '../centredColumnSx'
 import { signUpSchema, type SignUpFormData } from '../schemas'
 
 export function SignUpPage() {
@@ -22,17 +23,7 @@ export function SignUpPage() {
 
   return (
     <Container maxWidth="sm" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-      <Box
-        sx={{
-          // Auto margins rather than justifyContent: centred content that outgrows the viewport
-          // overflows equally at both ends under `center`, and the top is then unreachable by
-          // scrolling. Auto margins collapse to zero instead, so a short screen scrolls to the title.
-          my: 'auto',
-          py: 4,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <Box sx={centredColumnSx}>
         <TextH4Bold align="center" gutterBottom>
           {t('signUp.title')}
         </TextH4Bold>

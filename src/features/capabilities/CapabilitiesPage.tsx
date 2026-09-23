@@ -27,6 +27,9 @@ import {
 } from '../../shared/components'
 import { useNotification, useTranslation } from '../../shared/hooks'
 
+/** The share sheet rejects when the person dismisses it, and dismissing is not an error to show. */
+const shareOrDismiss = (data: ShareData) => navigator.share(data).catch(() => undefined)
+
 function detectBrowser(): string {
   const ua = navigator.userAgent
   if (ua.includes('Edg')) return 'Microsoft Edge'
@@ -150,15 +153,11 @@ export function CapabilitiesPage() {
 
   const handleShare = async () => {
     if (!navigator.share) return
-    try {
-      await navigator.share({
-        title: t('app.name'),
-        text: t('capabilities.share.text'),
-        url: window.location.href,
-      })
-    } catch {
-      // user cancelled — not an error
-    }
+    await shareOrDismiss({
+      title: t('app.name'),
+      text: t('capabilities.share.text'),
+      url: window.location.href,
+    })
   }
 
   const handleFullscreen = async () => {

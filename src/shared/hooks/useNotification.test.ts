@@ -15,11 +15,14 @@ function stubNotification(permission: NotificationPermission, requestResult: Not
   return { ctor, requestPermission: MockNotification.requestPermission }
 }
 
+/** jsdom has no Notification of its own; this also drops any stub a prior test left behind. */
+const removeNotificationApi = () => Reflect.deleteProperty(globalThis, 'Notification')
+
 afterEach(() => vi.unstubAllGlobals())
 
 describe('useNotification', () => {
   it('reports unsupported when the Notification API is absent', async () => {
-    Reflect.deleteProperty(globalThis, 'Notification') // jsdom lacks it; ensure no prior stub lingers
+    removeNotificationApi()
     const { result } = renderHook(() => useNotification())
 
     expect(result.current.isSupported).toBe(false)

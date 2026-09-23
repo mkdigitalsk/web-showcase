@@ -2,10 +2,11 @@ import { http, HttpResponse } from 'msw'
 import { API_PREFIX } from '../shared/api/apiVersion'
 import { fakeAuthResponse, fakeRemoteNote, fakeUser } from './fakes'
 
-// Wildcard origin (`*`) so handlers match regardless of the axios baseURL under test.
-const auth = `*${API_PREFIX}/auth`
-const users = `*${API_PREFIX}/users`
-const notes = `*${API_PREFIX}/notes`
+/** Any origin, so the handlers match regardless of the axios baseURL under test. */
+const anyOrigin = (path: string) => `*${API_PREFIX}${path}`
+const auth = anyOrigin('/auth')
+const users = anyOrigin('/users')
+const notes = anyOrigin('/notes')
 
 export const handlers = [
   http.get(notes, () => HttpResponse.json([fakeRemoteNote()])),

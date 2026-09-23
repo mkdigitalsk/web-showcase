@@ -14,6 +14,7 @@ import {
 import { useTranslation } from '../../../shared/hooks'
 import { httpStatus, requestErrorKey } from '../../../shared/api'
 import { useSignInMutation } from './useSignInMutation'
+import { centredColumnSx } from '../centredColumnSx'
 import { signInSchema, type SignInFormData } from '../schemas'
 
 const TEST_EMAIL = 'test01@mkdigital.sk'
@@ -39,17 +40,7 @@ export function SignInPage() {
 
   return (
     <Container maxWidth="sm" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-      <Box
-        sx={{
-          // Auto margins rather than justifyContent: centred content that outgrows the viewport
-          // overflows equally at both ends under `center`, and the top is then unreachable by
-          // scrolling. Auto margins collapse to zero instead, so a short screen scrolls to the title.
-          my: 'auto',
-          py: 4,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <Box sx={centredColumnSx}>
         <TextH4Bold align="center" gutterBottom>
           {t('signIn.title')}
         </TextH4Bold>

@@ -62,9 +62,7 @@ describe('SignInPage', () => {
     expect(localStorage.getItem('token')).toBeNull()
   })
 
-  // The 401 interceptor answers an expired session by clearing the token and loading the sign-in
-  // document, which discards this error before it can be read. A rejected credential is not that.
-  it('keeps the session when it is the sign-in itself that is rejected', async () => {
+  it('keeps the session on a rejected credential, which is not the expired session the 401 interceptor reloads on', async () => {
     localStorage.setItem('token', 'still.valid.token')
     server.use(http.post('*/v1/auth/sign-in', () => new HttpResponse(null, { status: 401 })))
     renderWithProviders(<SignInPage />, { route: AppRoutes.SIGN_IN, useRealAuth: true })

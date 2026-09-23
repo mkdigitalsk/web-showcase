@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppLayout, LoadingView, PrivateRoute, PublicLayout } from './shared/components'
 import { Routes as AppRoutes } from './utils'
 
-// One chunk per route: a visitor landing on SignIn pays for SignIn, not for every screen behind the gate.
 const PrivacyPage = lazy(() => import('./features/privacy/PrivacyPage').then((m) => ({ default: m.PrivacyPage })))
 const SignInPage = lazy(() => import('./features/auth/signIn/SignInPage').then((m) => ({ default: m.SignInPage })))
 const SignUpPage = lazy(() => import('./features/auth/signUp/SignUpPage').then((m) => ({ default: m.SignUpPage })))
@@ -20,6 +19,10 @@ const CapabilitiesPage = lazy(() =>
 )
 const AccountPage = lazy(() => import('./features/account/AccountPage').then((m) => ({ default: m.AccountPage })))
 
+/** Without this an unmatched path renders nothing, which reads as a crash rather than a typo. */
+const catchAll = <Route path="*" element={<Navigate to={AppRoutes.ROOT} replace />} />
+
+/** One chunk per route: a visitor landing on SignIn pays for SignIn, not for every screen behind the gate. */
 export function AppRouter() {
   return (
     <Suspense fallback={<LoadingView sx={{ minHeight: '100vh' }} />}>
@@ -40,8 +43,7 @@ export function AppRouter() {
             <Route path={AppRoutes.ACCOUNT} element={<AccountPage />} />
           </Route>
         </Route>
-        {/* Without this an unmatched path renders nothing, which reads as a crash rather than a typo. */}
-        <Route path="*" element={<Navigate to={AppRoutes.ROOT} replace />} />
+        {catchAll}
       </Routes>
     </Suspense>
   )

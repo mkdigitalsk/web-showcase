@@ -28,7 +28,6 @@ declare module '@mui/material/styles' {
   }
 }
 
-// Brand colors composed from the design system (@mkdigitalsk/design-system), not defined here.
 const Neutral0Light = Light.neutral[0]
 const Neutral20Light = Light.neutral[20]
 const Neutral40Light = Light.neutral[40]

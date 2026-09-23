@@ -20,6 +20,8 @@ export const Routes = {
   ACCOUNT: '/account',
 } as const
 
-// Every path the app serves, as a type. A component that takes this instead of `string` cannot be
-// handed a route the router never registered.
+/**
+ * Every path the app serves, as a type. A component that takes this instead of `string` cannot be
+ * handed a route the router never registered.
+ */
 export type AppRoute = (typeof Routes)[keyof typeof Routes]

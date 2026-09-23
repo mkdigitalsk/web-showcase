@@ -10,7 +10,7 @@ import { useLocale } from '../hooks/useLocale'
 import { DEFAULT_LOCALE } from '../i18n/locales'
 import { AuthContext, type AuthContextValue } from './AuthContext'
 
-// Another tab or a stale release can leave anything under this key.
+/** Another tab or a stale release can leave anything under this key. */
 const storedUserSchema = z.object({
   id: z.number(),
   email: z.string(),
@@ -18,6 +18,13 @@ const storedUserSchema = z.object({
   locale: z.string(),
   demo: z.boolean().default(false),
 }) satisfies z.ZodType<AuthUser>
+
+/**
+ * A preference sync is best-effort: the UI already reflects the change through its own setter, so a
+ * refused write leaves it standing.
+ */
+const syncPreference = (write: Promise<AuthUser>, store: (user: AuthUser) => void) =>
+  write.then(store).catch(() => undefined)
 
 function getStoredUser(): AuthUser | null {
   const token = localStorage.getItem(StorageKey.TOKEN)
@@ -68,37 +75,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setLocale(DEFAULT_LOCALE)
   }
 
-  // The call goes first, while the token clearing it away is still there to authorize it. Once the
-  // server answers, the account is gone — a local store that will not clear cannot turn that into
-  // "deletion failed" and park the person on an account that no longer exists.
   const deleteAccount = async () => {
     await userService.deleteAccount()
     await signOut().catch(() => undefined)
   }
 
+  const storeUser = (updatedUser: AuthUser) => {
+    localStorage.setItem(StorageKey.USER, JSON.stringify(updatedUser))
+    setUser(updatedUser)
+  }
+
   const updateThemeMode = async (themeMode: ThemeMode) => {
     setMode(themeMode)
-    // The toggle rides in the top bar, which public pages render too. With nobody signed in there is
-    // nothing to save it against, and the request would 401 into the interceptor's hard reload.
     if (!user) return
-    try {
-      const updatedUser = await userService.updateThemeMode(themeMode)
-      localStorage.setItem(StorageKey.USER, JSON.stringify(updatedUser))
-      setUser(updatedUser)
-    } catch {
-      // Theme preference sync is best-effort — UI already reflects the change via setMode.
-    }
+    await syncPreference(userService.updateThemeMode(themeMode), storeUser)
   }
 
   const updateLocale = async (locale: string) => {
     setLocale(locale)
-    try {
-      const updatedUser = await userService.updateLocale(locale)
-      localStorage.setItem(StorageKey.USER, JSON.stringify(updatedUser))
-      setUser(updatedUser)
-    } catch {
-      // Locale preference sync is best-effort — UI already reflects the change via setLocale.
-    }
+    await syncPreference(userService.updateLocale(locale), storeUser)
   }
 
   const value: AuthContextValue = {

@@ -15,13 +15,19 @@ import type { RemoteNote } from '../../../shared/types'
 import { conflictingNote, useDeleteNote, useUpdateNote } from '../useNotes'
 import { NoteConflictDialog } from './NoteConflictDialog'
 
+interface Draft {
+  title: string
+  content: string
+  /** Captured when editing starts; re-reading it on save would overwrite an unseen edit. */
+  etag: string
+}
+
 export function NoteRow({ note }: { note: RemoteNote }) {
   const { t } = useTranslation()
-  const [draft, setDraft] = useState<{ title: string; content: string; etag: string } | null>(null)
+  const [draft, setDraft] = useState<Draft | null>(null)
   const update = useUpdateNote()
   const remove = useDeleteNote()
 
-  // Captured when editing starts; re-reading it on save would overwrite an unseen edit.
   const startEditing = () => setDraft({ title: note.title, content: note.content, etag: note.etag })
 
   const save = (etag: string) => {

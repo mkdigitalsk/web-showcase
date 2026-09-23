@@ -9,6 +9,14 @@ interface UseNotificationResult {
   notify: (title: string, body?: string) => Promise<NotifyOutcome>
 }
 
+/** Asks only while the person has not decided — a denied permission is never re-prompted. */
+async function askIfUndecided(onAsked: (answer: NotificationPermission) => void): Promise<NotificationPermission> {
+  if (Notification.permission !== 'default') return Notification.permission
+  const answer = await Notification.requestPermission()
+  onAsked(answer)
+  return answer
+}
+
 /**
  * Wraps the browser Notification API behind a stable interface (Dependency Inversion):
  * components depend on `notify` / `permission`, never on the raw `Notification` global.
@@ -19,12 +27,7 @@ export function useNotification(): UseNotificationResult {
 
   const notify = async (title: string, body?: string): Promise<NotifyOutcome> => {
     if (!isSupported) return 'unsupported'
-    // Ask only if the user hasn't decided yet — never re-prompt a denied user.
-    let current = Notification.permission
-    if (current === 'default') {
-      current = await Notification.requestPermission()
-      setPermission(current)
-    }
+    const current = await askIfUndecided(setPermission)
     if (current !== 'granted') return 'denied'
     new Notification(title, body ? { body } : undefined)
     return 'shown'

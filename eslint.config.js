@@ -2,11 +2,13 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-// Its peer range stops at ESLint 9; package.json overrides it, the rules run unchanged on 10.
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import tseslint from 'typescript-eslint'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import { defineConfig, globalIgnores } from 'eslint/config'
+
+/** Its peer range stops at ESLint 9; package.json overrides it, and the rules run unchanged on 10. */
+const jsxA11yRecommended = jsxA11y.flatConfigs.recommended
 
 export default defineConfig([
   globalIgnores(['dist', '.claude']),
@@ -17,16 +19,18 @@ export default defineConfig([
       tseslint.configs.recommendedTypeChecked,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
-      jsxA11y.flatConfigs.recommended,
+      jsxA11yRecommended,
     ],
     languageOptions: {
       globals: globals.browser,
-      // Type-aware linting: without it the any ban and every no-unsafe-* rule silently pass.
+      /** Type-aware linting: without it the any ban and every no-unsafe-* rule silently pass. */
       parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
     },
     rules: {
-      // A path written as a literal agrees with routes.ts only until one of them changes, and the
-      // disagreement surfaces as a link to a route the router never registered.
+      /**
+       * A path written as a literal agrees with routes.ts only until one of them changes, and the
+       * disagreement surfaces as a link to a route the router never registered.
+       */
       'no-restricted-syntax': [
         'error',
         {
@@ -40,8 +44,7 @@ export default defineConfig([
       ],
     },
   },
-  // routes.ts is where the literals are declared, so the rule cannot apply to it.
+  /** routes.ts is where the literals are declared, so the rule cannot apply to it. */
   { files: ['src/utils/routes.ts'], rules: { 'no-restricted-syntax': 'off' } },
-  // Last: turn off ESLint stylistic rules that would fight Prettier (formatting is Prettier's job).
   eslintConfigPrettier,
 ])

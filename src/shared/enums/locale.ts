@@ -5,6 +5,8 @@ export const Locale = {
   DE_DE: 'de-DE',
 } as const
 
-// Predefined locales give autocomplete; the `| (string & {})` keeps the type
-// OPEN so future dynamic / AI-translated locales are added without changing it.
+/**
+ * Predefined locales give autocomplete; the `| (string & {})` keeps the type open so future dynamic or
+ * AI-translated locales are added without changing it.
+ */
 export type Locale = (typeof Locale)[keyof typeof Locale] | (string & {})

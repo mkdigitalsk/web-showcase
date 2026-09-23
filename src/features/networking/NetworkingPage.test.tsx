@@ -50,9 +50,7 @@ describe('NetworkingPage', () => {
     expect(sent).toBe('"0"')
   })
 
-  // The write the server refuses. Both versions have to reach the screen, because choosing between
-  // them is the person's — a client that auto-merged would pick a winner without saying so.
-  it('offers both versions when the row moved under the edit', async () => {
+  it('shows both versions when the row moved under the edit, so the person chooses rather than a silent merge', async () => {
     server.use(
       http.put(`${notes}/1`, () =>
         HttpResponse.json(fakeRemoteNote({ title: 'Someone else won', etag: '"7"' }), { status: 412 }),

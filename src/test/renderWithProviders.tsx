@@ -11,7 +11,7 @@ import { AuthContext, type AuthContextValue } from '../shared/context/AuthContex
 type Options = Omit<RenderOptions, 'wrapper'> & {
   route?: string
   authValue?: AuthContextValue
-  // Wrap in the real AuthProvider so auth flows hit the network (MSW) — for integration tests.
+  /** Wraps in the real AuthProvider so auth flows hit the network (MSW) — for integration tests. */
   useRealAuth?: boolean
 }
 

@@ -9,7 +9,7 @@ import { TextCaption } from '../text'
 
 const GITHUB = 'https://github.com/mkdigitalsk'
 
-// Caption-sized to sit level with the © and version lines beside it, without their neutral dimming.
+/** Caption-sized to sit level with the © and version lines beside it, without their neutral dimming. */
 const linkSx = (theme: Theme) => ({
   fontSize: theme.typography.caption.fontSize,
   color: 'inherit',
@@ -20,8 +20,10 @@ const linkSx = (theme: Theme) => ({
   '&:focus-visible': { opacity: 1, textDecoration: 'underline' },
 })
 
-// Slim brand footer on the same navy surface as the top bar — closes the shell and carries the one
-// piece of app-level meta a dashboard needs visible: company + version (bug-report reference).
+/**
+ * Slim brand footer on the same navy surface as the top bar — closes the shell and carries the one
+ * piece of app-level meta a dashboard needs visible: company + version (bug-report reference).
+ */
 export function Footer() {
   const theme = useTheme()
   const { t } = useTranslation()

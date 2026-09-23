@@ -6,10 +6,12 @@ import { AppLayout } from './layout/AppLayout'
 import { PublicLayout } from './layout/PublicLayout'
 import { RouteErrorBoundary } from './RouteErrorBoundary'
 
-// React logs every caught error to the console; the boundary is the assertion, not the noise.
+/** React logs every caught error to the console; the boundary is the assertion, not the noise. */
+const silenceConsoleError = () => vi.spyOn(console, 'error').mockImplementation(() => {})
+
 beforeEach(() => {
   crashing.value = true
-  vi.spyOn(console, 'error').mockImplementation(() => {})
+  silenceConsoleError()
 })
 afterEach(() => vi.restoreAllMocks())
 
@@ -17,8 +19,10 @@ function Crashing(): never {
   throw new Error('column "owner_id" does not exist')
 }
 
-// The test flips this between the crash and the retry. React may render a throwing tree twice, so the
-// component must not be the thing that decides when to stop crashing.
+/**
+ * The test flips this between the crash and the retry. React may render a throwing tree twice, so the
+ * component must not be the thing that decides when to stop crashing.
+ */
 const crashing = { value: true }
 function CrashesWhileFlagged() {
   if (crashing.value) throw new Error('first render only')
@@ -61,8 +65,10 @@ describe('RouteErrorBoundary', () => {
   })
 })
 
-// Reaches for the layouts production routes through, so removing the boundary from one fails here. The
-// component tests above pass either way — they render the boundary the test itself wrote down.
+/**
+ * Reaches for the layouts production routes through, so removing the boundary from one fails here. The
+ * component tests above pass either way — they render the boundary the test itself wrote down.
+ */
 describe.each([
   ['AppLayout', AppLayout],
   ['PublicLayout', PublicLayout],

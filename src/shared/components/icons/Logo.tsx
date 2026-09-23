@@ -8,22 +8,34 @@ type LogoVariant = 'mark' | 'wordmark' | 'lockup'
 interface LogoProps {
   variant?: LogoVariant
   height?: number
+  /**
+   * Forces the light-on-dark stack (the navy brand bar, the footer) regardless of page scheme; otherwise
+   * the colours adapt light↔dark via CSS vars, so a standalone placement still follows the theme.
+   */
   onDark?: boolean
   sx?: SxProps<Theme>
 }
 
 const FONT = "'Plus Jakarta Sans','Inter','Helvetica Neue',Arial,sans-serif"
 
-// Fixed inline SVG (NOT live HTML text) → can't wrap/reflow/collide, scales crisply, font-independent
-// layout. Geometry = the canonical lockup (design-system mk-digital-lockup.svg): tight stripes, dual-tone MK.
-// `onDark` forces the light-on-dark stack (for the navy brand bar / footer) regardless of page scheme;
-// otherwise colours adapt light↔dark via CSS vars so a standalone placement still follows the theme.
+type SxArray = Extract<SxProps<Theme>, readonly unknown[]>
+
+/** Array.isArray widens the union to any[]; the annotation restores the element type. */
+function toSxArray(sx: SxProps<Theme> | undefined): SxArray {
+  const sxArray: SxArray = Array.isArray(sx) ? sx : sx ? [sx] : []
+  return sxArray
+}
+
+/**
+ * Fixed inline SVG, not live HTML text: it cannot wrap, reflow or collide, scales crisply and lays out
+ * independently of the font. The geometry is the canonical lockup (design-system mk-digital-lockup.svg):
+ * tight stripes, dual-tone MK.
+ */
 export function Logo({ variant = 'wordmark', height = 28, onDark = false, sx }: LogoProps) {
   const uid = useId().replace(/:/g, '')
   const isMark = variant === 'mark'
   const isLockup = variant === 'lockup'
-  // Array.isArray widens the union to any[]; the annotation restores the element type.
-  const sxArray: Extract<SxProps<Theme>, readonly unknown[]> = Array.isArray(sx) ? sx : sx ? [sx] : []
+  const sxArray = toSxArray(sx)
 
   const scheme = onDark
     ? [{ '--s0': Dark.stack[0], '--s1': Dark.stack[1], '--tl': Brand.teal }]

@@ -5,12 +5,14 @@ import { db } from '../../shared/services/db'
 import { noteService } from './service/noteService'
 import { DatabasePage } from './DatabasePage'
 
-// Drives the real feature stack (useLiveQuery -> noteService -> noteRepository -> Dexie)
-// against a fake IndexedDB boundary — the web equivalent of faking a repository.
 afterEach(async () => {
   await db.notes.clear()
 })
 
+/**
+ * Drives the real feature stack (useLiveQuery -> noteService -> noteRepository -> Dexie) against a fake
+ * IndexedDB boundary — the web equivalent of faking a repository.
+ */
 describe('DatabasePage', () => {
   it('names itself with a heading', () => {
     renderWithProviders(<DatabasePage />)
@@ -50,7 +52,6 @@ describe('DatabasePage', () => {
     await db.notes.add(fakeNote({ title: 'Banana', createdAt: 2000 }))
     renderWithProviders(<DatabasePage />)
 
-    // Default DATE_DESC — newest (Banana) precedes oldest (Apple).
     await screen.findByText('Banana')
     expect(precedes('Banana', 'Apple')).toBe(true)
 

@@ -34,8 +34,7 @@ export function AlertDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={onDismiss}>{dismissText}</Button>
-        {/* no-autofocus guards against focus stealing on page load; focus belongs inside an open modal. */}
-        {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+        {/* eslint-disable-next-line jsx-a11y/no-autofocus -- the rule guards page load; focus belongs inside an open modal */}
         <Button onClick={onConfirm} autoFocus>
           {confirmText}
         </Button>

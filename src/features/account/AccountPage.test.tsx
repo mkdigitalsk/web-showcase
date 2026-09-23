@@ -84,8 +84,7 @@ describe('AccountPage', () => {
     expect(screen.getByRole('button', { name: 'Delete account' })).toBeVisible()
   })
 
-  // The bearer proves the order: the call went out before the teardown took the token away.
-  it('deletes on the server, then clears this device, then lands on sign-in', async () => {
+  it('deletes on the server while the token still authorizes it, then clears this device, then lands on sign-in', async () => {
     let bearer: string | null = null
     server.use(
       http.delete(account, ({ request }) => {

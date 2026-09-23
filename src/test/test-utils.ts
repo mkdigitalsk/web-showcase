@@ -1,4 +1,3 @@
-// Single import surface for tests: render + queries + user-event + fakes + the MSW server.
 export { screen, waitFor, within } from '@testing-library/react'
 export { default as userEvent } from '@testing-library/user-event'
 export { http, HttpResponse } from 'msw'

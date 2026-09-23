@@ -53,9 +53,12 @@ function Section({ titleKey, children }: { titleKey: string; children: ReactNode
   )
 }
 
-// A field and a card are read at a human measure; the panel they sit in is not the measure. Mobile
-// fills the width because there is nothing else to fill.
+/**
+ * A field is read at a human measure; the panel it sits in is not the measure. Mobile fills the width
+ * because there is nothing else to fill.
+ */
 const FORM_MEASURE = 480
+/** A card is read at a human measure too, a wider one than a field. */
 const CARD_MEASURE = 720
 
 export function UiComponentsPage() {

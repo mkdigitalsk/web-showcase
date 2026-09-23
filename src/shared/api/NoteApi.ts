@@ -13,8 +13,10 @@ export class NoteApi extends BaseApiService {
     return this._post<RemoteNote>(this.baseRoute, input)
   }
 
-  // The server refuses a write that names no version, so the tag is required rather than optional —
-  // an edit that could not capture one has nothing to send and must not be attempted.
+  /**
+   * The server refuses a write that names no version, so the tag is required rather than optional — an
+   * edit that could not capture one has nothing to send and must not be attempted.
+   */
   updateNote(id: number, input: RemoteNoteInput, etag: string): Promise<RemoteNote> {
     return this._put<RemoteNote>(`${this.baseRoute}/${id}`, input, { headers: { 'If-Match': etag } })
   }

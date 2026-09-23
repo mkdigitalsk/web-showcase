@@ -4,8 +4,10 @@ import { RouteErrorBoundary } from '../RouteErrorBoundary'
 import { Footer } from './Footer'
 import { TopBar } from './TopBar'
 
-// The footer rides along because the privacy notice has to be reachable from the form that collects
-// the data, and AppLayout sits behind PrivateRoute.
+/**
+ * The footer rides along because the privacy notice has to be reachable from the form that collects
+ * the data, and AppLayout sits behind PrivateRoute.
+ */
 export function PublicLayout() {
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

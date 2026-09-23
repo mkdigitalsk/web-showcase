@@ -2,8 +2,15 @@ import { DarkMode, LightMode } from '@mui/icons-material'
 import { Box, IconButton, Tooltip } from '@mui/material'
 import { useColorScheme } from '@mui/material/styles'
 import { useAuth, useTranslation } from '../../hooks'
+import type { ThemeMode } from '../../types'
 
 const ICON_SIZE = 20
+
+/** Toggling off an explicit mode restores 'system' — nothing else in the UI can get back to it. */
+function toggledMode(mode: ThemeMode, systemMode: 'light' | 'dark' | undefined): ThemeMode {
+  const opposite = systemMode === 'dark' ? 'light' : 'dark'
+  return mode === 'system' ? opposite : 'system'
+}
 
 export function ThemeModeToggle() {
   const { t } = useTranslation()
@@ -13,11 +20,7 @@ export function ThemeModeToggle() {
   const resolved = mode === 'system' ? systemMode : mode
   const isDark = resolved === 'dark'
 
-  // Toggling off an explicit mode restores 'system' — nothing else in the UI can get back to it.
-  const handleToggle = () => {
-    const opposite = systemMode === 'dark' ? 'light' : 'dark'
-    void updateThemeMode(mode === 'system' ? opposite : 'system')
-  }
+  const handleToggle = () => void updateThemeMode(toggledMode(mode, systemMode))
 
   const iconSx = {
     position: 'absolute',
