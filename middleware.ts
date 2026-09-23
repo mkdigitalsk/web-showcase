@@ -68,7 +68,7 @@ function siteGate(request: Request, url: URL): Response | undefined {
 /** API_URL is read per request, so one build serves every environment the platform points it at. */
 function forwardToApi(request: Request): Promise<Response> | Response {
   const apiUrl = process.env.API_URL
-  if (apiUrl) return proxyApi(request, apiUrl)
+  if (apiUrl) return proxyApi(request, apiUrl, process.env.PROXY_KEY)
   console.error('API_URL is not set, so /v1 has nowhere to go')
   return new Response(null, { status: HTTP_SERVER_ERROR })
 }

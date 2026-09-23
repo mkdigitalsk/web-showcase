@@ -1,3 +1,4 @@
+import { ipAddress } from '@vercel/functions'
 import { API_PREFIX } from '../src/shared/api/apiVersion.js'
 
 /** `__Host-` pins it to this host, `/` and `Secure` — browsers honour `Secure` on localhost too. */
@@ -8,6 +9,12 @@ const SIGN_OUT_PATH = `${AUTH_PREFIX}sign-out`
 const COOKIE_ATTRIBUTES = 'HttpOnly; Secure; SameSite=Lax'
 const EXPIRED_SESSION = `${SESSION_COOKIE}=; Path=/; Max-Age=0; ${COOKIE_ATTRIBUTES}`
 const SAFE_METHODS = new Set(['GET', 'HEAD'])
+
+/** The API counts a request on this address when it arrives beside the proxy key — studio-api's `RateLimit.kt`. */
+const VISITOR_IP_HEADER = 'x-visitor-ip'
+
+/** Proves to the API that this proxy, not a browser, named the visitor. */
+const PROXY_KEY_HEADER = 'x-proxy-key'
 const HTTP = { NO_CONTENT: 204, UNAUTHORIZED: 401, FORBIDDEN: 403, NOT_ALLOWED: 405, BAD_GATEWAY: 502 } as const
 
 /**
@@ -41,8 +48,9 @@ export function isApiRequest(url: URL): boolean {
  * [crbug]: https://issues.chromium.org/issues/40233601
  *
  * @param apiUrl the API's origin, read at runtime — the browser bundle never carries it.
+ * @param proxyKey the key the API checks beside the visitor's address; without it, no visitor is named.
  */
-export async function proxyApi(request: Request, apiUrl: string): Promise<Response> {
+export async function proxyApi(request: Request, apiUrl: string, proxyKey?: string): Promise<Response> {
   const url = new URL(request.url)
   if (!SAFE_METHODS.has(request.method) && request.headers.get('origin') !== url.origin) {
     return new Response(null, { status: HTTP.FORBIDDEN })
@@ -50,18 +58,25 @@ export async function proxyApi(request: Request, apiUrl: string): Promise<Respon
   if (url.pathname === SIGN_OUT_PATH) return signOut(request)
 
   const session = readCookie(request, SESSION_COOKIE)
-  const upstream = await callApi(request, url, apiUrl, session)
+  const upstream = await callApi(request, url, apiUrl, session, proxyKey)
   if (url.pathname.startsWith(AUTH_PREFIX)) return upstream.ok ? openSession(upstream) : relay(upstream)
   return relay(upstream, session && upstream.status === HTTP.UNAUTHORIZED ? [EXPIRED_SESSION] : [])
 }
 
-async function callApi(request: Request, url: URL, apiUrl: string, session: string | undefined): Promise<Response> {
+async function callApi(
+  request: Request,
+  url: URL,
+  apiUrl: string,
+  session: string | undefined,
+  proxyKey: string | undefined,
+): Promise<Response> {
   const headers = new Headers()
   for (const name of FORWARDED_REQUEST_HEADERS) {
     const value = request.headers.get(name)
     if (value !== null) headers.set(name, value)
   }
   if (session) headers.set('authorization', `Bearer ${session}`)
+  nameVisitor(request, headers, proxyKey)
   const body = SAFE_METHODS.has(request.method) ? undefined : await request.arrayBuffer()
 
   try {
@@ -74,6 +89,19 @@ async function callApi(request: Request, url: URL, apiUrl: string, session: stri
     console.error('API unreachable', error)
     return new Response(null, { status: HTTP.BAD_GATEWAY })
   }
+}
+
+/**
+ * Every visitor reaches the API from the platform's egress, so the API would count them all as one. Vercel overwrites
+ * `x-real-ip`, which `ipAddress()` reads, so no browser can choose the address named here.
+ *
+ * @see {@link https://vercel.com/docs/headers/request-headers#x-real-ip | Vercel — request headers, x-real-ip}
+ */
+function nameVisitor(request: Request, headers: Headers, proxyKey: string | undefined) {
+  const visitor = ipAddress(request)
+  if (!proxyKey || !visitor) return
+  headers.set(VISITOR_IP_HEADER, visitor)
+  headers.set(PROXY_KEY_HEADER, proxyKey)
 }
 
 function signOut(request: Request): Response {

@@ -188,6 +188,34 @@ describe('proxyApi', () => {
     expect(seen).toHaveLength(0)
   })
 
+  it('names the visitor the platform saw, never the one the browser claims, and proves it with the proxy key', async () => {
+    const seen = recordUpstream('post', '/v1/auth/login', () => HttpResponse.json({ user: { id: 1 } }))
+    const request = browserRequest('/v1/auth/login', {
+      method: 'POST',
+      headers: { 'x-real-ip': '198.51.100.9', 'x-visitor-ip': '203.0.113.66', 'x-proxy-key': 'a-guess' },
+      body: '{}',
+    })
+
+    await proxyApi(request, API, 'shared-proxy-key')
+
+    expect(seen[0]?.headers.get('x-visitor-ip')).toBe('198.51.100.9')
+    expect(seen[0]?.headers.get('x-proxy-key')).toBe('shared-proxy-key')
+  })
+
+  it('names no visitor without a proxy key', async () => {
+    const seen = recordUpstream('post', '/v1/auth/login', () => HttpResponse.json({ user: { id: 1 } }))
+    const request = browserRequest('/v1/auth/login', {
+      method: 'POST',
+      headers: { 'x-real-ip': '198.51.100.9', 'x-visitor-ip': '203.0.113.66', 'x-proxy-key': 'a-guess' },
+      body: '{}',
+    })
+
+    await proxyApi(request, API)
+
+    expect(seen[0]?.headers.get('x-visitor-ip')).toBeNull()
+    expect(seen[0]?.headers.get('x-proxy-key')).toBeNull()
+  })
+
   it('answers 502 when the API cannot be reached', async () => {
     server.use(http.get(`${API}/v1/notes`, () => HttpResponse.error()))
 
