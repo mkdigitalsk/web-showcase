@@ -2,8 +2,6 @@ import { defineConfig, loadEnv, type UserConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import type { InlineConfig } from 'vitest/node'
 
-const DEFAULT_API = 'https://api.showcase.mkdigital.sk'
-
 // `test` typed via vitest's own InlineConfig, `plugins` via vite's UserConfig —
 // keeps them apart so vitest's bundled-vite types don't clash with vite 8 (rolldown).
 type Config = UserConfig & { test: InlineConfig }
@@ -21,6 +19,12 @@ export default defineConfig(({ command, mode }): Config => {
     throw new Error('API_URL is required for a production build')
   }
 
+  // No silent fallback: the proxy target is a per-machine choice, and that is what .env.local is for.
+  // Guarded off under vitest, which loads this config without a dev server.
+  if (command === 'serve' && mode !== 'test' && !env.API_PROXY_TARGET) {
+    throw new Error('API_PROXY_TARGET is required — set it in .env.local (e.g. http://localhost:8080)')
+  }
+
   return {
     plugins: [react()],
     define: {
@@ -34,7 +38,7 @@ export default defineConfig(({ command, mode }): Config => {
         // need the API to allow-list a localhost origin, which is a production trust decision made for a
         // development convenience. Same-origin here costs nothing and grants nothing.
         '/v1': {
-          target: env.API_PROXY_TARGET || DEFAULT_API,
+          target: env.API_PROXY_TARGET,
           changeOrigin: true,
           // The hop is server-to-server, so the browser's origin must not travel with it — the API
           // rejects every request carrying an origin outside its allow-list, preflight or not.
@@ -44,6 +48,11 @@ export default defineConfig(({ command, mode }): Config => {
     },
     test: {
       environment: 'jsdom',
+      // Node ≥25 ships its own Web Storage globals (inert without --localstorage-file) and the test
+      // worker keeps them over jsdom's, so every localStorage call fails. The flag hands the globals
+      // back to jsdom. It exists only since Node 22.4 — an older node rejects it as a bad option, so
+      // it is version-guarded rather than unconditional.
+      execArgv: Number(process.versions.node.split('.')[0]) >= 23 ? ['--no-experimental-webstorage'] : [],
       globals: true,
       // The 5s default is tuned for unit tests. Ours are integration tests that type through real MUI
       // re-renders into a live Dexie query, which alone spends seconds before anything is asserted.

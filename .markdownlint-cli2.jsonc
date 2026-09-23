@@ -1,0 +1,14 @@
+{
+  // MD013 line-length is off across the industry: the tools don't enforce layout, nor do we.
+  "config": {
+    "MD013": false,
+    // One unordered-list marker (dash — prettier's default) instead of "consistent" inference.
+    "MD004": { "style": "dash" },
+    "MD060": false,
+    // The README feature grid is an HTML table by design.
+    "MD033": false
+  },
+  "globs": ["**/*.md"],
+  // The bridge CLAUDE.md is one `@AGENTS.md` line, not a document.
+  "ignores": ["CLAUDE.md", "**/node_modules", "dist", "build"]
+}
