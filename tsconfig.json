@@ -1,4 +1,6 @@
 {
+  /* Vercel type-checks middleware.ts against this file, not the referenced projects, so it carries Node's types. */
+  "compilerOptions": { "types": ["node"] },
   "files": [],
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }

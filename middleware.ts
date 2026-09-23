@@ -1,5 +1,5 @@
 import { next } from '@vercel/functions'
-import { isApiRequest, proxyApi } from './server/apiProxy'
+import { isApiRequest, proxyApi } from './server/apiProxy.js'
 
 const ACCESS_COOKIE = 'site_access'
 const ONE_YEAR = 60 * 60 * 24 * 365

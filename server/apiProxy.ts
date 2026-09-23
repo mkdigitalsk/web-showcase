@@ -1,4 +1,4 @@
-import { API_PREFIX } from '../src/shared/api/apiVersion'
+import { API_PREFIX } from '../src/shared/api/apiVersion.js'
 
 /** `__Host-` pins it to this host, `/` and `Secure` — browsers honour `Secure` on localhost too. */
 export const SESSION_COOKIE = '__Host-session'
