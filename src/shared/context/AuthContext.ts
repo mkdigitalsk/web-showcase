@@ -20,6 +20,7 @@ export interface AuthContextValue {
    * request would 401 into the interceptor's hard reload.
    */
   updateThemeMode: (themeMode: ThemeMode) => Promise<void>
+  /** Applies the language at once and, like the theme, saves it to the account only when somebody is signed in. */
   updateLocale: (locale: string) => Promise<void>
 }
 

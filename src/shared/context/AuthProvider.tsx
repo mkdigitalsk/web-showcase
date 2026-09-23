@@ -66,6 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const updateLocale = async (locale: string) => {
     setLocale(locale)
+    if (!user) return
     await syncPreference(userService.updateLocale(locale), storeUser)
   }
 
