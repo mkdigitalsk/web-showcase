@@ -32,7 +32,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 - TanStack Query + Axios
 - Showcase API (`/v1`)
 - IndexedDB via Dexie
-- JWT auth (sign in)
+- Session in an HttpOnly cookie, held by the app's own `/v1` proxy
 
 </td>
 </tr>
@@ -63,7 +63,7 @@ A production-ready React web app showcasing modern frontend development with MUI
 
 ## Tech stack
 
-React · TypeScript · Vite · MUI v9 + Emotion · TanStack Query · Axios · Dexie (IndexedDB) · React Hook Form + Zod · react-intl · React Router · **[@mkdigitalsk/design-system](https://github.com/mkdigitalsk/design-system)**.
+React · TypeScript · Vite · React Router (framework mode, SPA) · MUI v9 + Emotion · TanStack Query · Axios · Dexie (IndexedDB) · React Hook Form + Zod · react-intl · **[@mkdigitalsk/design-system](https://github.com/mkdigitalsk/design-system)**.
 
 ## Design system
 
@@ -75,6 +75,7 @@ Brand colors come from the shared **[@mkdigitalsk/design-system](https://github.
 
 ```bash
 npm install   # needs a GitHub Packages token for the private design-system (NODE_AUTH_TOKEN)
+cp .env.example .env.local   # then set API_URL — the dev server refuses to start without it
 npm run dev   # http://localhost:5173
 ```
 
@@ -88,15 +89,6 @@ npm run dev   # http://localhost:5173
 | `npm run lint`          | ESLint                        |
 | `npm run check-locales` | verify locale key parity      |
 
-### The one advisory left open
-
-`npm audit --omit=dev` reports one high on `react-router`: [RSC Mode CSRF Bypass][rsc-csrf]. It does not
-reach this app — routing is `BrowserRouter` in the browser and no `@react-router/*` server package is
-installed, so there is no RSC mode to bypass. It is fixed only in react-router 8; npm's suggested fix
-downgrades to 7.11.0, which loses features for nothing.
-
-[rsc-csrf]: https://github.com/advisories/GHSA-qwww-vcr4-c8h2
-
 ## Architecture
 
-Feature-based — `src/features/<name>/`: `auth` · `home` · `ui-components` · `networking` · `storage` · `database` · `capabilities` · `account`. Shared code in `src/shared/` (components, hooks, theme, services).
+`src/routes.ts` is the route table and `src/root.tsx` the document. Feature-based — `src/features/<name>/`: `auth` · `privacy` · `ui-components` · `networking` · `storage` · `database` · `capabilities` · `account`. Shared code in `src/shared/` (components, hooks, theme, services).

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router'
 import { Routes as AppRoutes } from '../../../utils'
 import {
   renderWithProviders,
@@ -10,7 +10,7 @@ import {
   http,
   HttpResponse,
 } from '../../../test/test-utils'
-import { SignInPage } from './SignInPage'
+import SignInPage from './SignInPage'
 
 describe('SignInPage', () => {
   it('blocks submission and flags required fields when empty', async () => {
@@ -47,7 +47,6 @@ describe('SignInPage', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(await screen.findByText('UI Components Page')).toBeVisible()
-    expect(localStorage.getItem('token')).toBe('fake.jwt.token')
   })
 
   it('shows an error message when the credentials are rejected', async () => {
@@ -59,20 +58,6 @@ describe('SignInPage', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(await screen.findByText('Invalid email or password')).toBeVisible()
-    expect(localStorage.getItem('token')).toBeNull()
-  })
-
-  it('keeps the session on a rejected credential, which is not the expired session the 401 interceptor reloads on', async () => {
-    localStorage.setItem('token', 'still.valid.token')
-    server.use(http.post('*/v1/auth/sign-in', () => new HttpResponse(null, { status: 401 })))
-    renderWithProviders(<SignInPage />, { route: AppRoutes.SIGN_IN, useRealAuth: true })
-
-    await userEvent.type(screen.getByLabelText('Email'), 'test01@mkdigital.sk')
-    await userEvent.type(screen.getByLabelText('Password'), 'wrong-password')
-    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }))
-
-    expect(await screen.findByText('Invalid email or password')).toBeVisible()
-    expect(localStorage.getItem('token')).toBe('still.valid.token')
   })
 
   it('separates an unreachable server from a rejected credential', async () => {

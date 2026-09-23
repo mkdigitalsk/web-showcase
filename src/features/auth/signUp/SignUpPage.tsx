@@ -9,7 +9,7 @@ import { useSignUpMutation } from './useSignUpMutation'
 import { centredColumnSx } from '../centredColumnSx'
 import { signUpSchema, type SignUpFormData } from '../schemas'
 
-export function SignUpPage() {
+export default function SignUpPage() {
   const { t } = useTranslation()
   const signUpMutation = useSignUpMutation()
 

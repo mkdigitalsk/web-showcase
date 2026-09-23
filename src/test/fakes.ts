@@ -11,7 +11,7 @@ export function fakeAuthUser(overrides: Partial<AuthUser> = {}): AuthUser {
 }
 
 export function fakeAuthResponse(overrides: Partial<AuthResponse> = {}): AuthResponse {
-  return { token: 'fake.jwt.token', user: fakeAuthUser(overrides.user), ...overrides }
+  return { user: fakeAuthUser(overrides.user), ...overrides }
 }
 
 export function fakeUser(overrides: Partial<User> = {}): User {

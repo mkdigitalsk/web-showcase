@@ -10,5 +10,5 @@
   },
   "globs": ["**/*.md"],
   // The bridge CLAUDE.md is one `@AGENTS.md` line, not a document.
-  "ignores": ["CLAUDE.md", "**/node_modules", "dist", "build"]
+  "ignores": ["CLAUDE.md", "**/node_modules", "build"]
 }

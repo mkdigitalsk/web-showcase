@@ -8,4 +8,4 @@ npm run lint
 npm run lint:md
 npm run check-locales
 npm run test
-API_URL=https://api.showcase.mkdigital.sk npm run build
+npm run build

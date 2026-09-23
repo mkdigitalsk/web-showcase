@@ -61,7 +61,7 @@ function CapabilityCard({ title, subtitle, children }: { title: string; subtitle
   )
 }
 
-export function CapabilitiesPage() {
+export default function CapabilitiesPage() {
   const { t } = useTranslation()
 
   const [clipboardText, setClipboardText] = useState(t('capabilities.clipboard.defaultText'))

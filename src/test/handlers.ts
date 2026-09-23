@@ -2,7 +2,10 @@ import { http, HttpResponse } from 'msw'
 import { API_PREFIX } from '../shared/api/apiVersion'
 import { fakeAuthResponse, fakeRemoteNote, fakeUser } from './fakes'
 
-/** Any origin, so the handlers match regardless of the axios baseURL under test. */
+/**
+ * The page's side of the proxy: what `/v1` answers the browser, with the token already taken into the cookie.
+ * Any origin, so a handler matches however the request was addressed. A visitor starts signed out.
+ */
 const anyOrigin = (path: string) => `*${API_PREFIX}${path}`
 const auth = anyOrigin('/auth')
 const users = anyOrigin('/users')
@@ -13,7 +16,11 @@ export const handlers = [
 
   http.post(`${auth}/sign-in`, () => HttpResponse.json(fakeAuthResponse())),
 
-  http.post(`${auth}/sign-up`, () => HttpResponse.json(fakeAuthResponse())),
+  http.post(`${auth}/sign-up`, () => HttpResponse.json(fakeAuthResponse(), { status: 201 })),
+
+  http.post(`${auth}/sign-out`, () => new HttpResponse(null, { status: 204 })),
+
+  http.get(`${users}/me`, () => new HttpResponse(null, { status: 401 })),
 
   http.put(`${users}/me/theme-mode`, async ({ request }) => {
     const { themeMode } = (await request.json()) as { themeMode: string }

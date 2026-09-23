@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto'
 import { QueryClient } from '@tanstack/react-query'
 import { describe, it, expect, afterEach } from 'vitest'
-import { fakeAuthUser, fakeNote, fakeRemoteNote } from '../../test/test-utils'
+import { fakeNote, fakeRemoteNote } from '../../test/test-utils'
 import { StorageKey } from '../enums/storageKey'
 import { clearLocalUserData } from './clearLocalUserData'
 import { db } from './db'
@@ -16,8 +16,6 @@ afterEach(async () => {
 describe('clearLocalUserData', () => {
   it('empties every store the signed-in person filled', async () => {
     const queryClient = new QueryClient()
-    localStorage.setItem(StorageKey.TOKEN, 'fake.jwt.token')
-    localStorage.setItem(StorageKey.USER, JSON.stringify(fakeAuthUser()))
     localStorage.setItem(StorageKey.PERSISTENT_COUNTER, '3')
     sessionStorage.setItem(StorageKey.SESSION_COUNTER, '2')
     await db.notes.add(fakeNote())
@@ -25,8 +23,6 @@ describe('clearLocalUserData', () => {
 
     await clearLocalUserData(queryClient)
 
-    expect(localStorage.getItem(StorageKey.TOKEN)).toBeNull()
-    expect(localStorage.getItem(StorageKey.USER)).toBeNull()
     expect(localStorage.getItem(StorageKey.PERSISTENT_COUNTER)).toBeNull()
     expect(sessionStorage.getItem(StorageKey.SESSION_COUNTER)).toBeNull()
     expect(await db.notes.toArray()).toHaveLength(0)

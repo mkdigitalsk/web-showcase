@@ -3,7 +3,7 @@ import { describe, it, expect, afterEach, vi } from 'vitest'
 import { renderWithProviders, screen, userEvent, fakeNote, waitFor } from '../../test/test-utils'
 import { db } from '../../shared/services/db'
 import { noteService } from './service/noteService'
-import { DatabasePage } from './DatabasePage'
+import DatabasePage from './DatabasePage'
 
 afterEach(async () => {
   await db.notes.clear()

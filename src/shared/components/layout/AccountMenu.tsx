@@ -1,5 +1,5 @@
 import { Avatar, IconButton, Tooltip } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useAuth, useTranslation } from '../../hooks'
 import type { AuthUser } from '../../types'
 import { Routes } from '../../../utils'

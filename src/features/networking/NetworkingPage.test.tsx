@@ -9,7 +9,7 @@ import {
   userEvent,
   fakeRemoteNote,
 } from '../../test/test-utils'
-import { NetworkingPage } from './NetworkingPage'
+import NetworkingPage from './NetworkingPage'
 
 const notes = `*${API_PREFIX}/notes`
 

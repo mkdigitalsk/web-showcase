@@ -3,6 +3,7 @@ export { default as userEvent } from '@testing-library/user-event'
 export { http, HttpResponse } from 'msw'
 
 export { renderWithProviders, fakeAuthValue } from './renderWithProviders'
+export { renderApp } from './renderApp'
 export { server } from './server'
 export { handlers } from './handlers'
 export { fakeAuthUser, fakeAuthResponse, fakeUser, fakeNote, fakeRemoteNote } from './fakes'

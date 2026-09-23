@@ -17,7 +17,7 @@ const SECTIONS = [
   'changes',
 ] as const
 
-export function PrivacyPage() {
+export default function PrivacyPage() {
   const { t, intl } = useTranslation()
 
   return (

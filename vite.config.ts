@@ -1,6 +1,8 @@
 import { defineConfig, loadEnv, type ConfigEnv, type UserConfig } from 'vite'
+import { reactRouter } from '@react-router/dev/vite'
 import react from '@vitejs/plugin-react'
 import type { InlineConfig } from 'vitest/node'
+import { apiProxy } from './server/viteApiProxy'
 
 /**
  * `test` typed via vitest's own InlineConfig, `plugins` via vite's UserConfig — keeps them apart so
@@ -15,55 +17,34 @@ type Config = UserConfig & { test: InlineConfig }
  */
 const loadUnprefixedEnv = (mode: string) => loadEnv(mode, process.cwd(), '')
 
-/**
- * A build has no dev server and so no proxy: without a base URL every call would resolve against the
- * static host. Failing here keeps that deploy from shipping as 404s in the browser.
- */
-function requireApiUrl(env: Record<string, string>): void {
-  if (!env.API_URL) throw new Error('API_URL is required for a production build')
-}
-
-/** No silent fallback: the proxy target is a per-machine choice, and that is what .env.local is for. */
-function requireProxyTarget(env: Record<string, string>): void {
-  if (!env.API_PROXY_TARGET) {
-    throw new Error('API_PROXY_TARGET is required — set it in .env.local (e.g. http://localhost:8080)')
-  }
-}
-
 /** Vitest loads this config as `serve` in mode `test`, and starts no dev server. */
-const startsDevServer = ({ command, mode }: ConfigEnv) => command === 'serve' && mode !== 'test'
+const isVitest = ({ mode }: ConfigEnv) => mode === 'test'
+
+/**
+ * Under Vitest the React plugin compiles the components and nothing else runs: React Router's plugin serves
+ * and builds an app, and a test renders modules one by one.
+ */
+function pluginsFor(configEnv: ConfigEnv, env: Record<string, string>) {
+  if (isVitest(configEnv)) return [react()]
+  return [apiProxy(env.API_URL), reactRouter()]
+}
 
 // https://vite.dev/config/
 export default defineConfig((configEnv): Config => {
-  const { command, mode } = configEnv
-  const env = loadUnprefixedEnv(mode)
-  if (command === 'build') requireApiUrl(env)
-  if (startsDevServer(configEnv)) requireProxyTarget(env)
+  const env = loadUnprefixedEnv(configEnv.mode)
 
   return {
-    plugins: [react()],
+    plugins: pluginsFor(configEnv, env),
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version ?? '0.0.0'),
-      /** Empty in dev and under test, where requests stay same-origin — the proxy below carries them. */
-      __API_URL__: JSON.stringify(env.API_URL ?? ''),
     },
-    server: {
-      proxy: {
-        /**
-         * The dev server forwards the API rather than the browser calling it: a cross-origin call would
-         * need the API to allow-list a localhost origin, which is a production trust decision made for
-         * a development convenience. Same-origin here costs nothing and grants nothing.
-         */
-        '/v1': {
-          target: env.API_PROXY_TARGET,
-          changeOrigin: true,
-          /**
-           * The hop is server-to-server, so the browser's origin must not travel with it — the API
-           * rejects every request carrying an origin outside its allow-list, preflight or not.
-           */
-          configure: (proxy) => proxy.on('proxyReq', (proxyReq) => proxyReq.removeHeader('origin')),
-        },
-      },
+    ssr: {
+      /**
+       * The build renders the root once in Node to write `index.html`. MUI's ESM files import
+       * react-transition-group by directory, which Node's loader refuses, so both are bundled into that render
+       * the way the browser build bundles them.
+       */
+      noExternal: [/^@mui\//, 'react-transition-group'],
     },
     test: {
       environment: 'jsdom',

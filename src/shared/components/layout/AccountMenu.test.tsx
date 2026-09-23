@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router'
 import { Routes as AppRoutes } from '../../../utils'
 import { renderWithProviders, fakeAuthValue, fakeAuthUser, screen, userEvent } from '../../../test/test-utils'
 import { AccountMenu } from './AccountMenu'
@@ -13,7 +13,6 @@ function renderAvatar() {
     {
       authValue: fakeAuthValue({
         user: fakeAuthUser({ email: 'test01@mkdigital.sk' }),
-        isAuthenticated: true,
       }),
     },
   )

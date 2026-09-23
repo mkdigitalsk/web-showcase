@@ -61,7 +61,7 @@ const FORM_MEASURE = 480
 /** A card is read at a human measure too, a wider one than a field. */
 const CARD_MEASURE = 720
 
-export function UiComponentsPage() {
+export default function UiComponentsPage() {
   const { t } = useTranslation()
 
   const [alertDialogOpen, setAlertDialogOpen] = useState(false)

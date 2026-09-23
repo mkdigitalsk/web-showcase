@@ -21,7 +21,7 @@ const TEST_EMAIL = 'test01@mkdigital.sk'
 const TEST_PASSWORD = 'MKDigitalTest1@'
 const HTTP_UNAUTHORIZED = 401
 
-export function SignInPage() {
+export default function SignInPage() {
   const { t } = useTranslation()
   const signInMutation = useSignInMutation()
 

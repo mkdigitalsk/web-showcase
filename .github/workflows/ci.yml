@@ -50,12 +50,10 @@ jobs:
       - name: Unit tests
         run: npm run test
 
-      # The URL rides the command so this step and `seed gate` are one string. It was a repo variable,
-      # which CI could read and a local gate could not — and dev needs API_URL empty for the proxy to
-      # match, so no committed env file can supply it either. Inlined into the bundle regardless, and
-      # this artifact gates a push and is never deployed — Vercel holds what ships.
+      # The bundle carries no API address — the edge proxy reads API_URL at runtime — so the build takes
+      # nothing. This artifact gates a push and is never deployed; Vercel holds what ships.
       - name: Build (typecheck + bundle)
-        run: API_URL=https://api.showcase.mkdigital.sk npm run build
+        run: npm run build
 
       # CI gates main, Vercel deploys production. A promote that never happens is invisible until the
       # live site turns out to be stale, so count the gap here rather than discover it in the bundle.

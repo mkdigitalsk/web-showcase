@@ -15,6 +15,4 @@ export async function clearLocalUserData(queryClient: QueryClient): Promise<void
   queryClient.clear()
   localStorage.removeItem(StorageKey.PERSISTENT_COUNTER)
   sessionStorage.removeItem(StorageKey.SESSION_COUNTER)
-  localStorage.removeItem(StorageKey.USER)
-  localStorage.removeItem(StorageKey.TOKEN)
 }

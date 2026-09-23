@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { renderWithProviders, screen, userEvent } from '../../test/test-utils'
-import { CapabilitiesPage } from './CapabilitiesPage'
+import CapabilitiesPage from './CapabilitiesPage'
 
 function stubNavigator(prop: string, value: unknown) {
   Object.defineProperty(navigator, prop, { value, configurable: true, writable: true })

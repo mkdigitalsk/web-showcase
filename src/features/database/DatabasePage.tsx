@@ -18,7 +18,7 @@ import { useTranslation } from '../../shared/hooks'
 import { useNotesDb, type SortOption } from './hooks/useNotesDb'
 import { type Note } from './types'
 
-export function DatabasePage() {
+export default function DatabasePage() {
   const { t } = useTranslation()
   const {
     notes,

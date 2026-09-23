@@ -3,15 +3,15 @@ import type { AuthUser, SignInRequest, SignUpRequest, ThemeMode } from '../types
 
 export interface AuthContextValue {
   user: AuthUser | null
-  isLoading: boolean
-  isAuthenticated: boolean
   signIn: (credentials: SignInRequest) => Promise<void>
   signUp: (data: SignUpRequest) => Promise<void>
+  /** The session cookie is gone before this device's data goes, so a refusal leaves the person signed in. */
   signOut: () => Promise<void>
   /**
-   * The server call goes first, while the token clearing it away is still there to authorize it. Once
-   * the server answers, the account is gone — a local store that will not clear cannot turn that into
-   * "deletion failed" and park the person on an account that no longer exists.
+   * The server call goes first, while the session clearing it away is still there to authorize it. Once
+   * the server answers, the account is gone — neither a proxy that will not end the session nor a local store
+   * that will not clear can turn that into "deletion failed" and park the person on an account that no
+   * longer exists.
    */
   deleteAccount: () => Promise<void>
   /**

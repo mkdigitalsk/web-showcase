@@ -15,7 +15,7 @@ import { ThemeModeToggle } from './ThemeModeToggle'
 
 function renderToggle(updateThemeMode: (themeMode: ThemeMode) => Promise<void>) {
   return renderWithProviders(<ThemeModeToggle />, {
-    authValue: fakeAuthValue({ user: fakeAuthUser(), isAuthenticated: true, updateThemeMode }),
+    authValue: fakeAuthValue({ user: fakeAuthUser(), updateThemeMode }),
   })
 }
 

@@ -1,6 +1,6 @@
 import { GitHub } from '@mui/icons-material'
 import { Box, IconButton } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useTheme, type Theme } from '@mui/material/styles'
 import { useTranslation } from '../../hooks'
 import { Routes } from '../../../utils'

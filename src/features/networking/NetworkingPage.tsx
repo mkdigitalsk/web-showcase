@@ -2,12 +2,21 @@ import { Refresh } from '@mui/icons-material'
 import { Box, IconButton, Stack } from '@mui/material'
 import { AlertError, LoadingView, PageContainer, PageHeader, TextBody1Neutral60 } from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
-import { requestErrorKey } from '../../shared/api'
+import { queryClient, requestErrorKey } from '../../shared/api'
 import { CreateNote } from './components/CreateNote'
 import { NoteRow } from './components/NoteRow'
-import { useNotesQuery } from './useNotes'
+import { notesQueryOptions, useNotesQuery } from './useNotes'
 
-export function NetworkingPage() {
+/**
+ * The notes arrive with the navigation. A failed load does not throw: the page shows it beside its own Retry,
+ * where the action happened, rather than handing the route to its error boundary.
+ */
+export async function clientLoader() {
+  await queryClient.prefetchQuery(notesQueryOptions)
+  return null
+}
+
+export default function NetworkingPage() {
   const { t } = useTranslation()
   const { data: notes, isLoading, isError, error, refetch, isFetching } = useNotesQuery()
 

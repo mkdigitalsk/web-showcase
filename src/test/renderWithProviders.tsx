@@ -1,8 +1,9 @@
 import type { ReactElement, ReactNode } from 'react'
 import { render, type RenderOptions } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MemoryRouter } from 'react-router-dom'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { createRoutesStub } from 'react-router'
+import { queryClient } from '../shared/api/queryClient'
 import { theme } from '../shared/theme'
 import { LocaleProvider } from '../shared/context/LocaleProvider'
 import { AuthProvider } from '../shared/context/AuthProvider'
@@ -15,12 +16,14 @@ type Options = Omit<RenderOptions, 'wrapper'> & {
   useRealAuth?: boolean
 }
 
+/**
+ * One component under the app's providers and a router of its own. For a page in its place in the route
+ * table — guard, layout, boundary — render the app itself with `renderApp`.
+ */
 export function renderWithProviders(
   ui: ReactElement,
   { route = '/', authValue, useRealAuth, ...options }: Options = {},
 ) {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
-
   function Wrapper({ children }: { children: ReactNode }) {
     const withAuth = useRealAuth ? (
       <AuthProvider>{children}</AuthProvider>
@@ -32,22 +35,19 @@ export function renderWithProviders(
     return (
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <LocaleProvider>
-            <MemoryRouter initialEntries={[route]}>{withAuth}</MemoryRouter>
-          </LocaleProvider>
+          <LocaleProvider>{withAuth}</LocaleProvider>
         </ThemeProvider>
       </QueryClientProvider>
     )
   }
 
-  return render(ui, { wrapper: Wrapper, ...options })
+  const Stub = createRoutesStub([{ path: '*', Component: () => ui }])
+  return render(<Stub initialEntries={[route]} />, { wrapper: Wrapper, ...options })
 }
 
 export function fakeAuthValue(overrides: Partial<AuthContextValue> = {}): AuthContextValue {
   return {
     user: null,
-    isLoading: false,
-    isAuthenticated: false,
     signIn: async () => {},
     signUp: async () => {},
     signOut: async () => {},

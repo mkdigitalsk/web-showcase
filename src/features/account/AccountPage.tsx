@@ -1,8 +1,8 @@
 import { DeleteForever, Logout } from '@mui/icons-material'
 import { Box, Stack } from '@mui/material'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import {
+  AlertError,
   Button,
   ElevatedCard,
   PageContainer,
@@ -11,22 +11,18 @@ import {
   TextBody1Neutral80,
   TextCaptionNeutral60,
 } from '../../shared/components'
+import { requestErrorKey } from '../../shared/api'
 import { useAuth, useTranslation } from '../../shared/hooks'
-import { Routes } from '../../utils'
 import { DeleteAccountDialog } from './components/DeleteAccountDialog'
 import { useDeleteAccountMutation } from './useDeleteAccountMutation'
+import { useSignOutMutation } from './useSignOutMutation'
 
-export function AccountPage() {
+export default function AccountPage() {
   const { t } = useTranslation()
-  const { user, signOut } = useAuth()
-  const navigate = useNavigate()
+  const { user } = useAuth()
   const [isConfirming, setIsConfirming] = useState(false)
+  const signOut = useSignOutMutation()
   const deleteAccount = useDeleteAccountMutation()
-
-  const handleSignOut = async () => {
-    await signOut()
-    await navigate(Routes.SIGN_IN)
-  }
 
   const closeDialog = () => {
     if (deleteAccount.isPending) return
@@ -45,9 +41,10 @@ export function AccountPage() {
         </ElevatedCard>
 
         <Box>
-          <Button variant="outline" startIcon={<Logout />} onClick={() => void handleSignOut()}>
+          <Button variant="outline" startIcon={<Logout />} loading={signOut.isPending} onClick={() => signOut.mutate()}>
             {t('home.signOut')}
           </Button>
+          {signOut.error && <AlertError sx={{ mt: 2 }}>{t(requestErrorKey(signOut.error, 'common.error'))}</AlertError>}
         </Box>
 
         <Box>

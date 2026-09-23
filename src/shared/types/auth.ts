@@ -18,7 +18,7 @@ export interface AuthUser {
   demo: boolean
 }
 
+/** The API's token stays with the proxy as the session cookie; the page receives only who signed in. */
 export interface AuthResponse {
-  token: string
   user: AuthUser
 }

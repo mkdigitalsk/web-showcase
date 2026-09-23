@@ -11,7 +11,7 @@ import {
 import { useLocalStorage, useSessionStorage, useTranslation } from '../../shared/hooks'
 import { StorageKey } from '../../shared/enums/storageKey'
 
-export function StoragePage() {
+export default function StoragePage() {
   const { t } = useTranslation()
   const [sessionCounter, setSessionCounter, clearSession] = useSessionStorage(StorageKey.SESSION_COUNTER, 0)
   const [persistentCounter, setPersistentCounter] = usePersistentCounter()

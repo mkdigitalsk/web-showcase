@@ -5,9 +5,16 @@ import type { RemoteNote, RemoteNoteInput } from '../../shared/types'
 
 const NOTES_KEY = ['notes']
 
+/**
+ * Fresh for long enough that the page, mounting right after its `clientLoader` fetched the notes, reads them
+ * rather than fetching them a second time.
+ */
+const LOADED_WITH_THE_PAGE_MS = 10_000
+
 export const notesQueryOptions = queryOptions({
   queryKey: NOTES_KEY,
   queryFn: () => noteService.getNotes(),
+  staleTime: LOADED_WITH_THE_PAGE_MS,
 })
 
 export function useNotesQuery() {

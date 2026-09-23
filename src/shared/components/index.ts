@@ -1,7 +1,5 @@
 export { Button } from './Button'
 export { Input } from './Input'
-export { PrivateRoute } from './PrivateRoute'
-export { RouteErrorBoundary } from './RouteErrorBoundary'
 export { RouteError } from './RouteError'
 
 export {
@@ -51,4 +49,4 @@ export { Checkbox, Switch, RadioButton, Slider } from './forms'
 
 export { Divider, DividerPrimary } from './dividers'
 
-export { Sidebar, AppLayout, PublicLayout, PageContainer, PageHeader } from './layout'
+export { Sidebar, PageContainer, PageHeader } from './layout'

@@ -9,7 +9,7 @@ import {
   Storage as StorageIcon,
 } from '@mui/icons-material'
 import { Box, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Tooltip } from '@mui/material'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router'
 import { useTranslation } from '../../hooks'
 import { Routes } from '../../../utils'
 import { Divider } from '../dividers'

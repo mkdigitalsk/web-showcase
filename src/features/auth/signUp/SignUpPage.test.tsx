@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router'
 import { Routes as AppRoutes } from '../../../utils'
 import {
   renderWithProviders,
@@ -10,7 +10,7 @@ import {
   http,
   HttpResponse,
 } from '../../../test/test-utils'
-import { SignUpPage } from './SignUpPage'
+import SignUpPage from './SignUpPage'
 
 describe('SignUpPage', () => {
   it('flags the empty required fields on submit', async () => {
@@ -47,7 +47,6 @@ describe('SignUpPage', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
 
     expect(await screen.findByText('UI Components Page')).toBeVisible()
-    expect(localStorage.getItem('token')).toBe('fake.jwt.token')
   })
 
   it('surfaces an error when sign-up is rejected', async () => {
@@ -58,6 +57,5 @@ describe('SignUpPage', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
 
     expect(await screen.findByText('Sign-up failed. Please try again.')).toBeVisible()
-    expect(localStorage.getItem('token')).toBeNull()
   })
 })

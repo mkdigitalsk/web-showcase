@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { renderWithProviders, screen, userEvent } from '../../test/test-utils'
-import { StoragePage } from './StoragePage'
+import StoragePage from './StoragePage'
 
 /** The Session card renders first in DOM order. */
 const SESSION_CARD = 0

@@ -1,13 +1,20 @@
 import { Box } from '@mui/material'
 import { useRef, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigation } from 'react-router'
 import { Panel, PanelGroup, PanelResizeHandle, type ImperativePanelHandle } from 'react-resizable-panels'
-import { RouteErrorBoundary } from '../RouteErrorBoundary'
+import { useTranslation } from '../../hooks'
+import { LinearProgress } from '../feedback'
 import { Footer } from './Footer'
 import { Sidebar } from './Sidebar'
 import { TopBar } from './TopBar'
 
-export function AppLayout() {
+/**
+ * The signed-in shell. A navigation waits for the next page's loaders, so a bar across the top of the page says
+ * one is under way.
+ */
+export default function AppLayout() {
+  const { t } = useTranslation()
+  const isNavigating = useNavigation().state === 'loading'
   const sidebarRef = useRef<ImperativePanelHandle>(null)
   const [collapsed, setCollapsed] = useState(false)
 
@@ -61,10 +68,16 @@ export function AppLayout() {
           </PanelResizeHandle>
 
           <Panel id="main" order={2}>
-            <Box sx={{ height: '100%', overflow: 'auto' }}>
-              <RouteErrorBoundary>
+            <Box sx={{ position: 'relative', height: '100%' }}>
+              {isNavigating && (
+                <LinearProgress
+                  aria-label={t('common.loading')}
+                  sx={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1 }}
+                />
+              )}
+              <Box sx={{ height: '100%', overflow: 'auto' }}>
                 <Outlet />
-              </RouteErrorBoundary>
+              </Box>
             </Box>
           </Panel>
         </PanelGroup>
