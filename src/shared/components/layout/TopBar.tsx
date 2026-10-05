@@ -51,7 +51,7 @@ export function TopBar() {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-        <Logo variant="lockup" height={32} onDark />
+        <Logo variant="lockup" onDark />
         <ProductLabel />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

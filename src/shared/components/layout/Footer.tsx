@@ -47,7 +47,7 @@ export function Footer() {
         '& .MuiIconButton-root': { color: theme.palette.onBrandBar },
       }}
     >
-      <Logo variant="lockup" height={26} onDark />
+      <Logo variant="lockup" type="subtitle1" onDark />
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', columnGap: 2, rowGap: 0.5 }}>
         <TextCaption>© 2026 MK Digital s. r. o.</TextCaption>
         <TextCaption>{t('app.version', { version: __APP_VERSION__ })}</TextCaption>

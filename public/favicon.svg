@@ -1,8 +1,18 @@
-<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MK Digital">
-  <!-- favicon / app icon: canonical 3-stack mark (bar 12, gap 4 — same ratio as the lockup) on a navy
-       rounded square → works on ANY background (light/dark tabs). -->
-  <rect width="64" height="64" rx="14" fill="#0E2A47"/>
-  <rect x="10" y="10" width="44" height="12" rx="3" fill="#ffffff"/>
-  <rect x="10" y="26" width="44" height="12" rx="3" fill="#7FB0E0"/>
-  <rect x="10" y="42" width="44" height="12" rx="3" fill="#37C2B4"/>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 16 16"
+  role="img"
+  aria-label="MK Digital">
+  <style>
+    .b1 { fill: #0E2A47; } .b2 { fill: #2F6DB0; } .b3 { fill: #0F9A8A; } @media (prefers-color-scheme: dark) { .b1 { fill: #FFFFFF; } .b2 { fill: #7FB0E0; } .b3 { fill: #3CCBB7; } }
+  </style>
+  <path
+    class="b1"
+    d="M1 1H14.1A0.9 0.9 0 0 1 15 1.9V3.1A0.9 0.9 0 0 1 14.1 4H1Z"/>
+  <path
+    class="b2"
+    d="M1 6H9.1A0.9 0.9 0 0 1 10 6.9V8.1A0.9 0.9 0 0 1 9.1 9H1Z"/>
+  <path
+    class="b3"
+    d="M1 11H5.1A0.9 0.9 0 0 1 6 11.9V13.1A0.9 0.9 0 0 1 5.1 14H1Z"/>
 </svg>
