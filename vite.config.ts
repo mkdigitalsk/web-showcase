@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv, type ConfigEnv, type UserConfig } from 'vite'
 import { reactRouter } from '@react-router/dev/vite'
 import react from '@vitejs/plugin-react'
+import { configDefaults } from 'vitest/config'
 import type { InlineConfig } from 'vitest/node'
 import { apiProxy } from './server/viteApiProxy'
 
@@ -40,6 +41,8 @@ export default defineConfig((configEnv): Config => {
     },
     test: {
       environment: 'jsdom',
+      /** The Playwright journey under e2e/ runs in a browser against a booted stack, never under Vitest. */
+      exclude: [...configDefaults.exclude, 'e2e/**'],
       /**
        * Node ≥25 ships its own Web Storage globals (inert without --localstorage-file) and the test
        * worker keeps them over jsdom's, so every localStorage call fails. The flag hands the globals

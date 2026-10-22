@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
+    "e2e": "bash scripts/run-e2e.sh",
     "build": "tsc -b && react-router build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.63.0",
     "@react-router/dev": "^8.4.0",
     "@react-router/node": "^8.4.0",
     "@testing-library/dom": "^10.4.1",

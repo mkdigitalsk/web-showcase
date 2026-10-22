@@ -79,15 +79,16 @@ cp .env.example .env.local   # then set API_URL — the dev server refuses to st
 npm run dev   # http://localhost:5173
 ```
 
-| script                  | does                          |
-| ----------------------- | ----------------------------- |
-| `npm run dev`           | dev server (HMR)              |
-| `npm run build`         | type-check + production build |
-| `npm run preview`       | serve the production build    |
-| `npm run format`        | Prettier, write               |
-| `npm run format:check`  | Prettier, verify (CI gates)   |
-| `npm run lint`          | ESLint                        |
-| `npm run check-locales` | verify locale key parity      |
+| script                  | does                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| `npm run dev`           | dev server (HMR)                                                                |
+| `npm run build`         | type-check + production build                                                   |
+| `npm run preview`       | serve the production build                                                      |
+| `npm run format`        | Prettier, write                                                                 |
+| `npm run format:check`  | Prettier, verify (CI gates)                                                     |
+| `npm run lint`          | ESLint                                                                          |
+| `npm run check-locales` | verify locale key parity                                                        |
+| `npm run e2e`           | the Playwright journey on a stack of its own — Docker, a JDK, `../kmp-showcase` |
 
 ## Architecture
 

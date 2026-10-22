@@ -9,6 +9,8 @@
     "MD033": false
   },
   "globs": ["**/*.md"],
+  // What git ignores — build output, the agents' worktrees, a journey's report — CI never checks out.
+  "gitignore": true,
   // The bridge CLAUDE.md is one `@AGENTS.md` line, not a document.
   "ignores": ["CLAUDE.md", "**/node_modules", "build"]
 }
