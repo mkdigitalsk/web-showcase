@@ -36,4 +36,14 @@ describe('UiComponentsPage', () => {
     await userEvent.click(within(region).getByRole('button', { name: 'Close' }))
     await waitFor(() => expect(within(region).queryByText('Saved successfully!')).not.toBeInTheDocument())
   })
+
+  /** The pressed button leaves with its chip, so focus moves on rather than falling back to the page. */
+  it('takes the deletable chip away on its Delete, and focus moves to the next chip', async () => {
+    await openUiComponents()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Delete' }))
+
+    expect(screen.queryByText('Deletable')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Filter' })).toHaveFocus()
+  })
 })
