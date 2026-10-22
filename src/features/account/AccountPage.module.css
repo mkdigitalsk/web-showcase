@@ -1,0 +1,13 @@
+.sections {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.card {
+  padding: var(--space-4);
+}
+
+.action {
+  display: grid;
+  gap: var(--space-4);
+}

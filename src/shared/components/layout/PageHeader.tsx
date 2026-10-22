@@ -1,6 +1,5 @@
-import { Box } from '@mui/material'
-import { visuallyHidden } from '@mui/utils'
 import { TextBody1Neutral60 } from '../text'
+import styles from './PageHeader.module.css'
 
 interface PageHeaderProps {
   title: string
@@ -14,11 +13,9 @@ interface PageHeaderProps {
  */
 export function PageHeader({ title, description }: PageHeaderProps) {
   return (
-    <Box sx={{ mb: 3 }}>
-      <Box component="h1" sx={visuallyHidden}>
-        {title}
-      </Box>
+    <div className={styles.header}>
+      <h1 className={styles.title}>{title}</h1>
       <TextBody1Neutral60>{description}</TextBody1Neutral60>
-    </Box>
+    </div>
   )
 }

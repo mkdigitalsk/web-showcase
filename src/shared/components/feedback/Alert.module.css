@@ -1,0 +1,44 @@
+.alert {
+  --alert-color: var(--color-info);
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--alert-color) 40%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--alert-color) 8%, var(--color-pane));
+  color: var(--color-ink);
+  font: var(--font-body2);
+}
+
+.alert[data-severity='error'] {
+  --alert-color: var(--color-error);
+}
+
+.alert[data-severity='success'] {
+  --alert-color: var(--color-success);
+}
+
+.alert[data-severity='warning'] {
+  --alert-color: var(--color-warning);
+}
+
+.icon {
+  flex-shrink: 0;
+  width: var(--icon-medium);
+  height: var(--icon-medium);
+  color: var(--alert-color);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  align-self: center;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  margin-inline-start: auto;
+}

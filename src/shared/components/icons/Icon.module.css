@@ -1,0 +1,20 @@
+.icon {
+  flex-shrink: 0;
+  width: var(--icon-medium);
+  height: var(--icon-medium);
+}
+
+.icon[data-size='small'] {
+  width: var(--icon-small);
+  height: var(--icon-small);
+}
+
+.icon[data-size='large'] {
+  width: var(--icon-large);
+  height: var(--icon-large);
+}
+
+.icon[data-size='inherit'] {
+  width: 1em;
+  height: 1em;
+}

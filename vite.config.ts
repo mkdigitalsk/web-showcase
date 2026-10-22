@@ -38,14 +38,6 @@ export default defineConfig((configEnv): Config => {
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version ?? '0.0.0'),
     },
-    ssr: {
-      /**
-       * The build renders the root once in Node to write `index.html`. MUI's ESM files import
-       * react-transition-group by directory, which Node's loader refuses, so both are bundled into that render
-       * the way the browser build bundles them.
-       */
-      noExternal: [/^@mui\//, 'react-transition-group'],
-    },
     test: {
       environment: 'jsdom',
       /**
@@ -57,16 +49,11 @@ export default defineConfig((configEnv): Config => {
       execArgv: Number(process.versions.node.split('.')[0]) >= 23 ? ['--no-experimental-webstorage'] : [],
       globals: true,
       /**
-       * The 5s default is tuned for unit tests. Ours are integration tests that type through real MUI
+       * The 5s default is tuned for unit tests. Ours are integration tests that type through real
        * re-renders into a live Dexie query, which alone spends seconds before anything is asserted.
        */
       testTimeout: 15000,
       setupFiles: ['./src/test/setup.ts'],
-      deps: {
-        optimizer: {
-          client: { enabled: true, include: ['@mui/material', '@mui/icons-material', 'react-transition-group'] },
-        },
-      },
     },
   }
 })

@@ -1,4 +1,6 @@
 export { AuthContext, type AuthContextValue } from './AuthContext'
 export { AuthProvider } from './AuthProvider'
+export { ColorSchemeContext, type ColorSchemeContextValue, type ColorScheme } from './ColorSchemeContext'
+export { ColorSchemeProvider, THEME_MODE_STORAGE_KEY } from './ColorSchemeProvider'
 export { LocaleContext, type LocaleContextValue } from './LocaleContext'
 export { LocaleProvider } from './LocaleProvider'

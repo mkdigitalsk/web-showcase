@@ -1,0 +1,22 @@
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--gutter);
+  border-top: var(--hairline);
+  background: var(--color-pane);
+  color: var(--color-muted);
+}
+
+/* Caption-sized, so the privacy link sits level with the © and version lines beside it. */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-4);
+  row-gap: var(--space-1);
+  font: var(--font-caption);
+}

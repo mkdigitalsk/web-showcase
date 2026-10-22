@@ -1,70 +1,28 @@
-import { GitHub } from '@mui/icons-material'
-import { Box, IconButton } from '@mui/material'
-import { Link } from 'react-router'
-import { useTheme, type Theme } from '@mui/material/styles'
 import { useTranslation } from '../../hooks'
 import { Routes } from '../../../utils'
+import { IconLink } from '../IconLink'
+import { GitHubIcon } from '../icons/GitHubIcon'
 import { Logo } from '../icons/Logo'
-import { TextCaption } from '../text'
+import { TextCaption, TextLink } from '../text'
+import styles from './Footer.module.css'
 
 const GITHUB = 'https://github.com/mkdigitalsk'
 
-/** Caption-sized to sit level with the © and version lines beside it, without their neutral dimming. */
-const linkSx = (theme: Theme) => ({
-  fontSize: theme.typography.caption.fontSize,
-  color: 'inherit',
-  opacity: 0.85,
-  textDecoration: 'none',
-  transition: 'opacity 0.2s ease',
-  '&:hover': { opacity: 1, textDecoration: 'underline' },
-  '&:focus-visible': { opacity: 1, textDecoration: 'underline' },
-})
-
-/**
- * Slim brand footer on the same navy surface as the top bar — closes the shell and carries the one
- * piece of app-level meta a dashboard needs visible: company + version (bug-report reference).
- */
+/** Company and version stay in view — the version is the reference a bug report quotes. */
 export function Footer() {
-  const theme = useTheme()
   const { t } = useTranslation()
 
   return (
-    <Box
-      component="footer"
-      sx={{
-        flexShrink: 0,
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: 2,
-        px: { xs: 2, md: 3 },
-        py: 2,
-        bgcolor: theme.palette.brandBar,
-        color: theme.palette.onBrandBar,
-        borderTop: '1px solid',
-        borderColor: 'divider',
-        '& .MuiIconButton-root': { color: theme.palette.onBrandBar },
-      }}
-    >
-      <Logo variant="lockup" type="subtitle1" onDark />
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', columnGap: 2, rowGap: 0.5 }}>
+    <footer className={styles.footer}>
+      <Logo variant="lockup" />
+      <div className={styles.meta}>
         <TextCaption>© 2026 MK Digital s. r. o.</TextCaption>
         <TextCaption>{t('app.version', { version: __APP_VERSION__ })}</TextCaption>
-        <Box component={Link} to={Routes.PRIVACY} sx={linkSx}>
-          {t('privacy.link')}
-        </Box>
-        <IconButton
-          component="a"
-          href={GITHUB}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          size="small"
-        >
-          <GitHub fontSize="small" />
-        </IconButton>
-      </Box>
-    </Box>
+        <TextLink to={Routes.PRIVACY}>{t('privacy.link')}</TextLink>
+        <IconLink href={GITHUB} aria-label="GitHub" size="small">
+          <GitHubIcon />
+        </IconLink>
+      </div>
+    </footer>
   )
 }

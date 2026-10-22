@@ -1,10 +1,9 @@
-import { DeleteForever, Logout } from '@mui/icons-material'
-import { Box, Stack } from '@mui/material'
 import { useState } from 'react'
+import { DeleteIcon, SignOutIcon } from '../../shared/components/icons/catalog'
 import {
   AlertError,
   Button,
-  ElevatedCard,
+  Card,
   PageContainer,
   PageHeader,
   TextBody1Neutral60,
@@ -16,6 +15,7 @@ import { useAuth, useTranslation } from '../../shared/hooks'
 import { DeleteAccountDialog } from './components/DeleteAccountDialog'
 import { useDeleteAccountMutation } from './useDeleteAccountMutation'
 import { useSignOutMutation } from './useSignOutMutation'
+import styles from './AccountPage.module.css'
 
 export default function AccountPage() {
   const { t } = useTranslation()
@@ -34,29 +34,36 @@ export default function AccountPage() {
     <PageContainer>
       <PageHeader title={t('account.title')} description={t('account.subtitle')} />
 
-      <Stack spacing={3}>
-        <ElevatedCard sx={{ p: 2 }}>
+      <div className={styles.sections}>
+        <Card className={styles.card}>
           <TextCaptionNeutral60>{t('account.email')}</TextCaptionNeutral60>
           <TextBody1Neutral80>{user?.email}</TextBody1Neutral80>
-        </ElevatedCard>
+        </Card>
 
-        <Box>
-          <Button variant="outline" startIcon={<Logout />} loading={signOut.isPending} onClick={() => signOut.mutate()}>
-            {t('home.signOut')}
-          </Button>
-          {signOut.error && <AlertError sx={{ mt: 2 }}>{t(requestErrorKey(signOut.error, 'common.error'))}</AlertError>}
-        </Box>
+        <div className={styles.action}>
+          <div>
+            <Button
+              variant="outline"
+              startIcon={<SignOutIcon />}
+              loading={signOut.isPending}
+              onClick={() => signOut.mutate()}
+            >
+              {t('home.signOut')}
+            </Button>
+          </div>
+          {signOut.error && <AlertError>{t(requestErrorKey(signOut.error, 'common.error'))}</AlertError>}
+        </div>
 
-        <Box>
+        <div>
           {user?.demo ? (
             <TextBody1Neutral60>{t('account.deleteDemo')}</TextBody1Neutral60>
           ) : (
-            <Button color="error" startIcon={<DeleteForever />} onClick={() => setIsConfirming(true)}>
+            <Button destructive startIcon={<DeleteIcon />} onClick={() => setIsConfirming(true)}>
               {t('account.delete')}
             </Button>
           )}
-        </Box>
-      </Stack>
+        </div>
+      </div>
 
       {isConfirming && (
         <DeleteAccountDialog

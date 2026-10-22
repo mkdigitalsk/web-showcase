@@ -1,13 +1,16 @@
-import { Divider as MuiDivider, type DividerProps as MuiDividerProps } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { Separator } from '@base-ui/react/separator'
+import { cx } from '../css'
+import styles from './Divider.module.css'
 
-type DividerProps = MuiDividerProps
-
-export function Divider({ sx, ...props }: DividerProps) {
-  return <MuiDivider sx={sx} {...props} />
+interface DividerProps {
+  orientation?: 'horizontal' | 'vertical'
+  className?: string
 }
 
-export function DividerPrimary({ sx, ...props }: DividerProps) {
-  const theme = useTheme()
-  return <MuiDivider sx={{ borderColor: theme.palette.primary.main, ...sx }} {...props} />
+export function Divider({ orientation = 'horizontal', className }: DividerProps) {
+  return <Separator orientation={orientation} className={cx(styles.divider, className)} />
+}
+
+export function DividerPrimary({ className, ...props }: DividerProps) {
+  return <Divider {...props} className={cx(styles.action, className)} />
 }

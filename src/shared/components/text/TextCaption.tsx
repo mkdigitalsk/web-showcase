@@ -1,17 +1,14 @@
-import { useTheme } from '@mui/material/styles'
-import { BaseTypography } from './BaseTypography'
-import { type BaseTextProps, type TextInternalProps } from './types'
+import { Text } from './Text'
+import type { BaseTextProps } from './types'
 
-export function TextCaption({ internalSx, ...props }: TextInternalProps) {
-  return <BaseTypography variant="caption" internalSx={internalSx} {...props} />
+export function TextCaption(props: BaseTextProps) {
+  return <Text variant="caption" {...props} />
 }
 
 export function TextCaptionNeutral60(props: BaseTextProps) {
-  const theme = useTheme()
-  return <TextCaption internalSx={{ color: theme.palette.neutral[60] }} {...props} />
+  return <Text variant="caption" tone="muted" {...props} />
 }
 
 export function TextCaptionNeutral40(props: BaseTextProps) {
-  const theme = useTheme()
-  return <TextCaption internalSx={{ color: theme.palette.neutral[40] }} {...props} />
+  return <Text variant="caption" tone="faint" {...props} />
 }

@@ -1,0 +1,38 @@
+/* The window's bottom corner, the newest notice nearest the edge; the empty strip lets the pointer through. */
+.viewport {
+  position: fixed;
+  inset-inline: var(--gutter);
+  bottom: var(--gutter);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.notice {
+  composes: alert from './Alert.module.css';
+
+  align-items: center;
+  max-width: min(100%, 420px);
+  pointer-events: auto;
+  transition:
+    opacity var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
+}
+
+.notice[data-starting-style],
+.notice[data-ending-style] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.icon {
+  composes: icon from './Alert.module.css';
+}
+
+.message {
+  composes: body from './Alert.module.css';
+
+  margin: 0;
+}

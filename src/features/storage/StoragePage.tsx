@@ -1,8 +1,8 @@
-import { Add, Remove } from '@mui/icons-material'
-import { Box, IconButton, Stack } from '@mui/material'
+import { DecreaseIcon, IncreaseIcon } from '../../shared/components/icons/catalog'
 import {
   Button,
-  ElevatedCard,
+  Card,
+  IconButton,
   PageContainer,
   PageHeader,
   TextBody1Neutral80,
@@ -10,6 +10,7 @@ import {
 } from '../../shared/components'
 import { useLocalStorage, useSessionStorage, useTranslation } from '../../shared/hooks'
 import { StorageKey } from '../../shared/enums/storageKey'
+import styles from './StoragePage.module.css'
 
 export default function StoragePage() {
   const { t } = useTranslation()
@@ -20,7 +21,7 @@ export default function StoragePage() {
     <PageContainer>
       <PageHeader title={t('storage.title')} description={t('storage.subtitle')} />
 
-      <Stack spacing={2}>
+      <div className={styles.cards}>
         <CounterCard
           label={t('storage.session.label')}
           hint={t('storage.session.hint')}
@@ -40,7 +41,7 @@ export default function StoragePage() {
         <Button variant="outline" onClick={() => clearSession()}>
           {t('storage.clearSession')}
         </Button>
-      </Stack>
+      </div>
     </PageContainer>
   )
 }
@@ -58,21 +59,21 @@ interface CounterCardProps {
 }
 
 function CounterCard({ label, hint, counter, onIncrement, onDecrement }: CounterCardProps) {
+  const { t } = useTranslation()
+
   return (
-    <ElevatedCard sx={{ p: 2 }}>
-      <TextH6Bold sx={{ mb: 0.5 }}>{label}</TextH6Bold>
-      <TextBody1Neutral80 sx={{ mb: 2 }}>{hint}</TextBody1Neutral80>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <IconButton onClick={onDecrement} color="primary">
-          <Remove />
+    <Card className={styles.card}>
+      <TextH6Bold>{label}</TextH6Bold>
+      <TextBody1Neutral80 className={styles.hint}>{hint}</TextBody1Neutral80>
+      <div className={styles.counter}>
+        <IconButton onClick={onDecrement} tone="action" aria-label={t('storage.decrement')}>
+          <DecreaseIcon aria-hidden />
         </IconButton>
-        <Box sx={{ minWidth: 32, textAlign: 'center' }}>
-          <TextH6Bold>{counter}</TextH6Bold>
-        </Box>
-        <IconButton onClick={onIncrement} color="primary">
-          <Add />
+        <TextH6Bold className={styles.value}>{counter}</TextH6Bold>
+        <IconButton onClick={onIncrement} tone="action" aria-label={t('storage.increment')}>
+          <IncreaseIcon aria-hidden />
         </IconButton>
-      </Box>
-    </ElevatedCard>
+      </div>
+    </Card>
   )
 }

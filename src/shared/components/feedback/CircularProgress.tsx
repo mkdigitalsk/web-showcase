@@ -1,10 +1,29 @@
-import {
-  CircularProgress as MuiCircularProgress,
-  type CircularProgressProps as MuiCircularProgressProps,
-} from '@mui/material'
+import { Progress } from '@base-ui/react/progress'
+import { useTranslation } from '../../hooks'
+import { cx, cssVars } from '../css'
+import styles from './CircularProgress.module.css'
 
-type CircularProgressProps = MuiCircularProgressProps
+interface CircularProgressProps {
+  /** The ring's diameter, in px. */
+  size?: number
+  'aria-label'?: string
+  className?: string
+}
 
-export function CircularProgress({ sx, ...props }: CircularProgressProps) {
-  return <MuiCircularProgress color="primary" sx={sx} {...props} />
+/** A ring that turns until what it waits for arrives. */
+export function CircularProgress({ size = 40, 'aria-label': label, className }: CircularProgressProps) {
+  const { t } = useTranslation()
+
+  return (
+    <Progress.Root
+      value={null}
+      aria-label={label ?? t('common.loading')}
+      className={cx(styles.root, className)}
+      style={cssVars({ '--size': `${size}px` })}
+    >
+      <svg className={styles.ring} viewBox="0 0 40 40" aria-hidden>
+        <circle cx="20" cy="20" r="17" />
+      </svg>
+    </Progress.Root>
+  )
 }

@@ -1,0 +1,47 @@
+.bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--bar-height);
+  padding-inline: var(--gutter);
+  border-bottom: var(--hairline);
+  background: var(--color-pane);
+  color: var(--color-ink);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* A hairline before the name, so it reads as the app's within the brand rather than part of it. */
+.product {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.product::before {
+  content: '';
+  width: 1px;
+  height: 1.375rem;
+  background: var(--color-line);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+@media (min-width: 600px) {
+  .product {
+    display: flex;
+  }
+}

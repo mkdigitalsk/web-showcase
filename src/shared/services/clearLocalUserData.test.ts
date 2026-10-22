@@ -2,11 +2,11 @@ import 'fake-indexeddb/auto'
 import { QueryClient } from '@tanstack/react-query'
 import { describe, it, expect, afterEach } from 'vitest'
 import { fakeNote, fakeRemoteNote } from '../../test/test-utils'
+import { THEME_MODE_STORAGE_KEY } from '../context/ColorSchemeProvider'
 import { StorageKey } from '../enums/storageKey'
 import { clearLocalUserData } from './clearLocalUserData'
 import { db } from './db'
 
-const THEME_MODE_KEY = 'mui-mode'
 const NOTES_QUERY_KEY = ['notes']
 
 afterEach(async () => {
@@ -30,10 +30,10 @@ describe('clearLocalUserData', () => {
   })
 
   it('keeps the theme mode, which describes the device and not the account', async () => {
-    localStorage.setItem(THEME_MODE_KEY, 'dark')
+    localStorage.setItem(THEME_MODE_STORAGE_KEY, JSON.stringify('dark'))
 
     await clearLocalUserData(new QueryClient())
 
-    expect(localStorage.getItem(THEME_MODE_KEY)).toBe('dark')
+    expect(localStorage.getItem(THEME_MODE_STORAGE_KEY)).toBe(JSON.stringify('dark'))
   })
 })

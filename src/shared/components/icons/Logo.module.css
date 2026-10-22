@@ -1,0 +1,7 @@
+.logo {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: var(--logo-height);
+  font: var(--font-h6);
+}

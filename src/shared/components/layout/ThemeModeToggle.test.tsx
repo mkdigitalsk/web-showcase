@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import {
   renderWithProviders,
   fakeAuthValue,
@@ -10,6 +10,7 @@ import {
   HttpResponse,
 } from '../../../test/test-utils'
 import { API_PREFIX } from '../../api/apiVersion'
+import { THEME_MODE_STORAGE_KEY } from '../../context/ColorSchemeProvider'
 import type { ThemeMode } from '../../types'
 import { ThemeModeToggle } from './ThemeModeToggle'
 
@@ -18,10 +19,6 @@ function renderToggle(updateThemeMode: (themeMode: ThemeMode) => Promise<void>) 
     authValue: fakeAuthValue({ user: fakeAuthUser(), updateThemeMode }),
   })
 }
-
-afterEach(() => {
-  localStorage.removeItem('mui-mode')
-})
 
 describe('ThemeModeToggle', () => {
   it('does not reach the server when nobody is signed in', async () => {
@@ -49,7 +46,7 @@ describe('ThemeModeToggle', () => {
   })
 
   it('returns to following the system once a mode has been chosen', async () => {
-    localStorage.setItem('mui-mode', 'dark')
+    localStorage.setItem(THEME_MODE_STORAGE_KEY, JSON.stringify('dark'))
     const updateThemeMode = vi.fn().mockResolvedValue(undefined)
     renderToggle(updateThemeMode)
 

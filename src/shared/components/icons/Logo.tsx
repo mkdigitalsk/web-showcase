@@ -1,55 +1,30 @@
-import Box from '@mui/material/Box'
-import type { SxProps, Theme, TypographyVariant } from '@mui/material/styles'
 import { Lockup, Mark } from '@mkdigitalsk/design-system/mark'
-import { Light, Dark } from '../../theme/color'
-
-type LogoVariant = 'mark' | 'lockup'
+import { cx, cssVars } from '../css'
+import styles from './Logo.module.css'
 
 interface LogoProps {
-  variant?: LogoVariant
-  /** The name's type — the logo is drawn in its em. */
-  type?: TypographyVariant
-  /** The on-dark colours whatever the page's scheme — unset, the logo follows the theme. */
-  onDark?: boolean
-  sx?: SxProps<Theme>
+  variant?: 'mark' | 'lockup'
+  className?: string
 }
 
-type SxArray = Extract<SxProps<Theme>, readonly unknown[]>
-
-/** Array.isArray widens the union to any[]; the annotation restores the element type. */
-function toSxArray(sx: SxProps<Theme> | undefined): SxArray {
-  const sxArray: SxArray = Array.isArray(sx) ? sx : sx ? [sx] : []
-  return sxArray
-}
-
-const FILLS = ['var(--s0)', 'var(--s1)', 'var(--s2)']
+/** The bars' colours, top to bottom — the tokens follow the scheme. */
+const FILLS = ['var(--mark-0)', 'var(--mark-1)', 'var(--mark-2)']
 
 /**
  * The logo as an inline SVG drawn from the design system's paths: the mark alone, or the mark before the outlined
- * name — so it cannot drift from the design system's files, and needs no font.
+ * name — so it cannot drift from the design system's files, and needs no font. Its height is the name's em.
  */
-export function Logo({ variant = 'lockup', type = 'h6', onDark = false, sx }: LogoProps) {
+export function Logo({ variant = 'lockup', className }: LogoProps) {
   const lockup = variant === 'lockup'
   const box = lockup ? Lockup : Mark
-  const dark = { '--s0': Dark.stack[0], '--s1': Dark.stack[1], '--s2': Dark.stack[2] }
-  const scheme = onDark
-    ? [dark]
-    : [
-        { '--s0': Light.stack[0], '--s1': Light.stack[1], '--s2': Light.stack[2] },
-        (t: Theme) => t.applyStyles('dark', dark),
-      ]
 
   return (
-    <Box
-      component="svg"
+    <svg
       role="img"
       aria-label="MK Digital"
       viewBox={`0 0 ${box.width} ${box.height}`}
-      sx={[
-        { typography: type, height: `${box.height / Mark.em}em`, width: 'auto', display: 'block', flexShrink: 0 },
-        ...scheme,
-        ...toSxArray(sx),
-      ]}
+      className={cx(styles.logo, className)}
+      style={cssVars({ '--logo-height': `${box.height / Mark.em}em` })}
     >
       <g transform={lockup ? `translate(${Lockup.mark.x} ${Lockup.mark.y})` : undefined}>
         {Mark.bars.map((d, i) => (
@@ -60,9 +35,9 @@ export function Logo({ variant = 'lockup', type = 'h6', onDark = false, sx }: Lo
         <path
           d={Lockup.wordmark.d}
           transform={`translate(${Lockup.wordmark.x} ${Lockup.wordmark.y})`}
-          fill="var(--s0)"
+          fill="var(--mark-0)"
         />
       )}
-    </Box>
+    </svg>
   )
 }

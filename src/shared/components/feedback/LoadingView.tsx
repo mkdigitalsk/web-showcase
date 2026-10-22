@@ -1,12 +1,13 @@
-import { Box, type BoxProps } from '@mui/material'
+import type { ComponentPropsWithoutRef } from 'react'
+import { cx } from '../css'
 import { CircularProgress } from './CircularProgress'
+import styles from './LoadingView.module.css'
 
-type LoadingViewProps = Omit<BoxProps, 'display' | 'justifyContent' | 'alignItems'>
-
-export function LoadingView({ sx, ...props }: LoadingViewProps) {
+/** A region's whole content while it loads — the ring, centred in the space the content will take. */
+export function LoadingView({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', ...sx }} {...props}>
+    <div className={cx(styles.view, className)} {...props}>
       <CircularProgress />
-    </Box>
+    </div>
   )
 }

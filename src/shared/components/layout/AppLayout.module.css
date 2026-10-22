@@ -1,0 +1,56 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.panels {
+  flex: 1;
+  min-height: 0;
+}
+
+.handle {
+  position: relative;
+  width: 6px;
+  cursor: col-resize;
+  outline: 0;
+}
+
+.handle::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--color-line);
+  transform: translateX(-50%);
+  transition:
+    background-color var(--duration) var(--ease),
+    width var(--duration) var(--ease);
+}
+
+.handle:hover::after,
+.handle[data-resize-handle-state='drag']::after,
+.handle:focus-visible::after {
+  width: 2px;
+  background: var(--color-action);
+}
+
+.main {
+  position: relative;
+  height: 100%;
+  min-width: 0;
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.scroll {
+  height: 100%;
+  overflow: auto;
+}

@@ -1,0 +1,7 @@
+.card {
+  min-width: 0;
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: var(--color-pane);
+  color: var(--color-ink);
+}

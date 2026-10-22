@@ -1,8 +1,8 @@
-import { Stack } from '@mui/material'
 import { useLocation, useNavigate, useNavigation } from 'react-router'
 import { useTranslation } from '../hooks'
 import { Button } from './Button'
 import { TextBody1Neutral60, TextH4Bold } from './text'
+import styles from './RouteError.module.css'
 
 /**
  * What a route renders once it has crashed. The error itself is deliberately unread — its message is the thrown
@@ -18,12 +18,12 @@ export function RouteError() {
   const isRetrying = useNavigation().state !== 'idle'
 
   return (
-    <Stack spacing={2} sx={{ alignItems: 'flex-start', p: 3 }}>
+    <div className={styles.error}>
       <TextH4Bold>{t('errors.routeTitle')}</TextH4Bold>
       <TextBody1Neutral60>{t('errors.routeBody')}</TextBody1Neutral60>
       <Button onClick={() => void navigate({ pathname, search, hash }, { replace: true })} loading={isRetrying}>
         {t('common.retry')}
       </Button>
-    </Stack>
+    </div>
   )
 }

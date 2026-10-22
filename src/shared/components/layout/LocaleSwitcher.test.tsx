@@ -9,7 +9,7 @@ describe('LocaleSwitcher', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Change language' }))
 
-    expect(screen.getByRole('menuitem', { name: /English/ })).toBeVisible()
+    expect(await screen.findByRole('menuitem', { name: /English/ })).toBeVisible()
     await userEvent.click(screen.getByRole('menuitem', { name: /Slovenčina/ }))
 
     expect(updateLocale).toHaveBeenCalledWith('sk-SK')

@@ -1,1 +1,1 @@
-export { Chip, FilterChip } from './Chip'
+export { Chip, FilterChip, type ChipColor } from './Chip'

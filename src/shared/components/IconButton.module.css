@@ -1,0 +1,56 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color var(--duration) var(--ease),
+    color var(--duration) var(--ease);
+}
+
+.button > svg {
+  width: var(--icon-medium);
+  height: var(--icon-medium);
+}
+
+.button[data-size='small'] {
+  width: var(--control-height-small);
+  height: var(--control-height-small);
+}
+
+.button[data-size='small'] > svg {
+  width: var(--icon-small);
+  height: var(--icon-small);
+}
+
+.button[data-tone='action'] {
+  color: var(--color-action);
+}
+
+.button[data-tone='error'] {
+  color: var(--color-error);
+}
+
+.button:not([data-disabled]):hover {
+  background: var(--color-hover);
+  color: var(--color-action);
+}
+
+.button[data-tone='error']:not([data-disabled]):hover {
+  color: var(--color-error);
+}
+
+/* Still takes the pointer, so a hint on a held control opens. */
+.button[data-disabled] {
+  opacity: 0.4;
+  cursor: default;
+}

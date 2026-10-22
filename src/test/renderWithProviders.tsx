@@ -1,10 +1,11 @@
 import type { ReactElement, ReactNode } from 'react'
 import { render, type RenderOptions } from '@testing-library/react'
-import { ThemeProvider } from '@mui/material/styles'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { createRoutesStub } from 'react-router'
 import { queryClient } from '../shared/api/queryClient'
-import { theme } from '../shared/theme'
+import { SnackbarProvider } from '../shared/components/feedback/Snackbar'
+import { TooltipProvider } from '../shared/components/Tooltip'
+import { ColorSchemeProvider } from '../shared/context/ColorSchemeProvider'
 import { LocaleProvider } from '../shared/context/LocaleProvider'
 import { AuthProvider } from '../shared/context/AuthProvider'
 import { AuthContext, type AuthContextValue } from '../shared/context/AuthContext'
@@ -34,9 +35,13 @@ export function renderWithProviders(
     )
     return (
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <LocaleProvider>{withAuth}</LocaleProvider>
-        </ThemeProvider>
+        <ColorSchemeProvider>
+          <TooltipProvider>
+            <LocaleProvider>
+              <SnackbarProvider>{withAuth}</SnackbarProvider>
+            </LocaleProvider>
+          </TooltipProvider>
+        </ColorSchemeProvider>
       </QueryClientProvider>
     )
   }

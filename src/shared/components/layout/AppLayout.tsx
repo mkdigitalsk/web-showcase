@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import { useRef, useState } from 'react'
 import { Outlet, useNavigation } from 'react-router'
 import { Panel, PanelGroup, PanelResizeHandle, type ImperativePanelHandle } from 'react-resizable-panels'
@@ -7,6 +6,7 @@ import { LinearProgress } from '../feedback'
 import { Footer } from './Footer'
 import { Sidebar } from './Sidebar'
 import { TopBar } from './TopBar'
+import styles from './AppLayout.module.css'
 
 /**
  * The signed-in shell. A navigation waits for the next page's loaders, so a bar across the top of the page says
@@ -26,64 +26,38 @@ export default function AppLayout() {
   }
 
   return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className={styles.shell}>
       <TopBar />
 
-      <Box sx={{ flexGrow: 1, minHeight: 0 }}>
-        <PanelGroup direction="horizontal" autoSaveId="app-layout" style={{ height: '100%' }}>
-          <Panel
-            id="sidebar"
-            order={1}
-            ref={sidebarRef}
-            collapsible
-            collapsedSize={5}
-            minSize={12}
-            maxSize={28}
-            defaultSize={18}
-            onCollapse={() => setCollapsed(true)}
-            onExpand={() => setCollapsed(false)}
-          >
-            <Sidebar collapsed={collapsed} onToggle={toggleSidebar} />
-          </Panel>
+      <PanelGroup direction="horizontal" autoSaveId="app-layout" className={styles.panels}>
+        <Panel
+          id="sidebar"
+          order={1}
+          ref={sidebarRef}
+          collapsible
+          collapsedSize={5}
+          minSize={12}
+          maxSize={28}
+          defaultSize={18}
+          onCollapse={() => setCollapsed(true)}
+          onExpand={() => setCollapsed(false)}
+        >
+          <Sidebar collapsed={collapsed} onToggle={toggleSidebar} />
+        </Panel>
 
-          <PanelResizeHandle style={{ width: 6, cursor: 'col-resize', outline: 'none' }}>
-            <Box
-              sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                '&:hover > div, &:active > div': { backgroundColor: 'primary.main', width: '2px' },
-              }}
-            >
-              <Box
-                sx={{
-                  width: '1px',
-                  height: '100%',
-                  bgcolor: 'divider',
-                  transition: 'background-color 0.15s ease, width 0.15s ease',
-                }}
-              />
-            </Box>
-          </PanelResizeHandle>
+        <PanelResizeHandle className={styles.handle} />
 
-          <Panel id="main" order={2}>
-            <Box sx={{ position: 'relative', height: '100%' }}>
-              {isNavigating && (
-                <LinearProgress
-                  aria-label={t('common.loading')}
-                  sx={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1 }}
-                />
-              )}
-              <Box sx={{ height: '100%', overflow: 'auto' }}>
-                <Outlet />
-              </Box>
-            </Box>
-          </Panel>
-        </PanelGroup>
-      </Box>
+        <Panel id="main" order={2}>
+          <main className={styles.main}>
+            {isNavigating && <LinearProgress aria-label={t('common.loading')} className={styles.progress} />}
+            <div className={styles.scroll}>
+              <Outlet />
+            </div>
+          </main>
+        </Panel>
+      </PanelGroup>
 
       <Footer />
-    </Box>
+    </div>
   )
 }

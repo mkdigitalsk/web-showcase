@@ -1,7 +1,7 @@
-import { Box, Container, Stack } from '@mui/material'
 import { useTranslation } from '../../shared/hooks'
 import { Locale } from '../../shared/enums/locale'
 import { TextBody1Neutral60, TextCaptionNeutral60, TextH4Bold, TextH6Bold } from '../../shared/components'
+import styles from './PrivacyPage.module.css'
 
 const SECTIONS = [
   'controller',
@@ -21,27 +21,25 @@ export default function PrivacyPage() {
   const { t, intl } = useTranslation()
 
   return (
-    <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
-      <TextH4Bold sx={{ mb: 1 }}>{t('privacy.title')}</TextH4Bold>
-      <Box sx={{ mb: 4 }}>
+    <div className={styles.page}>
+      <div className={styles.intro}>
+        <TextH4Bold>{t('privacy.title')}</TextH4Bold>
         <TextCaptionNeutral60>{t('privacy.updated')}</TextCaptionNeutral60>
-      </Box>
+      </div>
 
-      <Stack spacing={3}>
+      <div className={styles.sections}>
         {SECTIONS.map((section) => (
-          <Box key={section}>
-            <TextH6Bold sx={{ mb: 1 }}>{t(`privacy.${section}.h`)}</TextH6Bold>
+          <section key={section} className={styles.section}>
+            <TextH6Bold>{t(`privacy.${section}.h`)}</TextH6Bold>
             {t(`privacy.${section}.body`)
               .split('\n\n')
-              .map((paragraph, i) => (
-                <TextBody1Neutral60 key={paragraph.slice(0, 40)} sx={{ mt: i === 0 ? 0 : 2 }}>
-                  {paragraph}
-                </TextBody1Neutral60>
+              .map((paragraph) => (
+                <TextBody1Neutral60 key={paragraph.slice(0, 40)}>{paragraph}</TextBody1Neutral60>
               ))}
-          </Box>
+          </section>
         ))}
         {intl.locale !== Locale.SK_SK && <TextCaptionNeutral60>{t('privacy.prevailing')}</TextCaptionNeutral60>}
-      </Stack>
-    </Container>
+      </div>
+    </div>
   )
 }

@@ -1,24 +1,24 @@
-import {
-  ContentCopy,
-  ContentPaste,
-  Fullscreen,
-  FullscreenExit,
-  LocationOn,
-  NotificationsActive,
-  Print,
-  RecordVoiceOver,
-  Share,
-  Vibration,
-} from '@mui/icons-material'
-import { Box, Stack } from '@mui/material'
 import { type ReactNode, useState } from 'react'
+import {
+  CopyIcon,
+  EnterFullscreenIcon,
+  ExitFullscreenIcon,
+  LocationIcon,
+  NotifyIcon,
+  PasteIcon,
+  PrintIcon,
+  ShareIcon,
+  SpeakIcon,
+  VibrateIcon,
+} from '../../shared/components/icons/catalog'
 import {
   AlertError,
   AlertInfo,
   AlertSuccess,
   Button,
-  ElevatedCard,
+  Card,
   Input,
+  TextArea,
   PageContainer,
   PageHeader,
   TextBody1Neutral60,
@@ -26,6 +26,7 @@ import {
   TextH6Bold,
 } from '../../shared/components'
 import { useNotification, useTranslation } from '../../shared/hooks'
+import styles from './CapabilitiesPage.module.css'
 
 /** The share sheet rejects when the person dismisses it, and dismissing is not an error to show. */
 const shareOrDismiss = (data: ShareData) => navigator.share(data).catch(() => undefined)
@@ -42,22 +43,20 @@ function detectBrowser(): string {
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
-    <Box sx={{ display: 'flex', gap: 1 }}>
-      <Box sx={{ minWidth: 120 }}>
-        <TextBody1Neutral60>{label}:</TextBody1Neutral60>
-      </Box>
+    <div className={styles.infoRow}>
+      <TextBody1Neutral60>{label}:</TextBody1Neutral60>
       <TextBody1Neutral80>{value}</TextBody1Neutral80>
-    </Box>
+    </div>
   )
 }
 
 function CapabilityCard({ title, subtitle, children }: { title: string; subtitle: string; children: ReactNode }) {
   return (
-    <ElevatedCard sx={{ p: 2 }}>
-      <TextH6Bold sx={{ mb: 0.5 }}>{title}</TextH6Bold>
-      <TextBody1Neutral60 sx={{ mb: 2 }}>{subtitle}</TextBody1Neutral60>
+    <Card className={styles.card}>
+      <TextH6Bold>{title}</TextH6Bold>
+      <TextBody1Neutral60 className={styles.subtitle}>{subtitle}</TextBody1Neutral60>
       {children}
-    </ElevatedCard>
+    </Card>
   )
 }
 
@@ -204,9 +203,9 @@ export default function CapabilitiesPage() {
   return (
     <PageContainer>
       <PageHeader title={t('capabilities.title')} description={t('capabilities.subtitle')} />
-      <Stack spacing={2}>
+      <div className={styles.cards}>
         <CapabilityCard title={t('capabilities.browser.title')} subtitle={t('capabilities.browser.subtitle')}>
-          <Stack spacing={0.5}>
+          <div className={styles.info}>
             <InfoRow label={t('capabilities.browser.name')} value={browser} />
             <InfoRow label={t('capabilities.browser.platform')} value={navigator.platform} />
             <InfoRow label={t('capabilities.browser.language')} value={navigator.language} />
@@ -215,67 +214,61 @@ export default function CapabilitiesPage() {
               label={t('capabilities.browser.cookiesEnabled')}
               value={navigator.cookieEnabled ? 'Enabled' : 'Disabled'}
             />
-          </Stack>
+          </div>
         </CapabilityCard>
 
         <CapabilityCard title={t('capabilities.clipboard.title')} subtitle={t('capabilities.clipboard.subtitle')}>
-          <Stack spacing={1}>
+          <div className={styles.stack}>
             <Input value={clipboardText} onChange={(e) => setClipboardText(e.target.value)} size="small" />
-            <Stack direction="row" spacing={1}>
-              <Button variant="outline" onClick={() => void handleCopy()}>
-                <ContentCopy sx={{ mr: 1, fontSize: 16 }} />
+            <div className={styles.row}>
+              <Button variant="outline" startIcon={<CopyIcon />} onClick={() => void handleCopy()}>
                 {t('capabilities.clipboard.copy')}
               </Button>
-              <Button variant="outline" onClick={() => void handlePaste()}>
-                <ContentPaste sx={{ mr: 1, fontSize: 16 }} />
+              <Button variant="outline" startIcon={<PasteIcon />} onClick={() => void handlePaste()}>
                 {t('capabilities.clipboard.paste')}
               </Button>
-            </Stack>
+            </div>
             {clipboardResult && <AlertSuccess>{clipboardResult}</AlertSuccess>}
             {clipboardError && <AlertError>{clipboardError}</AlertError>}
-          </Stack>
+          </div>
         </CapabilityCard>
 
         <CapabilityCard title={t('capabilities.geolocation.title')} subtitle={t('capabilities.geolocation.subtitle')}>
-          <Stack spacing={1}>
-            <Box>
-              <Button variant="outline" onClick={handleGeolocation} loading={geoLoading}>
-                <LocationOn sx={{ mr: 1, fontSize: 16 }} />
+          <div className={styles.stack}>
+            <div>
+              <Button variant="outline" startIcon={<LocationIcon />} onClick={handleGeolocation} loading={geoLoading}>
                 {t('capabilities.geolocation.get')}
               </Button>
-            </Box>
+            </div>
             {geoResult && <AlertSuccess>{geoResult}</AlertSuccess>}
             {geoError && <AlertError>{geoError}</AlertError>}
-          </Stack>
+          </div>
         </CapabilityCard>
 
         <CapabilityCard title={t('capabilities.speech.title')} subtitle={t('capabilities.speech.subtitle')}>
-          <Stack spacing={1}>
-            <Input
+          <div className={styles.stack}>
+            <TextArea
               value={speechText}
               onChange={(e) => setSpeechText(e.target.value)}
               size="small"
-              multiline
-              rows={2}
+              minRows={2}
               placeholder={t('capabilities.speech.placeholder')}
             />
-            <Box>
+            <div>
               {speechSupported ? (
-                <Button variant="outline" onClick={handleSpeak}>
-                  <RecordVoiceOver sx={{ mr: 1, fontSize: 16 }} />
+                <Button variant="outline" startIcon={<SpeakIcon />} onClick={handleSpeak}>
                   {isSpeaking ? t('capabilities.speech.stop') : t('capabilities.speech.speak')}
                 </Button>
               ) : (
                 <AlertInfo>{t('capabilities.speech.notSupported')}</AlertInfo>
               )}
-            </Box>
-          </Stack>
+            </div>
+          </div>
         </CapabilityCard>
 
         <CapabilityCard title={t('capabilities.share.title')} subtitle={t('capabilities.share.subtitle')}>
           {shareSupported ? (
-            <Button variant="outline" onClick={() => void handleShare()}>
-              <Share sx={{ mr: 1, fontSize: 16 }} />
+            <Button variant="outline" startIcon={<ShareIcon />} onClick={() => void handleShare()}>
               {t('capabilities.share.button')}
             </Button>
           ) : (
@@ -284,27 +277,24 @@ export default function CapabilitiesPage() {
         </CapabilityCard>
 
         <CapabilityCard title={t('capabilities.fullscreen.title')} subtitle={t('capabilities.fullscreen.subtitle')}>
-          <Button variant="outline" onClick={() => void handleFullscreen()}>
-            {isFullscreen ? (
-              <FullscreenExit sx={{ mr: 1, fontSize: 16 }} />
-            ) : (
-              <Fullscreen sx={{ mr: 1, fontSize: 16 }} />
-            )}
+          <Button
+            variant="outline"
+            startIcon={isFullscreen ? <ExitFullscreenIcon /> : <EnterFullscreenIcon />}
+            onClick={() => void handleFullscreen()}
+          >
             {isFullscreen ? t('capabilities.fullscreen.exit') : t('capabilities.fullscreen.enter')}
           </Button>
         </CapabilityCard>
 
         <CapabilityCard title={t('capabilities.print.title')} subtitle={t('capabilities.print.subtitle')}>
-          <Button variant="outline" onClick={() => window.print()}>
-            <Print sx={{ mr: 1, fontSize: 16 }} />
+          <Button variant="outline" startIcon={<PrintIcon />} onClick={() => window.print()}>
             {t('capabilities.print.button')}
           </Button>
         </CapabilityCard>
 
         <CapabilityCard title={t('capabilities.vibration.title')} subtitle={t('capabilities.vibration.subtitle')}>
           {vibrationSupported ? (
-            <Button variant="outline" onClick={handleVibrate}>
-              <Vibration sx={{ mr: 1, fontSize: 16 }} />
+            <Button variant="outline" startIcon={<VibrateIcon />} onClick={handleVibrate}>
               {t('capabilities.vibration.button')}
             </Button>
           ) : (
@@ -317,7 +307,7 @@ export default function CapabilitiesPage() {
           subtitle={t('capabilities.notifications.subtitle')}
         >
           {notificationsSupported ? (
-            <Stack spacing={2}>
+            <div className={styles.form}>
               <InfoRow label={t('capabilities.notifications.status')} value={notifStatusLabel} />
               <Input
                 value={notifTitle}
@@ -331,20 +321,19 @@ export default function CapabilitiesPage() {
                 size="small"
                 label={t('capabilities.notifications.bodyLabel')}
               />
-              <Box>
-                <Button variant="outline" onClick={() => void handleNotify()}>
-                  <NotificationsActive sx={{ mr: 1, fontSize: 16 }} />
+              <div>
+                <Button variant="outline" startIcon={<NotifyIcon />} onClick={() => void handleNotify()}>
                   {t('capabilities.notifications.send')}
                 </Button>
-              </Box>
+              </div>
               {notifResult && <AlertSuccess>{notifResult}</AlertSuccess>}
               {notifError && <AlertError>{notifError}</AlertError>}
-            </Stack>
+            </div>
           ) : (
             <AlertInfo>{t('capabilities.notifications.notSupported')}</AlertInfo>
           )}
         </CapabilityCard>
-      </Stack>
+      </div>
     </PageContainer>
   )
 }
