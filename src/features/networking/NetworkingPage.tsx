@@ -1,11 +1,18 @@
-import { Refresh } from '@mui/icons-material'
-import { Box, IconButton, Stack } from '@mui/material'
-import { AlertError, LoadingView, PageContainer, PageHeader, TextBody1Neutral60 } from '../../shared/components'
+import { RefreshIcon } from '../../shared/components/icons/catalog'
+import {
+  AlertError,
+  IconButton,
+  LoadingView,
+  PageContainer,
+  PageHeader,
+  TextBody1Neutral60,
+} from '../../shared/components'
 import { useTranslation } from '../../shared/hooks'
 import { queryClient, requestErrorKey } from '../../shared/api'
 import { CreateNote } from './components/CreateNote'
 import { NoteRow } from './components/NoteRow'
 import { notesQueryOptions, useNotesQuery } from './useNotes'
+import styles from './NetworkingPage.module.css'
 
 /**
  * The notes arrive with the navigation. A failed load does not throw: the page shows it beside its own Retry,
@@ -26,28 +33,28 @@ export default function NetworkingPage() {
 
   return (
     <PageContainer>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 2 }}>
+      <div className={styles.header}>
         <PageHeader title={t('networking.title')} description={t('networking.subtitle')} />
         <IconButton onClick={() => void refetch()} disabled={isFetching} aria-label={t('networking.refresh')}>
-          <Refresh aria-hidden />
+          <RefreshIcon aria-hidden />
         </IconButton>
-      </Box>
+      </div>
 
       <CreateNote />
 
       {showLoading && <LoadingView />}
-      {showError && <AlertError sx={{ mt: 2 }}>{t(requestErrorKey(error, 'common.error'))}</AlertError>}
+      {showError && <AlertError>{t(requestErrorKey(error, 'common.error'))}</AlertError>}
       {!showLoading && !showError && !hasNotes && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+        <div className={styles.empty}>
           <TextBody1Neutral60>{t('networking.empty')}</TextBody1Neutral60>
-        </Box>
+        </div>
       )}
       {hasNotes && (
-        <Stack spacing={2}>
+        <div className={styles.notes}>
           {notes.map((note) => (
             <NoteRow key={note.id} note={note} />
           ))}
-        </Stack>
+        </div>
       )}
     </PageContainer>
   )

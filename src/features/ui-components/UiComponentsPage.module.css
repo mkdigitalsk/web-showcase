@@ -1,0 +1,50 @@
+.sections {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+}
+
+.lines {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.column {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* A field is read at a human measure, never at the width of the panel it sits in. */
+.fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  max-width: 480px;
+}
+
+/* A card is read at a human measure too, a wider one than a field. */
+.card {
+  max-width: 720px;
+  padding: var(--space-4);
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* The bounds the loading view centres in. */
+.loadingBox {
+  height: var(--space-10);
+  border: 1px dashed var(--color-line);
+}

@@ -1,18 +1,18 @@
-import { Box } from '@mui/material'
-import type { SxProps, Theme } from '@mui/material/styles'
 import type { ReactNode } from 'react'
+import { cx, cssVars } from '../css'
+import styles from './PageContainer.module.css'
 
 interface PageContainerProps {
   children: ReactNode
+  /** The content's cap, in px — forms, cards and lists stay readable rather than stretching across the panel. */
   maxWidth?: number
-  sx?: SxProps<Theme>
+  className?: string
 }
 
-/**
- * Feature pages render into the wide app-shell panel. Caps the content measure so forms, cards and
- * lists stay readable instead of stretching edge-to-edge (per-context width, not full-bleed).
- * Left-aligned (hugs the sidebar) with responsive padding; override maxWidth for wider surfaces.
- */
-export function PageContainer({ children, maxWidth = 960, sx }: PageContainerProps) {
-  return <Box sx={{ p: { xs: 2, md: 3 }, maxWidth, ...sx }}>{children}</Box>
+export function PageContainer({ children, maxWidth = 960, className }: PageContainerProps) {
+  return (
+    <div className={cx(styles.page, className)} style={cssVars({ '--page-max': `${maxWidth}px` })}>
+      {children}
+    </div>
+  )
 }

@@ -1,0 +1,23 @@
+.cards {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.card {
+  padding: var(--space-4);
+}
+
+.hint {
+  margin-block: var(--space-1) var(--space-4);
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.value {
+  min-width: 2rem;
+  text-align: center;
+}

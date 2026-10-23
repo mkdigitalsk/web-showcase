@@ -1,0 +1,42 @@
+.track {
+  display: flex;
+  flex-shrink: 0;
+  width: 36px;
+  height: 20px;
+  padding: 2px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--color-faint);
+  cursor: pointer;
+  transition: background-color var(--duration) var(--ease);
+}
+
+.track[data-checked] {
+  background: var(--color-action);
+}
+
+.track[data-disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-pane);
+  transition: translate var(--duration) var(--ease);
+}
+
+.thumb[data-checked] {
+  translate: 16px 0;
+}
+
+.labelled {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height-small);
+  font: var(--font-body1);
+  cursor: pointer;
+}

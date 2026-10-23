@@ -55,8 +55,8 @@ describe('DatabasePage', () => {
     await screen.findByText('Banana')
     expect(precedes('Banana', 'Apple')).toBe(true)
 
-    await userEvent.click(screen.getByTestId('FilterListIcon'))
-    await userEvent.click(screen.getByRole('menuitem', { name: 'Title — A to Z' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Sort by' }))
+    await userEvent.click(await screen.findByRole('menuitem', { name: 'Title — A to Z' }))
 
     expect(precedes('Apple', 'Banana')).toBe(true)
   })
@@ -66,7 +66,7 @@ describe('DatabasePage', () => {
     renderWithProviders(<DatabasePage />)
 
     await screen.findByText('Disposable')
-    await userEvent.click(screen.getByTestId('DeleteIcon'))
+    await userEvent.click(screen.getByRole('button', { name: 'Delete note' }))
 
     expect(await screen.findByText('No notes yet — add one above')).toBeVisible()
   })

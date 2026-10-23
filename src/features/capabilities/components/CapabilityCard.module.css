@@ -1,0 +1,7 @@
+.card {
+  padding: var(--space-4);
+}
+
+.subtitle {
+  margin-block: var(--space-1) var(--space-4);
+}

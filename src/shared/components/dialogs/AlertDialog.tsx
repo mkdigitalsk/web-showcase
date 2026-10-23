@@ -1,44 +1,52 @@
-import {
-  Dialog as MuiDialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-} from '@mui/material'
+import type { ReactNode } from 'react'
+import { AlertDialog as BaseAlertDialog } from '@base-ui/react/alert-dialog'
+import { Button } from '../Button'
+import styles from './Dialog.module.css'
 
-type AlertDialogProps = {
+interface AlertDialogProps {
   open: boolean
-  title?: string
-  text: string
-  confirmText?: string
-  dismissText?: string
+  title: string
+  text?: string
+  confirmText: string
+  dismissText: string
+  destructive?: boolean
   onConfirm: () => void
   onDismiss: () => void
+  children?: ReactNode
 }
 
+/** A question that must be answered before the page goes on — only its two buttons and Escape leave it. */
 export function AlertDialog({
   open,
   title,
   text,
-  confirmText = 'OK',
-  dismissText = 'Cancel',
+  confirmText,
+  dismissText,
+  destructive = false,
   onConfirm,
   onDismiss,
+  children,
 }: AlertDialogProps) {
   return (
-    <MuiDialog open={open} onClose={onDismiss}>
-      {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent>
-        <DialogContentText>{text}</DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onDismiss}>{dismissText}</Button>
-        {/* eslint-disable-next-line jsx-a11y/no-autofocus -- the rule guards page load; focus belongs inside an open modal */}
-        <Button onClick={onConfirm} autoFocus>
-          {confirmText}
-        </Button>
-      </DialogActions>
-    </MuiDialog>
+    <BaseAlertDialog.Root open={open} onOpenChange={(next) => !next && onDismiss()}>
+      <BaseAlertDialog.Portal>
+        <BaseAlertDialog.Backdrop className={styles.backdrop} />
+        <BaseAlertDialog.Viewport className={styles.viewport}>
+          <BaseAlertDialog.Popup className={styles.popup}>
+            <BaseAlertDialog.Title className={styles.title}>{title}</BaseAlertDialog.Title>
+            {text && <BaseAlertDialog.Description className={styles.description}>{text}</BaseAlertDialog.Description>}
+            {children && <div className={styles.content}>{children}</div>}
+            <div className={styles.actions}>
+              <Button variant="text" onClick={onDismiss}>
+                {dismissText}
+              </Button>
+              <Button destructive={destructive} onClick={onConfirm}>
+                {confirmText}
+              </Button>
+            </div>
+          </BaseAlertDialog.Popup>
+        </BaseAlertDialog.Viewport>
+      </BaseAlertDialog.Portal>
+    </BaseAlertDialog.Root>
   )
 }

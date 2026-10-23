@@ -1,0 +1,15 @@
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-color: var(--color-line);
+  transition: text-decoration-color var(--duration) var(--ease);
+}
+
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+.action {
+  color: var(--color-action);
+}

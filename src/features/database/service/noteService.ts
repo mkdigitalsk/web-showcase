@@ -1,5 +1,5 @@
 import { noteRepository } from '../repository/noteRepository'
-import { type Note } from '../types'
+import type { Note } from '../../../shared/types'
 
 export const noteService = {
   addNote: (title: string, content: string): Promise<number> =>

@@ -1,48 +1,54 @@
-import { Badge as MuiBadge, type BadgeProps as MuiBadgeProps } from '@mui/material'
+import type { ReactNode } from 'react'
+import { cx } from '../css'
+import styles from './Badge.module.css'
+
+interface BadgeProps {
+  /** The count, or nothing for a dot. */
+  content?: ReactNode
+  invisible?: boolean
+  variant?: 'count' | 'dot'
+  /** Red for what needs attention, neutral for a plain count. */
+  tone?: 'error' | 'neutral'
+  className?: string
+  children: ReactNode
+}
+
+export function Badge({
+  content,
+  invisible = false,
+  variant = 'count',
+  tone = 'error',
+  className,
+  children,
+}: BadgeProps) {
+  return (
+    <span className={cx(styles.anchor, className)}>
+      {children}
+      {!invisible && (
+        <span className={styles.badge} data-variant={variant} data-tone={tone}>
+          {variant === 'count' && content}
+        </span>
+      )}
+    </span>
+  )
+}
 
 const DEFAULT_MAX_COUNT = 99
 
-type BadgeProps = MuiBadgeProps
-
-export function Badge({ sx, ...props }: BadgeProps) {
-  return <MuiBadge color="error" sx={sx} {...props} />
-}
-
-type BadgedBoxProps = Omit<MuiBadgeProps, 'badgeContent'> & {
+interface BadgedBoxProps extends Omit<BadgeProps, 'content' | 'invisible' | 'variant'> {
   count: number
   maxCount?: number
   showBadge?: boolean
 }
 
-export function BadgedBox({
-  count,
-  maxCount = DEFAULT_MAX_COUNT,
-  showBadge = count > 0,
-  sx,
-  children,
-  ...props
-}: BadgedBoxProps) {
-  return (
-    <MuiBadge
-      badgeContent={showBadge ? (count > maxCount ? `${maxCount}+` : count) : 0}
-      color="error"
-      invisible={!showBadge}
-      sx={sx}
-      {...props}
-    >
-      {children}
-    </MuiBadge>
-  )
+export function BadgedBox({ count, maxCount = DEFAULT_MAX_COUNT, showBadge = count > 0, ...props }: BadgedBoxProps) {
+  return <Badge content={count > maxCount ? `${maxCount}+` : count} invisible={!showBadge} {...props} />
 }
 
-type DotBadgedBoxProps = Omit<MuiBadgeProps, 'badgeContent' | 'variant'> & {
+interface DotBadgedBoxProps extends Omit<BadgeProps, 'content' | 'invisible' | 'variant'> {
   showBadge: boolean
 }
 
-export function DotBadgedBox({ showBadge, sx, children, ...props }: DotBadgedBoxProps) {
-  return (
-    <MuiBadge variant="dot" color="error" invisible={!showBadge} sx={sx} {...props}>
-      {children}
-    </MuiBadge>
-  )
+export function DotBadgedBox({ showBadge, ...props }: DotBadgedBoxProps) {
+  return <Badge variant="dot" invisible={!showBadge} {...props} />
 }

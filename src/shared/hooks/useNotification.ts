@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-/** Result of attempting to show a notification — the page maps this to localized UI. */
 export type NotifyOutcome = 'shown' | 'denied' | 'unsupported'
 
 interface UseNotificationResult {

@@ -1,0 +1,22 @@
+.page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/*
+ * Auto margins rather than centring: content that outgrows the viewport overflows equally at both ends under
+ * `center`, and its top is then unreachable by scrolling. Auto margins collapse to zero instead, so a short screen
+ * scrolls to the title.
+ */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-block: auto;
+  padding-block: var(--space-6);
+}

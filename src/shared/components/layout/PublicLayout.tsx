@@ -1,7 +1,7 @@
-import { Box } from '@mui/material'
 import { Outlet } from 'react-router'
 import { Footer } from './Footer'
 import { TopBar } from './TopBar'
+import styles from './PublicLayout.module.css'
 
 /**
  * The footer rides along because the privacy notice has to be reachable from the form that collects
@@ -9,12 +9,12 @@ import { TopBar } from './TopBar'
  */
 export default function PublicLayout() {
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className={styles.shell}>
       <TopBar />
-      <Box component="main" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+      <main className={styles.main}>
         <Outlet />
-      </Box>
+      </main>
       <Footer />
-    </Box>
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { noteService } from '../service/noteService'
-import { type Note } from '../types'
+import type { Note } from '../../../shared/types'
 
 export type SortOption = 'DATE_DESC' | 'DATE_ASC' | 'TITLE_ASC' | 'TITLE_DESC'
 

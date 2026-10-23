@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Delete, Edit } from '@mui/icons-material'
-import { Box, IconButton, Stack } from '@mui/material'
+import { DeleteIcon, EditIcon } from '../../../shared/components/icons/catalog'
 import {
   AlertError,
   Button,
-  ElevatedCard,
+  Card,
+  IconButton,
   Input,
+  TextArea,
   TextBody1Neutral60,
   TextBody1Neutral80,
 } from '../../../shared/components'
@@ -14,6 +15,7 @@ import { requestErrorKey } from '../../../shared/api'
 import type { RemoteNote } from '../../../shared/types'
 import { conflictingNote, useDeleteNote, useUpdateNote } from '../useNotes'
 import { NoteConflictDialog } from './NoteConflictDialog'
+import styles from './NoteRow.module.css'
 
 interface Draft {
   title: string
@@ -42,50 +44,47 @@ export function NoteRow({ note }: { note: RemoteNote }) {
 
   if (!draft) {
     return (
-      <ElevatedCard sx={{ p: 2 }}>
-        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
-          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+      <Card className={styles.card}>
+        <div className={styles.row}>
+          <div className={styles.body}>
             <TextBody1Neutral80>{note.title}</TextBody1Neutral80>
             <TextBody1Neutral60>{note.content}</TextBody1Neutral60>
-          </Box>
+          </div>
           <IconButton onClick={startEditing} aria-label={t('notes.edit')}>
-            <Edit fontSize="small" aria-hidden />
+            <EditIcon aria-hidden />
           </IconButton>
           <IconButton onClick={() => remove.mutate(note.id)} disabled={remove.isPending} aria-label={t('notes.delete')}>
-            <Delete fontSize="small" aria-hidden />
+            <DeleteIcon aria-hidden />
           </IconButton>
-        </Box>
-      </ElevatedCard>
+        </div>
+      </Card>
     )
   }
 
   return (
-    <ElevatedCard sx={{ p: 2 }}>
-      <Stack spacing={2}>
+    <Card className={styles.card}>
+      <div className={styles.form}>
         <Input
           label={t('notes.titleLabel')}
           value={draft.title}
           onChange={(e) => setDraft({ ...draft, title: e.target.value })}
-          fullWidth
         />
-        <Input
+        <TextArea
           label={t('notes.contentLabel')}
           value={draft.content}
           onChange={(e) => setDraft({ ...draft, content: e.target.value })}
-          fullWidth
-          multiline
           minRows={2}
         />
         {update.isError && !conflict && <AlertError>{t(requestErrorKey(update.error, 'notes.saveFailed'))}</AlertError>}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+        <div className={styles.actions}>
           <Button variant="outline" onClick={() => setDraft(null)}>
             {t('notes.cancel')}
           </Button>
           <Button onClick={() => save(draft.etag)} disabled={update.isPending} loading={update.isPending}>
             {t('notes.save')}
           </Button>
-        </Box>
-      </Stack>
+        </div>
+      </div>
 
       {conflict && (
         <NoteConflictDialog
@@ -98,6 +97,6 @@ export function NoteRow({ note }: { note: RemoteNote }) {
           onOverwrite={() => save(conflict.etag)}
         />
       )}
-    </ElevatedCard>
+    </Card>
   )
 }

@@ -26,3 +26,6 @@ build
 .vercel
 .env*
 !.env.example
+# Playwright: what a journey leaves behind
+test-results/
+playwright-report/

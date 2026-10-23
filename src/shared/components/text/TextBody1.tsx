@@ -1,22 +1,22 @@
-import { useTheme } from '@mui/material/styles'
-import { BaseTypography } from './BaseTypography'
-import { type BaseTextProps, type TextInternalProps } from './types'
+import { Text } from './Text'
+import type { BaseTextProps } from './types'
 
-export function TextBody1({ internalSx, ...props }: TextInternalProps) {
-  return <BaseTypography variant="body1" internalSx={internalSx} {...props} />
+export function TextBody1(props: BaseTextProps) {
+  return <Text variant="body1" {...props} />
 }
 
 export function TextBody1Neutral80(props: BaseTextProps) {
-  const theme = useTheme()
-  return <TextBody1 internalSx={{ color: theme.palette.neutral[80] }} {...props} />
+  return <Text variant="body1" tone="ink" {...props} />
 }
 
 export function TextBody1Neutral60(props: BaseTextProps) {
-  const theme = useTheme()
-  return <TextBody1 internalSx={{ color: theme.palette.neutral[60] }} {...props} />
+  return <Text variant="body1" tone="muted" {...props} />
+}
+
+export function TextBody1Disabled(props: BaseTextProps) {
+  return <Text variant="body1" tone="faint" {...props} />
 }
 
 export function TextBody1Primary(props: BaseTextProps) {
-  const theme = useTheme()
-  return <TextBody1 internalSx={{ color: theme.palette.primary.main }} {...props} />
+  return <Text variant="body1" tone="action" {...props} />
 }

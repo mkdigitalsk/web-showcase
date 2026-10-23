@@ -1,0 +1,37 @@
+.anchor {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding-inline: var(--space-1);
+  border-radius: var(--radius);
+  background: var(--color-error);
+  color: var(--color-pane);
+  font: var(--font-caption);
+  font-weight: 500;
+  line-height: 1;
+  transform: translate(40%, -40%);
+}
+
+.badge[data-tone='neutral'] {
+  background: var(--color-line);
+  color: var(--color-ink);
+}
+
+.badge[data-variant='dot'] {
+  min-width: 8px;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+}

@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv, type ConfigEnv, type UserConfig } from 'vite'
 import { reactRouter } from '@react-router/dev/vite'
 import react from '@vitejs/plugin-react'
+import { configDefaults } from 'vitest/config'
 import type { InlineConfig } from 'vitest/node'
 import { apiProxy } from './server/viteApiProxy'
 
@@ -38,16 +39,13 @@ export default defineConfig((configEnv): Config => {
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version ?? '0.0.0'),
     },
-    ssr: {
-      /**
-       * The build renders the root once in Node to write `index.html`. MUI's ESM files import
-       * react-transition-group by directory, which Node's loader refuses, so both are bundled into that render
-       * the way the browser build bundles them.
-       */
-      noExternal: [/^@mui\//, 'react-transition-group'],
-    },
     test: {
       environment: 'jsdom',
+      /**
+       * A worktree under .claude/ is another checkout of this repo, whose tests belong to its own run. The
+       * Playwright journey under e2e/ runs in a browser against a booted stack, never under Vitest.
+       */
+      exclude: [...configDefaults.exclude, 'e2e/**', '.claude/**'],
       /**
        * Node ≥25 ships its own Web Storage globals (inert without --localstorage-file) and the test
        * worker keeps them over jsdom's, so every localStorage call fails. The flag hands the globals
@@ -57,16 +55,11 @@ export default defineConfig((configEnv): Config => {
       execArgv: Number(process.versions.node.split('.')[0]) >= 23 ? ['--no-experimental-webstorage'] : [],
       globals: true,
       /**
-       * The 5s default is tuned for unit tests. Ours are integration tests that type through real MUI
+       * The 5s default is tuned for unit tests. Ours are integration tests that type through real
        * re-renders into a live Dexie query, which alone spends seconds before anything is asserted.
        */
       testTimeout: 15000,
       setupFiles: ['./src/test/setup.ts'],
-      deps: {
-        optimizer: {
-          client: { enabled: true, include: ['@mui/material', '@mui/icons-material', 'react-transition-group'] },
-        },
-      },
     },
   }
 })

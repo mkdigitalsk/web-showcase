@@ -1,4 +1,3 @@
-import { Box, Stack } from '@mui/material'
 import {
   Button,
   Dialog,
@@ -33,19 +32,17 @@ export function NoteConflictDialog({ theirs, yours, onReload, onOverwrite }: Not
         </>
       }
     >
-      <Stack spacing={2}>
-        <TextBody1Neutral60>{t('notes.conflictBody')}</TextBody1Neutral60>
-        <Box>
-          <TextCaptionNeutral60>{t('notes.conflictTheirs')}</TextCaptionNeutral60>
-          <TextBody1Neutral80>{theirs.title}</TextBody1Neutral80>
-          <TextBody1Neutral60>{theirs.content}</TextBody1Neutral60>
-        </Box>
-        <Box>
-          <TextCaptionNeutral60>{t('notes.conflictYours')}</TextCaptionNeutral60>
-          <TextBody1Neutral80>{yours.title}</TextBody1Neutral80>
-          <TextBody1Neutral60>{yours.content}</TextBody1Neutral60>
-        </Box>
-      </Stack>
+      <TextBody1Neutral60>{t('notes.conflictBody')}</TextBody1Neutral60>
+      <div>
+        <TextCaptionNeutral60>{t('notes.conflictTheirs')}</TextCaptionNeutral60>
+        <TextBody1Neutral80>{theirs.title}</TextBody1Neutral80>
+        <TextBody1Neutral60>{theirs.content}</TextBody1Neutral60>
+      </div>
+      <div>
+        <TextCaptionNeutral60>{t('notes.conflictYours')}</TextCaptionNeutral60>
+        <TextBody1Neutral80>{yours.title}</TextBody1Neutral80>
+        <TextBody1Neutral60>{yours.content}</TextBody1Neutral60>
+      </div>
     </Dialog>
   )
 }

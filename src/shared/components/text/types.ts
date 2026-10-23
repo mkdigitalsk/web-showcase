@@ -1,29 +1,13 @@
-import { type ReactNode } from 'react'
-import { type SxProps, type TypographyProps } from '@mui/material'
+import type { ReactNode } from 'react'
 
-export interface SpacingSx {
-  mt?: string | number
-  mb?: string | number
-  ml?: string | number
-  mr?: string | number
-  mx?: string | number
-  my?: string | number
-  pt?: string | number
-  pb?: string | number
-  pl?: string | number
-  pr?: string | number
-  px?: string | number
-  py?: string | number
-}
+/** A text's colour by what it says — the ink, a subline, a disabled line, the action, or a state's meaning. */
+export type TextTone = 'ink' | 'muted' | 'faint' | 'action' | 'success' | 'warning' | 'info' | 'error' | 'secondary'
 
 export interface BaseTextProps {
-  sx?: SpacingSx
-  align?: TypographyProps['align']
+  align?: 'left' | 'center' | 'right'
   gutterBottom?: boolean
   noWrap?: boolean
+  className?: string
+  id?: string
   children?: ReactNode
-}
-
-export interface TextInternalProps extends BaseTextProps {
-  internalSx?: SxProps
 }

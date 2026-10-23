@@ -1,0 +1,4 @@
+.page {
+  max-width: var(--page-max);
+  padding: var(--gutter);
+}

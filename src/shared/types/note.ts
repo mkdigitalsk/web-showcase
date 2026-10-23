@@ -1,5 +1,13 @@
+/** A note held in IndexedDB on this device, never sent to the server. */
+export interface Note {
+  id: number
+  title: string
+  content: string
+  createdAt: number
+}
+
 /**
- * A note held on the server, as opposed to the Database screen's note held in IndexedDB.
+ * A note held on the server, as opposed to a {@link Note} held in IndexedDB.
  *
  * `etag` is carried verbatim from the response and sent back verbatim on a write. The quotes are part
  * of the value and `If-Match` compares strongly, so a client that trims or rebuilds it can never match.

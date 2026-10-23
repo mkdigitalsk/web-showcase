@@ -7,15 +7,13 @@ import { Locale } from '../enums/locale'
 export interface LocaleOption {
   code: Locale
   label: string
-  /** An emoji flag; swap to an SVG library if Windows rendering matters. */
-  flag: string
 }
 
 export const LOCALES: LocaleOption[] = [
-  { code: Locale.EN_GB, label: 'English', flag: '🇬🇧' },
-  { code: Locale.SK_SK, label: 'Slovenčina', flag: '🇸🇰' },
-  { code: Locale.CS_CZ, label: 'Čeština', flag: '🇨🇿' },
-  { code: Locale.DE_DE, label: 'Deutsch', flag: '🇩🇪' },
+  { code: Locale.EN_GB, label: 'English' },
+  { code: Locale.SK_SK, label: 'Slovenčina' },
+  { code: Locale.CS_CZ, label: 'Čeština' },
+  { code: Locale.DE_DE, label: 'Deutsch' },
 ]
 
 export const MESSAGES: Record<string, Record<string, string>> = {

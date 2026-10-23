@@ -1,16 +1,61 @@
-/* MUI handles all component styling */
-/* This file contains only global resets */
+/* Global resets and the scheme switch — everything else is a module beside its component. */
 
-* {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+html,
 body {
-  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* System by default; an explicit mode is the attribute the ColorSchemeProvider sets on <html>. */
+:root {
+  color-scheme: light dark;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+html {
+  font-variant-numeric: lining-nums tabular-nums;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* The base font sits on <body>: on <html> its size would become the rem, and every rem-sized token shrink with it. */
+body {
+  position: relative;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font: var(--font-body1);
+}
+
+/* The app's own stacking context, so no page z-index covers a portalled popup. */
+#app {
+  isolation: isolate;
+  min-height: 100dvh;
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
 }
 
 .app-loading {

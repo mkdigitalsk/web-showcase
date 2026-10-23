@@ -1,17 +1,28 @@
-import { Link as MuiLink, type LinkProps as MuiLinkProps } from '@mui/material'
-import { Link as RouterLink } from 'react-router'
-import { useTheme } from '@mui/material/styles'
-import type { AppRoute } from '../../../utils'
+import type { ReactNode } from 'react'
+import { Link } from 'react-router'
+import { cx } from '../css'
+import type { LinkTarget } from '../linkTarget'
+import styles from './TextLink.module.css'
 
-type TextLinkProps = Omit<MuiLinkProps, 'component'> & {
-  to: AppRoute
+type TextLinkProps = { className?: string; children: ReactNode } & LinkTarget
+
+export function TextLink({ to, href, className, children }: TextLinkProps) {
+  const linkClass = cx(styles.link, className)
+  if (to === undefined) {
+    return (
+      <a href={href} target="_blank" rel="noopener" className={linkClass}>
+        {children}
+      </a>
+    )
+  }
+
+  return (
+    <Link to={to} className={linkClass}>
+      {children}
+    </Link>
+  )
 }
 
-export function TextLink({ to, sx, ...props }: TextLinkProps) {
-  return <MuiLink component={RouterLink} to={to} sx={sx} {...props} />
-}
-
-export function TextLinkPrimary({ sx, ...props }: TextLinkProps) {
-  const theme = useTheme()
-  return <TextLink sx={{ color: theme.palette.primary.main, ...sx }} {...props} />
+export function TextLinkPrimary({ className, ...props }: TextLinkProps) {
+  return <TextLink {...props} className={cx(styles.action, className)} />
 }

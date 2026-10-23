@@ -1,0 +1,51 @@
+/*
+ * Every value a module may read enters here, once — the design system's with its web.css, this app's own below.
+ * A colour is one light-dark() that `color-scheme` on <html> switches.
+ */
+@import '@mkdigitalsk/design-system/web.css';
+
+:root {
+  /* Hovered, selected and behind-a-dialog — the ink or the night at a fraction, so they hold on both schemes */
+  --color-hover: color-mix(in srgb, var(--color-ink) 6%, transparent);
+  --color-selected: color-mix(in srgb, var(--color-ink) 10%, transparent);
+  --color-backdrop: color-mix(in srgb, #0b0f15 55%, transparent);
+
+  --focus-ring: 2px solid var(--color-action);
+  --focus-offset: 2px;
+
+  /* The shell — the bar every screen hangs under, the gutter, the control floor, the reading measure */
+  --bar-height: 56px;
+  --gutter: var(--space-4);
+  --touch-min: 44px;
+  --control-height: 40px;
+  --control-height-small: 32px;
+  --measure: 65ch;
+
+  /* A glyph's size — Lucide draws on a 24px grid, the large one
+   * https://lucide.dev/guide/react/basics/sizing
+   */
+  --icon-small: 1rem;
+  --icon-medium: 1.25rem;
+  --icon-large: 1.5rem;
+
+  /* Motion — one ease, two durations */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --duration: 160ms;
+  --duration-slow: 320ms;
+
+  /* The bar over the page; popups portal above both */
+  --z-bar: 10;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --gutter: var(--space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration: 0ms;
+    --duration-slow: 0ms;
+  }
+}

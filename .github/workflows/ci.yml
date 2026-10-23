@@ -44,6 +44,9 @@ jobs:
       - name: Lint Markdown
         run: npm run lint:md
 
+      - name: Lint Shell
+        run: npm run lint:sh
+
       - name: Check locales
         run: npm run check-locales
 

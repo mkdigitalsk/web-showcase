@@ -1,0 +1,6 @@
+.check {
+  width: var(--icon-small);
+  height: var(--icon-small);
+  margin-inline-start: auto;
+  color: var(--color-action);
+}

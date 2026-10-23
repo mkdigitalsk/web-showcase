@@ -1,8 +1,6 @@
-import type { RemoteNote } from '../shared/types'
-import type { AuthResponse, AuthUser, User } from '../shared/types'
-import type { Note } from '../features/database/types'
+import type { AuthResponse, AuthUser, Note, RemoteNote, User } from '../shared/types'
 
-export function fakeNote(overrides: Partial<Note> = {}): Note {
+export function fakeNote(overrides: Partial<Omit<Note, 'id'>> = {}): Omit<Note, 'id'> {
   return { title: 'Groceries', content: 'Milk and eggs', createdAt: 1_700_000_000_000, ...overrides }
 }
 

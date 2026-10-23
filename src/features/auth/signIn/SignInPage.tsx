@@ -1,7 +1,6 @@
 import { useForm, Controller } from 'react-hook-form'
 import { Routes } from '../../../utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Box, Container } from '@mui/material'
 import {
   Button,
   Input,
@@ -14,8 +13,9 @@ import {
 import { useTranslation } from '../../../shared/hooks'
 import { httpStatus, requestErrorKey } from '../../../shared/api'
 import { useSignInMutation } from './useSignInMutation'
-import { centredColumnSx } from '../centredColumnSx'
+import { CentredColumn } from '../CentredColumn'
 import { signInSchema, type SignInFormData } from '../schemas'
+import styles from './SignInPage.module.css'
 
 const TEST_EMAIL = 'test01@mkdigital.sk'
 const TEST_PASSWORD = 'MKDigitalTest1@'
@@ -39,79 +39,70 @@ export default function SignInPage() {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-      <Box sx={centredColumnSx}>
-        <TextH4Bold align="center" gutterBottom>
-          {t('signIn.title')}
-        </TextH4Bold>
+    <CentredColumn>
+      <TextH4Bold align="center">{t('signIn.title')}</TextH4Bold>
 
-        <Box
-          component="form"
-          onSubmit={(event) => void handleSubmit((data) => signInMutation.mutate(data))(event)}
-          sx={{ mt: 4 }}
-        >
-          <Controller
-            name="email"
-            control={control}
-            render={({ field, fieldState: { error } }) => (
-              <Input
-                {...field}
-                label={t('signIn.emailLabel')}
-                type="email"
-                placeholder={t('signIn.emailPlaceholder')}
-                error={!!error}
-                helperText={error?.message && t(`validation.${error.message}`)}
-                margin="normal"
-                fullWidth
-              />
-            )}
-          />
-
-          <Controller
-            name="password"
-            control={control}
-            render={({ field, fieldState: { error } }) => (
-              <Input
-                {...field}
-                label={t('signIn.passwordLabel')}
-                type="password"
-                placeholder={t('signIn.passwordPlaceholder')}
-                error={!!error}
-                helperText={error?.message && t(`validation.${error.message}`)}
-                margin="normal"
-                fullWidth
-              />
-            )}
-          />
-
-          {signInMutation.error && (
-            <AlertError sx={{ mt: 2 }}>
-              {t(
-                httpStatus(signInMutation.error) === HTTP_UNAUTHORIZED
-                  ? 'signIn.error'
-                  : requestErrorKey(signInMutation.error, 'common.error'),
-              )}
-            </AlertError>
+      <form
+        className={styles.form}
+        onSubmit={(event) => void handleSubmit((data) => signInMutation.mutate(data))(event)}
+      >
+        <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <Input
+              {...field}
+              label={t('signIn.emailLabel')}
+              type="email"
+              placeholder={t('signIn.emailPlaceholder')}
+              errorText={error?.message && t(`validation.${error.message}`)}
+            />
           )}
+        />
 
-          <Button type="submit" loading={signInMutation.isPending} fullWidth size="large" sx={{ mt: 3 }}>
-            {t('signIn.button')}
-          </Button>
-        </Box>
+        <Controller
+          name="password"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <Input
+              {...field}
+              label={t('signIn.passwordLabel')}
+              type="password"
+              placeholder={t('signIn.passwordPlaceholder')}
+              errorText={error?.message && t(`validation.${error.message}`)}
+            />
+          )}
+        />
 
-        <Box sx={{ mt: 4, p: 2, bgcolor: 'action.hover', borderRadius: 2, textAlign: 'center' }}>
-          <TextBody1Neutral60>{t('signIn.testAccount.hint')}</TextBody1Neutral60>
-          <TextBody1Neutral80 sx={{ mt: 1 }}>{TEST_EMAIL}</TextBody1Neutral80>
+        {signInMutation.error && (
+          <AlertError>
+            {t(
+              httpStatus(signInMutation.error) === HTTP_UNAUTHORIZED
+                ? 'signIn.error'
+                : requestErrorKey(signInMutation.error, 'common.error'),
+            )}
+          </AlertError>
+        )}
+
+        <Button type="submit" loading={signInMutation.isPending}>
+          {t('signIn.button')}
+        </Button>
+      </form>
+
+      <div className={styles.testAccount}>
+        <TextBody1Neutral60>{t('signIn.testAccount.hint')}</TextBody1Neutral60>
+        <div>
+          <TextBody1Neutral80>{TEST_EMAIL}</TextBody1Neutral80>
           <TextBody1Neutral80>{TEST_PASSWORD}</TextBody1Neutral80>
-          <Button type="button" variant="outline" onClick={fillTestAccount} sx={{ mt: 2 }}>
-            {t('signIn.testAccount.fill')}
-          </Button>
-        </Box>
+        </div>
+        <Button type="button" variant="outline" onClick={fillTestAccount}>
+          {t('signIn.testAccount.fill')}
+        </Button>
+      </div>
 
-        <TextBody1Neutral60 align="center" sx={{ mt: 3 }}>
-          {t('signIn.noAccount')} <TextLinkPrimary to={Routes.SIGN_UP}>{t('signIn.signUp')}</TextLinkPrimary>
-        </TextBody1Neutral60>
-      </Box>
-    </Container>
+      <TextBody1Neutral60 align="center">
+        {t('signIn.noAccount')} <TextLinkPrimary to={Routes.SIGN_UP}>{t('signIn.signUp')}</TextLinkPrimary>
+      </TextBody1Neutral60>
+    </CentredColumn>
   )
 }

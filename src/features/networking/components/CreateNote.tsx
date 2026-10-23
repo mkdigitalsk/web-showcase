@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Box, Stack } from '@mui/material'
-import { AlertError, Button, ElevatedCard, Input } from '../../../shared/components'
+import { AlertError, Button, Card, Input, TextArea } from '../../../shared/components'
 import { useTranslation } from '../../../shared/hooks'
 import { requestErrorKey } from '../../../shared/api'
 import { useCreateNote } from '../useNotes'
+import styles from './CreateNote.module.css'
 
 export function CreateNote() {
   const { t } = useTranslation()
@@ -24,24 +24,20 @@ export function CreateNote() {
   }
 
   return (
-    <ElevatedCard sx={{ p: 2, mb: 3 }}>
-      <Stack spacing={2}>
-        <Input label={t('notes.titleLabel')} value={title} onChange={(e) => setTitle(e.target.value)} fullWidth />
-        <Input
-          label={t('notes.contentLabel')}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          fullWidth
-          multiline
-          minRows={2}
-        />
-        {create.isError && <AlertError>{t(requestErrorKey(create.error, 'notes.saveFailed'))}</AlertError>}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button onClick={submit} disabled={!title.trim() || create.isPending} loading={create.isPending}>
-            {t('notes.add')}
-          </Button>
-        </Box>
-      </Stack>
-    </ElevatedCard>
+    <Card className={styles.card}>
+      <Input label={t('notes.titleLabel')} value={title} onChange={(e) => setTitle(e.target.value)} />
+      <TextArea
+        label={t('notes.contentLabel')}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        minRows={2}
+      />
+      {create.isError && <AlertError>{t(requestErrorKey(create.error, 'notes.saveFailed'))}</AlertError>}
+      <div className={styles.actions}>
+        <Button onClick={submit} disabled={!title.trim() || create.isPending} loading={create.isPending}>
+          {t('notes.add')}
+        </Button>
+      </div>
+    </Card>
   )
 }

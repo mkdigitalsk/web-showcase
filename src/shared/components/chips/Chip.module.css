@@ -1,0 +1,104 @@
+.chip {
+  --chip-color: var(--color-ink);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--control-height-small);
+  padding-inline: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font: var(--font-body2);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--chip-color);
+  background: color-mix(in srgb, var(--chip-color) 12%, transparent);
+}
+
+.chip[data-size='small'] {
+  min-height: 24px;
+  padding-inline: var(--space-2);
+  font: var(--font-caption);
+  font-weight: 500;
+}
+
+.chip[data-variant='outlined'] {
+  border-color: var(--color-line);
+  background: none;
+}
+
+.chip[data-color='primary'] {
+  --chip-color: var(--color-action);
+}
+
+.chip[data-color='secondary'] {
+  --chip-color: var(--color-secondary);
+}
+
+.chip[data-color='success'] {
+  --chip-color: var(--color-success);
+}
+
+.chip[data-color='warning'] {
+  --chip-color: var(--color-warning);
+}
+
+.chip[data-color='error'] {
+  --chip-color: var(--color-error);
+}
+
+.chip[data-color='info'] {
+  --chip-color: var(--color-info);
+}
+
+.chip[data-variant='filled'][data-color='primary'] {
+  color: var(--color-on-action);
+  background: var(--color-action);
+}
+
+.filter {
+  cursor: pointer;
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
+}
+
+.filter:hover {
+  border-color: var(--color-ink);
+}
+
+.icon {
+  display: inline-flex;
+  margin-inline-start: calc(-1 * var(--space-1));
+}
+
+.icon > svg {
+  width: var(--icon-small);
+  height: var(--icon-small);
+}
+
+/* A 24px target, pulled into the chip's end padding so the chip keeps its height. */
+.delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+  margin-inline-end: calc(-1 * var(--space-2));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color var(--duration) var(--ease);
+}
+
+.delete:hover {
+  background: var(--color-hover);
+}
+
+.delete > svg {
+  width: var(--icon-small);
+  height: var(--icon-small);
+}

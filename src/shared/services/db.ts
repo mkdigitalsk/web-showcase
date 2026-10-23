@@ -1,11 +1,11 @@
-import Dexie, { type Table } from 'dexie'
-import { type Note } from '../../features/database/types'
+import Dexie, { type EntityTable } from 'dexie'
+import type { Note } from '../types'
 
 const DB_NAME = 'kmp-showcase'
 const DB_VERSION = 1
 
 class AppDatabase extends Dexie {
-  notes!: Table<Note>
+  notes!: EntityTable<Note, 'id'>
 
   constructor() {
     super(DB_NAME)

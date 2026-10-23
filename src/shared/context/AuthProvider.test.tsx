@@ -17,7 +17,7 @@ describe('AuthProvider', () => {
     await waitFor(() => expect(calls).toContain(`GET ${API_PREFIX}/users/me`))
 
     await userEvent.click(screen.getByRole('button', { name: 'Change language' }))
-    await userEvent.click(screen.getByRole('menuitem', { name: /Slovenčina/ }))
+    await userEvent.click(await screen.findByRole('menuitem', { name: /Slovenčina/ }))
 
     expect(await screen.findByRole('button', { name: 'Zmeniť jazyk' })).toBeVisible()
     expect(calls).not.toContain(`PUT ${API_PREFIX}/users/me/locale`)

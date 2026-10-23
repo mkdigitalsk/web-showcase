@@ -1,0 +1,65 @@
+.box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--color-faint);
+  border-radius: var(--radius);
+  background: var(--color-pane);
+  color: var(--color-on-action);
+  cursor: pointer;
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
+}
+
+.box[data-size='small'] {
+  width: 16px;
+  height: 16px;
+}
+
+.box:hover {
+  border-color: var(--color-ink);
+}
+
+.box[data-checked],
+.box[data-indeterminate] {
+  border-color: var(--color-action);
+  background: var(--color-action);
+}
+
+.box[data-disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* The mark grows in and shrinks out — kept mounted so the exit can show. */
+.indicator {
+  display: flex;
+  transition:
+    transform var(--duration) var(--ease),
+    opacity var(--duration) var(--ease);
+}
+
+.indicator[data-unchecked] {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.indicator > svg {
+  width: var(--icon-small);
+  height: var(--icon-small);
+  stroke-width: 3;
+}
+
+.labelled {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height-small);
+  font: var(--font-body1);
+  cursor: pointer;
+}

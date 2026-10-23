@@ -1,6 +1,6 @@
-import { BaseTypography } from './BaseTypography'
-import { type TextInternalProps } from './types'
+import { Text } from './Text'
+import type { BaseTextProps } from './types'
 
-export function TextH1({ internalSx, ...props }: TextInternalProps) {
-  return <BaseTypography variant="h1" internalSx={internalSx} {...props} />
+export function TextH1(props: BaseTextProps) {
+  return <Text variant="h1" {...props} />
 }

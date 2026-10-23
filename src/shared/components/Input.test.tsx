@@ -4,7 +4,7 @@ import { Input } from './Input'
 
 /**
  * The toggle is an icon-only button, so its accessible name is the only thing a screen reader has to
- * go on — and jsx-a11y cannot see it, because it does not know MUI's IconButton renders a <button>.
+ * go on — and jsx-a11y cannot see it, because it does not know the IconButton wrapper renders a <button>.
  */
 describe('Input password toggle', () => {
   it('names the action it will perform, and renames itself once performed', async () => {
