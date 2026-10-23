@@ -38,6 +38,20 @@ jobs:
       - name: Format
         run: npm run format:check
 
+      # Only the spec is checked out of kmp-showcase, so nothing of the server reaches a later step.
+      - name: Check out the API spec
+        uses: actions/checkout@v4
+        with:
+          repository: mkdigitalsk/kmp-showcase
+          path: .kmp-showcase
+          sparse-checkout: contracts/openapi.json
+          sparse-checkout-cone-mode: false
+
+      - name: Types Check
+        env:
+          API_SPEC: .kmp-showcase/contracts/openapi.json
+        run: npm run types:check
+
       - name: Lint
         run: npm run lint
 

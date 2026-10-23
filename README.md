@@ -88,6 +88,7 @@ npm run dev   # http://localhost:5173
 | `npm run format:check`  | Prettier, verify (CI gates)                                                     |
 | `npm run lint`          | ESLint                                                                          |
 | `npm run check-locales` | verify locale key parity                                                        |
+| `npm run types:api`     | the API's types, generated from `../kmp-showcase`'s spec                        |
 | `npm run e2e`           | the Playwright journey on a stack of its own — Docker, a JDK, `../kmp-showcase` |
 
 ## Architecture
