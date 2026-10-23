@@ -4,6 +4,7 @@ set -e
 cd "$(dirname "$0")/.."
 
 npm run format:check
+npm run types:check
 npm run lint
 npm run lint:md
 npm run lint:sh

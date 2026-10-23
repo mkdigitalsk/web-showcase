@@ -1,24 +1,12 @@
-import type { ThemeMode } from './theme'
+import type { components } from '../api/generated/schema'
 
-export interface SignInRequest {
-  email: string
-  password: string
-}
+type S = components['schemas']
 
-export interface SignUpRequest {
-  email: string
-  password: string
-}
+export type SignInRequest = S['SignInRequestDTO']
 
-export interface AuthUser {
-  id: number
-  email: string
-  themeMode: ThemeMode
-  locale: string
-  demo: boolean
-}
+export type SignUpRequest = S['SignUpRequestDTO']
+
+export type AuthUser = S['AuthUserDTO']
 
 /** The API's token stays with the proxy as the session cookie; the page receives only who signed in. */
-export interface AuthResponse {
-  user: AuthUser
-}
+export type AuthResponse = Omit<S['AuthResponseDTO'], 'token'>

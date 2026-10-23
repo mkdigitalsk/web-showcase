@@ -10,6 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "check-locales": "node scripts/check-locales.mjs",
+    "types:api": "spec=\"$(./scripts/api-spec.sh)\" && openapi-typescript \"$spec\" --output src/shared/api/generated/schema.d.ts",
+    "types:check": "npm run types:api && git diff --exit-code -- src/shared/api/generated/schema.d.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write .",
@@ -62,6 +64,7 @@
     "jsdom": "^27.0.1",
     "markdownlint-cli2": "^0.23.2",
     "msw": "^2.15.0",
+    "openapi-typescript": "^7.13.0",
     "prettier": "^3.9.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
@@ -71,6 +74,9 @@
   "overrides": {
     "eslint-plugin-jsx-a11y": {
       "eslint": "$eslint"
+    },
+    "openapi-typescript": {
+      "typescript": "$typescript"
     }
   }
 }

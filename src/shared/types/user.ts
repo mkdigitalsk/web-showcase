@@ -1,10 +1,3 @@
-import type { ThemeMode } from './theme'
+import type { components } from '../api/generated/schema'
 
-export interface User {
-  id: number
-  email: string
-  createdAt: number
-  themeMode: ThemeMode
-  locale: string
-  demo: boolean
-}
+export type User = components['schemas']['UserResponseDTO']

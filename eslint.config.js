@@ -22,7 +22,7 @@ const ROUTE_MODULE_EXPORTS = [
 const jsxA11yRecommended = jsxA11y.flatConfigs.recommended
 
 export default defineConfig([
-  globalIgnores(['build', '.react-router', '.claude']),
+  globalIgnores(['build', '.react-router', '.claude', 'src/shared/api/generated']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
