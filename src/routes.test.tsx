@@ -62,7 +62,7 @@ describe('the route table', () => {
 
 describe.each([
   ['the app layout', Routes.DATABASE, 'features/database/DatabasePage.tsx'],
-  ['the public layout', Routes.PRIVACY, 'features/privacy/PrivacyPage.tsx'],
+  ['the public layout', Routes.PRIVACY, 'features/legal/PrivacyPage.tsx'],
 ])('a page crashing inside %s', (_layout, path, page) => {
   beforeEach(() => {
     crashing.value = true

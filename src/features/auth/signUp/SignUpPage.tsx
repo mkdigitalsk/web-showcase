@@ -1,7 +1,15 @@
 import { useForm, Controller } from 'react-hook-form'
 import { Routes } from '../../../utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Input, TextH4Bold, TextBody1Neutral60, TextLinkPrimary, AlertError } from '../../../shared/components'
+import {
+  Button,
+  Input,
+  TextH4Bold,
+  TextBody1Neutral60,
+  TextCaptionNeutral60,
+  TextLinkPrimary,
+  AlertError,
+} from '../../../shared/components'
 import { useTranslation } from '../../../shared/hooks'
 import { requestErrorKey } from '../../../shared/api'
 import { useSignUpMutation } from './useSignUpMutation'
@@ -10,7 +18,7 @@ import { signUpSchema, type SignUpFormData } from '../schemas'
 import styles from './SignUpPage.module.css'
 
 export default function SignUpPage() {
-  const { t } = useTranslation()
+  const { t, intl } = useTranslation()
   const signUpMutation = useSignUpMutation()
 
   const { control, handleSubmit } = useForm<SignUpFormData>({
@@ -67,6 +75,13 @@ export default function SignUpPage() {
       <TextBody1Neutral60 align="center">
         {t('signUp.hasAccount')} <TextLinkPrimary to={Routes.SIGN_IN}>{t('signUp.signIn')}</TextLinkPrimary>
       </TextBody1Neutral60>
+
+      <TextCaptionNeutral60 align="center">
+        {intl.formatMessage(
+          { id: 'signUp.terms' },
+          { terms: (chunks) => <TextLinkPrimary to={Routes.TERMS}>{chunks}</TextLinkPrimary> },
+        )}
+      </TextCaptionNeutral60>
     </CentredColumn>
   )
 }

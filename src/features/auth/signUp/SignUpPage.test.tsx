@@ -26,7 +26,7 @@ describe('SignUpPage', () => {
   it('rejects a password shorter than six characters', async () => {
     const signUp = vi.fn()
     renderWithProviders(<SignUpPage />, { authValue: fakeAuthValue({ signUp }) })
-    await userEvent.type(screen.getByLabelText('Email'), 'alice@mkdigital.sk')
+    await userEvent.type(screen.getByLabelText('Email'), 'dana@example.com')
     await userEvent.type(screen.getByLabelText('Password'), '123')
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
 
@@ -42,17 +42,24 @@ describe('SignUpPage', () => {
       </Routes>,
       { route: AppRoutes.SIGN_UP, useRealAuth: true },
     )
-    await userEvent.type(screen.getByLabelText('Email'), 'alice@mkdigital.sk')
+    await userEvent.type(screen.getByLabelText('Email'), 'dana@example.com')
     await userEvent.type(screen.getByLabelText('Password'), 'strong-pass')
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
 
     expect(await screen.findByText('UI Components Page')).toBeVisible()
   })
 
+  it('names the terms the account is created on and links them', () => {
+    renderWithProviders(<SignUpPage />, { authValue: fakeAuthValue({ signUp: vi.fn() }) })
+
+    expect(screen.getByText(/By creating an account you enter into a contract/)).toBeVisible()
+    expect(screen.getByRole('link', { name: 'terms of use' })).toHaveAttribute('href', AppRoutes.TERMS)
+  })
+
   it('surfaces an error when sign-up is rejected', async () => {
     server.use(http.post('*/v1/auth/sign-up', () => new HttpResponse(null, { status: 409 })))
     renderWithProviders(<SignUpPage />, { route: AppRoutes.SIGN_UP, useRealAuth: true })
-    await userEvent.type(screen.getByLabelText('Email'), 'taken@mkdigital.sk')
+    await userEvent.type(screen.getByLabelText('Email'), 'dana@example.com')
     await userEvent.type(screen.getByLabelText('Password'), 'strong-pass')
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
 

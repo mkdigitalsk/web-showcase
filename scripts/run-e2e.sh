@@ -88,7 +88,7 @@ for _ in $(seq 1 30); do
 done
 
 echo "── starting the API on :$API_PORT"
-(cd "$API" && DATABASE_URL="jdbc:postgresql://localhost:$DB_PORT/showcase" DATABASE_USER="$DB_USER" \
+(cd "$API" && USE_H2=false DATABASE_URL="jdbc:postgresql://localhost:$DB_PORT/showcase" DATABASE_USER="$DB_USER" \
   DATABASE_PASSWORD="$DB_PASSWORD" JWT_SECRET="$JWT_SECRET" PORT="$API_PORT" ./gradlew --quiet :server:run \
   >"$API_LOG" 2>&1) &
 SERVER_PID=$!

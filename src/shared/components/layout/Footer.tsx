@@ -19,6 +19,7 @@ export function Footer() {
         <TextCaption>© 2026 MK Digital s. r. o.</TextCaption>
         <TextCaption>{t('app.version', { version: __APP_VERSION__ })}</TextCaption>
         <TextLink to={Routes.PRIVACY}>{t('privacy.link')}</TextLink>
+        <TextLink to={Routes.TERMS}>{t('terms.link')}</TextLink>
         <IconLink href={GITHUB} aria-label="GitHub" size="small">
           <GitHubIcon />
         </IconLink>
