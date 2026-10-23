@@ -34,12 +34,7 @@ function holdsSiteCredentials(request: Request, password: string): boolean {
   return decoded.slice(0, separator) === user && decoded.slice(separator + 1) === password
 }
 
-/**
- * An API call is refused without the challenge: a page the gate leaves open — the privacy notice — still asks
- * who is signed in, and a challenge there would open the browser's password prompt over it.
- */
-function refuse(url: URL): Response {
-  if (isApiRequest(url)) return new Response(null, { status: HTTP_UNAUTHORIZED })
+function refuse(): Response {
   return new Response('Authentication required.', {
     status: HTTP_UNAUTHORIZED,
     headers: { 'WWW-Authenticate': `Basic realm="${REALM}"` },
@@ -62,7 +57,7 @@ function siteGate(request: Request, url: URL): Response | undefined {
     if (url.searchParams.get('access') === bypass) return storeBypassCookieAndRedirect(url, bypass)
     if (holdsBypassCookie(request, bypass)) return undefined
   }
-  return holdsSiteCredentials(request, password) ? undefined : refuse(url)
+  return holdsSiteCredentials(request, password) ? undefined : refuse()
 }
 
 /** API_URL is read per request, so one build serves every environment the platform points it at. */
@@ -73,15 +68,17 @@ function forwardToApi(request: Request): Promise<Response> | Response {
   return new Response(null, { status: HTTP_SERVER_ERROR })
 }
 
-/** The site gate first, then `/v1` to the API through the session proxy, and everything else to the static app. */
+/**
+ * `/v1` skips the gate: the API's own authorization is the boundary, and a browser need not resend the site password
+ * unchallenged ([RFC 7617 § 2.2](https://www.rfc-editor.org/rfc/rfc7617#section-2.2)).
+ */
 export default function middleware(request: Request) {
   const url = new URL(request.url)
-  const refusal = siteGate(request, url)
-  if (refusal) return refusal
-  return isApiRequest(url) ? forwardToApi(request) : next()
+  if (isApiRequest(url)) return forwardToApi(request)
+  return siteGate(request, url) ?? next()
 }
 
 export const config = {
-  /** Gates everything except the hashed static assets, the favicon and the notice the apps point at. */
+  /** Runs on everything except the hashed static assets, the favicon and the notice the apps point at. */
   matcher: ['/((?!assets/|favicon|privacy).*)'],
 }
