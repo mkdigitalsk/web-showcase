@@ -11,7 +11,8 @@ export default [
     layout('./routes/boundary.tsx', { id: 'public-pages' }, [
       route(Routes.SIGN_IN, './features/auth/signIn/SignInPage.tsx'),
       route(Routes.SIGN_UP, './features/auth/signUp/SignUpPage.tsx'),
-      route(Routes.PRIVACY, './features/privacy/PrivacyPage.tsx'),
+      route(Routes.PRIVACY, './features/legal/PrivacyPage.tsx'),
+      route(Routes.TERMS, './features/legal/TermsPage.tsx'),
     ]),
   ]),
   layout('./routes/signedIn.ts', [

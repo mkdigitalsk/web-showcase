@@ -12,6 +12,7 @@ export const Routes = {
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
   PRIVACY: '/privacy',
+  TERMS: '/terms',
   NETWORKING: '/networking',
   STORAGE: '/storage',
   DATABASE: '/database',

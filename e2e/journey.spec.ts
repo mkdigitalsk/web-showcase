@@ -29,6 +29,8 @@ async function openFromSidebar(name: string, heading: string) {
 test('a stranger signs up and lands on the first screen', async () => {
   await page.goto('/sign-up')
   await expect(page.getByRole('heading', { name: 'Create Account' })).toBeVisible()
+  await expect(page.getByRole('main').getByRole('link', { name: 'terms of use' })).toHaveAttribute('href', '/terms')
+  await expect(page.getByRole('main').getByRole('link', { name: 'full notice' })).toHaveAttribute('href', '/privacy')
 
   await page.getByLabel('Email').fill(EMAIL)
   await page.getByLabel('Password', { exact: true }).fill(PASSWORD)
@@ -112,12 +114,15 @@ test('the device counter survives a reload, and the tab counter clears on its ow
   await expect(tabCounter.getByText('0', { exact: true })).toBeVisible()
 })
 
-test('the browser capabilities and the privacy notice open', async () => {
+test('the browser capabilities, the privacy notice and the terms open', async () => {
   await openFromSidebar('Capabilities', 'Capabilities')
   await expect(page.getByText('Your Browser')).toBeVisible()
 
   await page.getByRole('contentinfo').getByRole('link', { name: 'Privacy' }).click()
   await expect(page.getByRole('heading', { name: 'Privacy', exact: true })).toBeVisible()
+
+  await page.getByRole('contentinfo').getByRole('link', { name: 'Terms of use' }).click()
+  await expect(page.getByRole('heading', { name: 'Terms of use of the showcase apps' })).toBeVisible()
 })
 
 test('the account signs out, signs back in, and is deleted', async () => {

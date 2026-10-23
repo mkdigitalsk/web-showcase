@@ -11,16 +11,22 @@ const localesDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'l
 const REFERENCE = 'en.json'
 
 /**
- * Keys a locale may leave out. The privacy notice is legal text, translated only where we can stand
- * behind the wording — Slovak is the original, English the one translation. Czech and German fall back
- * to English via messagesFor(), so their absence here is a decision, not a gap; `privacy.link` is UI,
- * not legal text, and is translated everywhere. The sentence naming Slovak as the original is only
- * shown to the translations, so Slovak itself leaves it out.
+ * The privacy notice and the terms of use are legal text, translated only where we can stand behind the
+ * wording — Slovak is the original, English the one translation. Czech and German fall back to English
+ * via messagesFor(), for the sentence naming Slovak as the original too, so their absence is a decision,
+ * not a gap; each text's `.link` is UI, not legal text, and is translated everywhere.
+ */
+const LEGAL_TEXT = (key) =>
+  key === 'legal.prevailing' || ((key.startsWith('privacy.') || key.startsWith('terms.')) && !key.endsWith('.link'))
+
+/**
+ * Keys a locale may leave out. The sentence naming Slovak as the original is only shown to the
+ * translations, so Slovak itself leaves it out.
  */
 const UNTRANSLATED = {
-  'sk.json': (key) => key === 'privacy.prevailing',
-  'cs.json': (key) => key.startsWith('privacy.') && key !== 'privacy.link',
-  'de.json': (key) => key.startsWith('privacy.') && key !== 'privacy.link',
+  'sk.json': (key) => key === 'legal.prevailing',
+  'cs.json': LEGAL_TEXT,
+  'de.json': LEGAL_TEXT,
 }
 
 const load = (file) => JSON.parse(readFileSync(join(localesDir, file), 'utf8'))
