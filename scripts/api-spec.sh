@@ -4,6 +4,20 @@
 # its own name where one stands, so a contract change is checked against its branch.
 set -euo pipefail
 
+usage() { echo "usage: api-spec.sh   takes no argument — API_SPEC=<path> names the spec" >&2; }
+
+case "${1:-}" in
+'') ;;
+-h | --help)
+  usage
+  exit 0
+  ;;
+*)
+  usage
+  exit 2
+  ;;
+esac
+
 if [[ -n ${API_SPEC:-} ]]; then
   echo "$API_SPEC"
   exit
