@@ -38,7 +38,7 @@ jobs:
       - name: Format
         run: npm run format:check
 
-      # The spec lives in kmp-showcase; only that file is checked out, so nothing of the server reaches a later step.
+      # Only the spec is checked out of kmp-showcase, so nothing of the server reaches a later step.
       - name: Check out the API spec
         uses: actions/checkout@v4
         with:
