@@ -4,24 +4,33 @@ import { useLocale } from '../hooks'
 import { renderWithProviders, screen, userEvent } from '../../test/test-utils'
 import { LOCALE_STORAGE_KEY } from './LocaleProvider'
 
-function SwitchToGerman() {
+function SwitchToSlovak() {
   const { setLocale } = useLocale()
-  return <button onClick={() => setLocale(Locale.DE_DE)}>Deutsch</button>
+  return <button onClick={() => setLocale(Locale.SK_SK)}>Slovenčina</button>
 }
 
 describe('LocaleProvider', () => {
   it('names the language the page is read in on <html>', () => {
     localStorage.setItem(LOCALE_STORAGE_KEY, JSON.stringify(Locale.SK_SK))
-    renderWithProviders(<SwitchToGerman />)
+    renderWithProviders(<SwitchToSlovak />)
 
     expect(document.documentElement).toHaveAttribute('lang', Locale.SK_SK)
   })
 
   it('renames it on <html> as the language changes', async () => {
-    renderWithProviders(<SwitchToGerman />)
+    localStorage.setItem(LOCALE_STORAGE_KEY, JSON.stringify(Locale.EN_GB))
+    renderWithProviders(<SwitchToSlovak />)
+    expect(document.documentElement).toHaveAttribute('lang', Locale.EN_GB)
 
-    await userEvent.click(screen.getByRole('button', { name: 'Deutsch' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Slovenčina' }))
 
-    expect(document.documentElement).toHaveAttribute('lang', Locale.DE_DE)
+    expect(document.documentElement).toHaveAttribute('lang', Locale.SK_SK)
+  })
+
+  it('reads a kept language the app no longer offers in English', () => {
+    localStorage.setItem(LOCALE_STORAGE_KEY, JSON.stringify('de-DE'))
+    renderWithProviders(<SwitchToSlovak />)
+
+    expect(document.documentElement).toHaveAttribute('lang', Locale.EN_GB)
   })
 })

@@ -1,7 +1,5 @@
 import enMessages from '../../locales/en.json'
 import skMessages from '../../locales/sk.json'
-import csMessages from '../../locales/cs.json'
-import deMessages from '../../locales/de.json'
 import { Locale } from '../enums/locale'
 
 export interface LocaleOption {
@@ -9,26 +7,27 @@ export interface LocaleOption {
   label: string
 }
 
+/** English and Slovak — the two languages every showcase app speaks. */
 export const LOCALES: LocaleOption[] = [
   { code: Locale.EN_GB, label: 'English' },
   { code: Locale.SK_SK, label: 'Slovenčina' },
-  { code: Locale.CS_CZ, label: 'Čeština' },
-  { code: Locale.DE_DE, label: 'Deutsch' },
 ]
 
 export const MESSAGES: Record<string, Record<string, string>> = {
   [Locale.EN_GB]: enMessages,
   [Locale.SK_SK]: skMessages,
-  [Locale.CS_CZ]: csMessages,
-  [Locale.DE_DE]: deMessages,
 }
 
 export const DEFAULT_LOCALE: Locale = Locale.EN_GB
 
+/** The locale where the app offers it, else the default — one kept in storage or on the account may be offered no more. */
+export function offeredLocale(locale: Locale): Locale {
+  return LOCALES.some((option) => option.code === locale) ? locale : DEFAULT_LOCALE
+}
+
 /**
- * English underneath every locale: the legal texts — the privacy notice and the terms of use — are
- * deliberately only Slovak and English, so a Czech or German reader gets the English text rather than a
- * raw message id. Not DEFAULT_LOCALE — that is the same open-key lookup and can miss in turn.
+ * English underneath every locale, so a key a locale leaves out reads in English rather than as a raw message id.
+ * Not DEFAULT_LOCALE — that is the same open-key lookup and can miss in turn.
  */
 export function messagesFor(locale: Locale): Record<string, string> {
   return { ...enMessages, ...(MESSAGES[locale] ?? {}) }
