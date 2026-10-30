@@ -30,8 +30,8 @@ const DROPPED_RESPONSE_HEADERS = ['content-encoding', 'content-length', 'transfe
 export interface ProxyOptions {
   /** The key the API checks beside the visitor's address; without it, no visitor is named. */
   readonly proxyKey?: string
-  /** Where a call the API gave no answer goes beside the host log. */
-  readonly reportUnanswered?: (cause: unknown) => void
+  /** Where a call the API gave no answer goes beside the host log, under the status the page gets for it. */
+  readonly reportUnanswered?: (cause: unknown, status: number) => void
 }
 
 export function isApiRequest(url: URL): boolean {
@@ -94,7 +94,7 @@ async function callApi(
     })
   } catch (error) {
     console.error('API unreachable', error)
-    reportUnanswered?.(error)
+    reportUnanswered?.(error, HTTP.BAD_GATEWAY)
     return new Response(null, { status: HTTP.BAD_GATEWAY })
   }
 }

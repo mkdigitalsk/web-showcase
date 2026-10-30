@@ -7,7 +7,6 @@ const ACCESS_COOKIE = 'site_access'
 const ONE_YEAR = 60 * 60 * 24 * 365
 const HTTP_UNAUTHORIZED = 401
 const HTTP_SERVER_ERROR = 500
-const HTTP_BAD_GATEWAY = 502
 
 /** ASCII / Latin-1 only — an HTTP header value is a ByteString. */
 const REALM = 'MK Digital'
@@ -75,15 +74,12 @@ function siteGate(request: Request, url: URL): Response | undefined {
 
 /**
  * API_URL is read per request, so one build serves every environment the platform points it at. A call the API gives
- * no answer is filed with the error tracker as the 502 the page gets.
+ * no answer is filed with the error tracker under the status the page gets.
  */
 function forwardToApi(request: Request): Promise<Response> {
   const apiUrl = process.env.API_URL
   if (!apiUrl) throw new Error('API_URL is not set, so /v1 has nowhere to go')
-  return proxyApi(request, apiUrl, {
-    proxyKey: process.env.PROXY_KEY,
-    reportUnanswered: (cause) => reportServerFailure(cause, HTTP_BAD_GATEWAY),
-  })
+  return proxyApi(request, apiUrl, { proxyKey: process.env.PROXY_KEY, reportUnanswered: reportServerFailure })
 }
 
 /**

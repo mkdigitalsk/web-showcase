@@ -216,17 +216,17 @@ describe('proxyApi', () => {
     expect(seen[0]?.headers.get('x-proxy-key')).toBeNull()
   })
 
-  it('answers 502 when the API cannot be reached, and reports what stopped the call', async () => {
+  it('answers 502 when the API cannot be reached, and reports what stopped the call under that status', async () => {
     server.use(http.get(`${API}/v1/notes`, () => HttpResponse.error()))
     vi.spyOn(console, 'error').mockImplementation(() => {})
-    const reported: unknown[] = []
+    const reported: { cause: unknown; status: number }[] = []
 
     const response = await proxyApi(browserRequest('/v1/notes'), API, {
-      reportUnanswered: (cause) => reported.push(cause),
+      reportUnanswered: (cause, status) => reported.push({ cause, status }),
     })
 
     expect(response.status).toBe(502)
-    expect(reported).toHaveLength(1)
-    expect(reported[0]).toBeInstanceOf(TypeError)
+    expect(reported.map(({ status }) => status)).toEqual([response.status])
+    expect(reported[0]?.cause).toBeInstanceOf(TypeError)
   })
 })
