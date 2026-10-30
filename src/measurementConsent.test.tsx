@@ -10,10 +10,21 @@ import {
   type Consent,
   type Purpose,
 } from './shared/analytics/consent'
+import { API_PREFIX } from './shared/api/apiVersion'
 import { keepAnswers } from './shared/services/consentCookies'
 import { forgetTheClient, thrownOnThePage, trackerNamed } from './test/errorTracker'
 import { eventsIn, trackerReceiving } from './test/trackerEnvelopes'
-import { renderApp, screen, userEvent, waitFor, within } from './test/test-utils'
+import {
+  fakeAuthUser,
+  http,
+  HttpResponse,
+  renderApp,
+  screen,
+  server,
+  userEvent,
+  waitFor,
+  within,
+} from './test/test-utils'
 import { beforeSendIn, forgetVercelScripts } from './test/vercelQueues'
 import { Routes } from './utils'
 
@@ -259,6 +270,24 @@ describe('a refusal kept after the scripts loaded', () => {
     keepAnswers(sameAnswer('denied'))
 
     expect(await sendsAThrownError()).toBe(false)
+  })
+})
+
+/** A signed-in page belongs to a named person — analytics.md § This template's shape ships none. */
+describe('a signed-in page', () => {
+  it('hands Vercel nothing, though the visitor allowed measurement', async () => {
+    server.use(http.get(`*${API_PREFIX}/users/me`, () => HttpResponse.json(fakeAuthUser())))
+    keepAnswers({ measurement: 'granted', errorRecording: 'denied' })
+    await renderApp(Routes.ACCOUNT)
+    await screen.findByRole('heading', { level: 1, name: en['account.title'] })
+    const visits = beforeSendIn(window.vaq)
+    const vitals = beforeSendIn(window.siq)
+    expect(visits, 'the measurement did not load').toBeDefined()
+
+    const page = { type: 'pageview', url: `${window.location.origin}${Routes.ACCOUNT}` }
+
+    expect(visits?.(page)).toBeNull()
+    expect(vitals?.({ ...page, type: 'vital' })).toBeNull()
   })
 })
 
