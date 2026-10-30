@@ -39,6 +39,13 @@ export default defineConfig((configEnv): Config => {
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version ?? '0.0.0'),
     },
+    /**
+     * Each chunk's source map is served beside it, so the error tracker reads a browser's stack as the source has it.
+     * The source is public on GitHub already.
+     *
+     * @see {@link https://docs.sentry.io/platforms/javascript/sourcemaps/hosting-publicly/ | Sentry — Hosting Publicly}
+     */
+    build: { sourcemap: true },
     test: {
       environment: 'jsdom',
       /**

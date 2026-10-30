@@ -63,3 +63,18 @@
   font: var(--font-body1);
   cursor: pointer;
 }
+
+/* A description under the label — the box keeps to the label's first line. */
+.described {
+  align-items: flex-start;
+}
+
+.words {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.description {
+  font: var(--font-caption);
+  color: var(--color-muted);
+}

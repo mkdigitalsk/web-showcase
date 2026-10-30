@@ -17,6 +17,7 @@ export {
 
 // Actions
 export {
+  SlidersHorizontal as ChooseIcon,
   X as CloseIcon,
   Copy as CopyIcon,
   Minus as DecreaseIcon,
@@ -25,6 +26,7 @@ export {
   EyeOff as HideIcon,
   Plus as IncreaseIcon,
   RefreshCw as RefreshIcon,
+  Ban as RejectIcon,
   X as RemoveIcon,
   Eye as ShowIcon,
   ArrowUpDown as SortIcon,

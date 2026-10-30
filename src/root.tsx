@@ -7,9 +7,18 @@ import '@fontsource/archivo/700.css'
 import '@fontsource/dm-mono/400.css'
 import '@fontsource/dm-mono/500.css'
 
+import { ConsentDialog } from './shared/analytics/ConsentDialog'
+import { ErrorTracking } from './shared/analytics/ErrorTracking'
+import { Measurement } from './shared/analytics/Measurement'
 import { queryClient } from './shared/api/queryClient'
 import { RouteError, SnackbarProvider, TooltipProvider } from './shared/components'
-import { AuthProvider, ColorSchemeProvider, LocaleProvider, THEME_MODE_STORAGE_KEY } from './shared/context'
+import {
+  AuthProvider,
+  ColorSchemeProvider,
+  ConsentProvider,
+  LocaleProvider,
+  THEME_MODE_STORAGE_KEY,
+} from './shared/context'
 import './shared/theme/tokens.css'
 import './index.css'
 
@@ -48,19 +57,24 @@ export function Layout({ children }: { children: ReactNode }) {
   )
 }
 
-/** Every provider a screen reads — the scheme, the tooltips' shared timing, the language, the notices. */
+/**
+ * Every provider a screen reads — the scheme, the tooltips' shared timing, the language, the consent, the notices.
+ */
 function Chrome({ children }: { children: ReactNode }) {
   return (
     <ColorSchemeProvider>
       <TooltipProvider>
         <LocaleProvider>
-          <SnackbarProvider>{children}</SnackbarProvider>
+          <ConsentProvider>
+            <SnackbarProvider>{children}</SnackbarProvider>
+          </ConsentProvider>
         </LocaleProvider>
       </TooltipProvider>
     </ColorSchemeProvider>
   )
 }
 
+/** Every page, then the consent dialog, and the measurement and error recording the answers allow. */
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -68,6 +82,9 @@ export default function App() {
         <AuthProvider>
           <Outlet />
         </AuthProvider>
+        <ConsentDialog />
+        <Measurement />
+        <ErrorTracking />
       </Chrome>
     </QueryClientProvider>
   )

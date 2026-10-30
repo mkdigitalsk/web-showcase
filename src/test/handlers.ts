@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw'
 import { API_PREFIX } from '../shared/api/apiVersion'
+import { TRACKER_SETTINGS_PATH } from '../shared/errorTracking/trackerSettings'
 import { fakeAuthResponse, fakeRemoteNote, fakeUser } from './fakes'
 
 /**
@@ -33,4 +34,7 @@ export const handlers = [
   }),
 
   http.delete(`${users}/me`, () => new HttpResponse(null, { status: 204 })),
+
+  /** A deployment names no error tracker until a test's environment does. */
+  http.get(TRACKER_SETTINGS_PATH, () => HttpResponse.json(null)),
 ]

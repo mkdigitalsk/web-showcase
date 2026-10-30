@@ -4,6 +4,7 @@ import { IconLink } from '../IconLink'
 import { GitHubIcon } from '../icons/GitHubIcon'
 import { Logo } from '../icons/Logo'
 import { TextCaption, TextLink } from '../text'
+import { MeasurementSettingsButton } from './MeasurementSettingsButton'
 import styles from './Footer.module.css'
 
 const GITHUB = 'https://github.com/mkdigitalsk'
@@ -20,6 +21,7 @@ export function Footer() {
         <TextCaption>{t('app.version', { version: __APP_VERSION__ })}</TextCaption>
         <TextLink to={Routes.PRIVACY}>{t('privacy.link')}</TextLink>
         <TextLink to={Routes.TERMS}>{t('terms.link')}</TextLink>
+        <MeasurementSettingsButton />
         <IconLink href={GITHUB} aria-label="GitHub" size="small">
           <GitHubIcon />
         </IconLink>

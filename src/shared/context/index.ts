@@ -1,5 +1,7 @@
 export { AuthContext, type AuthContextValue } from './AuthContext'
 export { AuthProvider } from './AuthProvider'
+export { ConsentContext, type ConsentContextValue } from './ConsentContext'
+export { ConsentProvider } from './ConsentProvider'
 export { ColorSchemeContext, type ColorSchemeContextValue, type ColorScheme } from './ColorSchemeContext'
 export { ColorSchemeProvider, THEME_MODE_STORAGE_KEY } from './ColorSchemeProvider'
 export { LocaleContext, type LocaleContextValue } from './LocaleContext'

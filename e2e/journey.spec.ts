@@ -1,4 +1,6 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test, type Locator, type Page, type Request } from '@playwright/test'
+import { CONSENT_COOKIES } from '../src/shared/analytics/consent'
+import { TRACKER_SETTINGS_PATH } from '../src/shared/errorTracking/trackerSettings'
 
 test.describe.configure({ mode: 'serial' })
 
@@ -8,15 +10,42 @@ const EMAIL = `dana+${RUN_ID}@example.com`
 /** The server's policy: an upper, a lower, a digit and one of its special characters. */
 const PASSWORD = `Dana${RUN_ID}1!`
 
+const CONSENT = 'Consent to measurement and error recording'
+
 let page: Page
+
+/** Every request the journey's page sent to Vercel's measurement or toward the error tracker, in order. */
+const measuring: string[] = []
+
+/**
+ * Whether [request] measures the visit or records an error:
+ * - Vercel's measurement scripts
+ * - their beacons
+ * - the error tracker's settings
+ * - the error tracker's ingest
+ */
+function measures(request: Request): boolean {
+  const { hostname, pathname } = new URL(request.url())
+  return pathname.startsWith('/_vercel/') || pathname === TRACKER_SETTINGS_PATH || hostname.endsWith('.sentry.io')
+}
 
 test.beforeAll(async ({ browser }) => {
   page = await browser.newPage()
+  page.on('request', (request) => {
+    if (measures(request)) measuring.push(request.url())
+  })
 })
 
 test.afterAll(async () => {
   await page.close()
 })
+
+/** Where [shown] starts and ends down the window. */
+async function spanOf(shown: Locator): Promise<{ top: number; bottom: number }> {
+  const box = await shown.boundingBox()
+  if (box === null) throw new Error(`${shown.toString()} is not shown`)
+  return { top: box.y, bottom: box.y + box.height }
+}
 
 async function openFromSidebar(name: string, heading: string) {
   await page.getByRole('navigation').getByRole('link', { name, exact: true }).click()
@@ -25,6 +54,23 @@ async function openFromSidebar(name: string, heading: string) {
     `${name} did not open`,
   ).toBeAttached()
 }
+
+test('a stranger is asked before anything is measured, and an answer is kept', async () => {
+  await page.goto('/sign-up')
+  const asking = page.getByRole('region', { name: CONSENT })
+  await expect(asking).toBeVisible()
+  await page.waitForLoadState('networkidle')
+  expect(measuring, 'measured before the visitor answered').toEqual([])
+
+  await asking.getByRole('button', { name: 'Reject all' }).click()
+  await expect(asking, 'the answer did not take the bar away').toBeHidden()
+
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'Create Account' })).toBeVisible()
+  await expect(asking, 'the answer was not kept').toBeHidden()
+  await page.waitForLoadState('networkidle')
+  expect(measuring, 'measured after the visitor refused').toEqual([])
+})
 
 test('a stranger signs up and lands on the first screen', async () => {
   await page.goto('/sign-up')
@@ -38,6 +84,24 @@ test('a stranger signs up and lands on the first screen', async () => {
 
   await expect(page).toHaveURL(/\/ui-components$/)
   await expect(page.getByRole('heading', { level: 1, name: 'UI Components', exact: true })).toBeAttached()
+})
+
+test('a signed-in page asked again keeps to the window, the footer clear of the bar', async () => {
+  for (const name of Object.values(CONSENT_COOKIES)) await page.context().clearCookies({ name })
+  await page.reload()
+  const asking = page.getByRole('region', { name: CONSENT })
+  await expect(asking).toBeVisible()
+
+  const [pageHeight, windowHeight] = await page.evaluate<[number, number]>(
+    '[document.documentElement.scrollHeight, window.innerHeight]',
+  )
+  expect(pageHeight, 'the bar grew the page past the window').toBe(windowHeight)
+  const choice = page.getByRole('contentinfo').getByRole('button', { name: 'Measurement and error recording' })
+  await expect(choice).toBeInViewport({ ratio: 1 })
+  expect((await spanOf(choice)).bottom, 'the bar covers the footer').toBeLessThanOrEqual((await spanOf(asking)).top)
+
+  await asking.getByRole('button', { name: 'Reject all' }).click()
+  await expect(asking, 'the answer did not take the bar away').toBeHidden()
 })
 
 test('the components answer: a dialog, a notice, a deletable chip', async () => {
