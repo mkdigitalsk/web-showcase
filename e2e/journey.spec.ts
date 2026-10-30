@@ -18,8 +18,11 @@ let page: Page
 const measuring: string[] = []
 
 /**
- * Whether [request] measures the visit or records an error — Vercel's scripts and beacons, the error tracker's settings
- * or its ingest.
+ * Whether [request] measures the visit or records an error:
+ * - Vercel's measurement scripts
+ * - their beacons
+ * - the error tracker's settings
+ * - the error tracker's ingest
  */
 function measures(request: Request): boolean {
   const { hostname, pathname } = new URL(request.url())
