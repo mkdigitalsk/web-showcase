@@ -5,7 +5,7 @@ export function fakeNote(overrides: Partial<Omit<Note, 'id'>> = {}): Omit<Note, 
 }
 
 export function fakeAuthUser(overrides: Partial<AuthUser> = {}): AuthUser {
-  return { id: 1, email: 'test01@mkdigital.sk', themeMode: 'system', locale: 'en-GB', demo: false, ...overrides }
+  return { id: 1, email: 'dana@example.com', themeMode: 'system', locale: 'en-GB', demo: false, ...overrides }
 }
 
 export function fakeAuthResponse(overrides: Partial<AuthResponse> = {}): AuthResponse {
@@ -15,7 +15,7 @@ export function fakeAuthResponse(overrides: Partial<AuthResponse> = {}): AuthRes
 export function fakeUser(overrides: Partial<User> = {}): User {
   return {
     id: 1,
-    email: 'alice@mkdigital.sk',
+    email: 'jan.mrkvicka@example.com',
     createdAt: 1_700_000_000_000,
     themeMode: 'system',
     locale: 'en-GB',

@@ -57,7 +57,7 @@ describe('AccountPage', () => {
     await signIn()
     await openAccountPage()
 
-    expect(screen.getByText('test01@mkdigital.sk')).toBeVisible()
+    expect(screen.getByText(fakeAuthUser().email)).toBeVisible()
   })
 
   it('offers deletion on a normal account', async () => {
