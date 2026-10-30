@@ -1,24 +1,22 @@
-import type { NodeOptions } from '@sentry/node'
+import type { VercelEdgeOptions } from '@sentry/vercel-edge'
 import { waitUntil } from '@vercel/functions'
 import { serverEvent } from '../src/shared/errorTracking/trackerEvent.js'
 import { trackerSettingsOf } from '../src/shared/errorTracking/trackerSettings.js'
 
 /**
  * The SDK's own integrations that catch a failure and say where it happened — the rest record the server around it:
- * - the trail of console lines and requests before the error
- * - the process as a session
- * - the installed modules
- * - the source lines and the local variables around each frame
+ * - the trail of console lines and fetched calls before the error
+ * - the request the failure came with
+ * - the AI conversation a traced call belongs to
  */
 const FAILURE_INTEGRATIONS: ReadonlySet<string> = new Set([
   'EventFilters',
   'FunctionToString',
   'LinkedErrors',
   'Dedupe',
-  'Context',
 ])
 
-/** What the SDK would gather or change on its own, held to the failure itself. */
+/** What the SDK would gather or set up on its own, held to the failure itself. */
 const FAILURES_ONLY = {
   /** Nothing about a request or its visitor is collected, so nothing of them waits to be cut. */
   dataCollection: {
@@ -31,21 +29,19 @@ const FAILURES_ONLY = {
     frameContextLines: 0,
   },
   integrations: (defaults) => defaults.filter(({ name }) => FAILURE_INTEGRATIONS.has(name)),
-  /** No trace header on a call the proxy sends on — the API gets what it got before. */
-  tracePropagationTargets: [],
+  /** No tracer — the showcase traces nothing, so a failure files its event and starts no span. */
+  enableOpenTelemetrySetup: false,
   sendClientReports: false,
-} satisfies NodeOptions
+} satisfies VercelEdgeOptions
 
-/**
- * How long a report may keep the function alive after its response — as long as Sentry's own keep-alive on Vercel.
- */
+/** How long a report may keep the function alive after its response, so a slow tracker never holds it longer. */
 const FLUSH_MS = 2_000
 
 /** [failure] sent to the tracker the environment names, if it names one — the SDK loaded and started on the first. */
 async function sendToTracker(failure: unknown, status: number): Promise<void> {
   const settings = trackerSettingsOf(process.env)
   if (settings === undefined) return
-  const Sentry = await import('@sentry/node')
+  const Sentry = await import('@sentry/vercel-edge')
   if (!Sentry.isInitialized()) Sentry.init({ ...settings, ...FAILURES_ONLY, beforeSend: serverEvent })
   Sentry.withScope((scope) => {
     scope.setTag('status', status.toString())

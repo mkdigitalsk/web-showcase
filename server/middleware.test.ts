@@ -1,6 +1,5 @@
-import { syncBuiltinESMExports } from 'node:module'
-import * as Sentry from '@sentry/node'
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import * as Sentry from '@sentry/vercel-edge'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { http, HttpResponse } from 'msw'
 import { server } from '../src/test/server'
 import { eventsIn, TRACKER_DSN, trackerReceiving } from '../src/test/trackerEnvelopes'
@@ -8,12 +7,6 @@ import middleware from '../middleware'
 
 const API = 'https://api.example.test'
 const SITE = 'https://app.example.test'
-
-/**
- * MSW intercepts the CommonJS `node:https`, and an ES module's view of a builtin follows it only once Node syncs the
- * builtins' exports — the Node SDK's transport sends its envelopes through that view.
- */
-beforeAll(() => syncBuiltinESMExports())
 
 afterEach(() => {
   Sentry.getCurrentScope().setClient(undefined)
