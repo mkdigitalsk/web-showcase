@@ -15,6 +15,10 @@ describe('the tracker an environment names', () => {
     expect(trackerSettingsOf({ SENTRY_DSN: DSN })?.environment).toBe('development')
   })
 
+  it('refuses an environment Vercel never names', () => {
+    expect(() => trackerSettingsOf({ SENTRY_DSN: DSN, VERCEL_ENV: 'staging' })).toThrow('VERCEL_ENV is malformed')
+  })
+
   it.each([{}, { SENTRY_DSN: '' }, { SENTRY_DSN: '   ' }])('is none while the DSN is blank — %o', (environment) => {
     expect(trackerSettingsOf(environment)).toBeUndefined()
   })

@@ -1,15 +1,19 @@
 /** A Sentry project's DSN — its address, with the project's public key as the user and its id as the path. */
 export type Dsn = string & { readonly __brand: 'Dsn' }
 
+/** The environments a failure is filed under — Vercel's names for a deployment's, and `development` off Vercel. */
+export const ENVIRONMENTS = ['production', 'preview', 'development'] as const
+
+export type Environment = (typeof ENVIRONMENTS)[number]
+
 /** Where a deployment files its failures — the project its DSN names, under the deployment's environment. */
 export interface TrackerSettings {
   readonly dsn: Dsn
-  /** Vercel's name for the deployment's environment — `production` or `preview` — and `development` off Vercel. */
-  readonly environment: string
+  readonly environment: Environment
 }
 
 /** The variables the settings are read from — the build's environment, or the edge's as a request arrives. */
-type Environment = Readonly<Record<string, string | undefined>>
+type Variables = Readonly<Record<string, string | undefined>>
 
 /**
  * [value] as a DSN, once it has a scheme of the web, a key and a project.
@@ -27,9 +31,17 @@ function dsnOf(value: string): Dsn {
   return value as Dsn
 }
 
-/** The settings [environment] names — none while SENTRY_DSN is blank, so nothing is recorded. */
-export function trackerSettingsOf(environment: Environment): TrackerSettings | undefined {
-  const dsn = environment.SENTRY_DSN?.trim()
+/** [value] as one of the {@link ENVIRONMENTS} — `development` where no platform names one. */
+function environmentOf(value: string | undefined): Environment {
+  if (!value) return 'development'
+  const named = ENVIRONMENTS.find((environment) => environment === value)
+  if (named === undefined) throw new Error(`VERCEL_ENV is malformed — it names none of ${ENVIRONMENTS.join(', ')}`)
+  return named
+}
+
+/** The settings [variables] name — none while SENTRY_DSN is blank, so nothing is recorded. */
+export function trackerSettingsOf(variables: Variables): TrackerSettings | undefined {
+  const dsn = variables.SENTRY_DSN?.trim()
   if (!dsn) return undefined
-  return { dsn: dsnOf(dsn), environment: environment.VERCEL_ENV || 'development' }
+  return { dsn: dsnOf(dsn), environment: environmentOf(variables.VERCEL_ENV) }
 }
