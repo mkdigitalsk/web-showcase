@@ -1,58 +1,75 @@
-import type { VercelEdgeOptions } from '@sentry/vercel-edge'
+import type { TransportMakeRequestResponse, TransportRequest } from '@sentry/core'
+import type { ServerRuntimeClientOptions } from '@sentry/core/server'
 import { waitUntil } from '@vercel/functions'
 import { serverEvent } from '../src/shared/errorTracking/trackerEvent.js'
-import { trackerSettingsOf } from '../src/shared/errorTracking/trackerSettings.js'
+import { trackerSettingsOf, type TrackerSettings } from '../src/shared/errorTracking/trackerSettings.js'
 
-/**
- * The SDK's own integrations that catch a failure and say where it happened — the rest record the server around it:
- * - the trail of console lines and fetched calls before the error
- * - the request the failure came with
- * - the AI conversation a traced call belongs to
- */
-const FAILURE_INTEGRATIONS: ReadonlySet<string> = new Set([
-  'EventFilters',
-  'FunctionToString',
-  'LinkedErrors',
-  'Dedupe',
-])
-
-/** What the SDK would gather or set up on its own, held to the failure itself. */
+/** What the client gathers on its own, held to the failure itself. */
 const FAILURES_ONLY = {
-  /** Nothing about a request or its visitor is collected, so nothing of them waits to be cut. */
-  dataCollection: {
-    userInfo: false,
-    cookies: false,
-    httpHeaders: false,
-    httpBodies: [],
-    urlQueryParams: false,
-    stackFrameVariables: false,
-    frameContextLines: 0,
-  },
-  integrations: (defaults) => defaults.filter(({ name }) => FAILURE_INTEGRATIONS.has(name)),
-  /** No tracer — the showcase traces nothing, so a failure files its event and starts no span. */
-  enableOpenTelemetrySetup: false,
+  /** No count of the events it drops — a count says a failure happened, and nothing else of it. */
   sendClientReports: false,
-} satisfies VercelEdgeOptions
+  /** The edge runtime, named as Sentry's own edge SDK names it. */
+  runtime: { name: 'vercel-edge' },
+  platform: 'javascript',
+  beforeSend: serverEvent,
+} satisfies Partial<ServerRuntimeClientOptions>
 
 /** How long a report may keep the function alive after its response, so a slow tracker never holds it longer. */
 const FLUSH_MS = 2_000
 
-/** [failure] sent to the tracker the environment names, if it names one — the SDK loaded and started on the first. */
+/**
+ * An envelope posted to the tracker with `fetch`, the edge's one way out, with the limits the tracker answers by. A
+ * binary envelope is copied onto a buffer of its own, the only kind a request body takes.
+ */
+async function postEnvelope(url: string, { body }: TransportRequest): Promise<TransportMakeRequestResponse> {
+  const response = await fetch(url, { method: 'POST', body: typeof body === 'string' ? body : new Uint8Array(body) })
+  return {
+    statusCode: response.status,
+    headers: {
+      'x-sentry-rate-limits': response.headers.get('X-Sentry-Rate-Limits'),
+      'retry-after': response.headers.get('Retry-After'),
+    },
+  }
+}
+
+/**
+ * Sentry's client for a runtime with no Node, started once on the first failure — Sentry's core built the way its own
+ * edge SDK builds it, without the tracing context that SDK sets up, whose package the edge cannot load. It carries the
+ * integrations that say where a failure happened, and none that record the server around it.
+ */
+async function trackerFor(settings: TrackerSettings) {
+  const [core, server] = await Promise.all([import('@sentry/core'), import('@sentry/core/server')])
+  if (core.isInitialized()) return core
+  core.initAndBind(server.ServerRuntimeClient, {
+    ...settings,
+    ...FAILURES_ONLY,
+    integrations: [
+      core.eventFiltersIntegration(),
+      core.functionToStringIntegration(),
+      core.linkedErrorsIntegration(),
+      core.dedupeIntegration(),
+    ],
+    stackParser: core.createStackParser(server.nodeStackLineParser()),
+    transport: (options) => core.createTransport(options, (request) => postEnvelope(options.url, request)),
+  })
+  return core
+}
+
+/** [failure] sent to the tracker the environment names, if it names one. */
 async function sendToTracker(failure: unknown, status: number): Promise<void> {
   const settings = trackerSettingsOf(process.env)
   if (settings === undefined) return
-  const Sentry = await import('@sentry/vercel-edge')
-  if (!Sentry.isInitialized()) Sentry.init({ ...settings, ...FAILURES_ONLY, beforeSend: serverEvent })
-  Sentry.withScope((scope) => {
+  const tracker = await trackerFor(settings)
+  tracker.withScope((scope) => {
     scope.setTag('status', status.toString())
-    Sentry.captureException(failure)
+    tracker.captureException(failure)
   })
-  await Sentry.flush(FLUSH_MS)
+  await tracker.flush(FLUSH_MS)
 }
 
 /**
  * Files [failure] with the error tracker under the status the server path answered with, once the response has gone —
- * the platform keeps the function alive until the report is sent. A request that succeeds never loads the SDK.
+ * the platform keeps the function alive until the report is sent. A request that succeeds never loads the client.
  */
 export function reportServerFailure(failure: unknown, status: number): void {
   waitUntil(

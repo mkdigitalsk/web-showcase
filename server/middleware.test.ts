@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/vercel-edge'
+import * as Sentry from '@sentry/core'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { http, HttpResponse } from 'msw'
 import { server } from '../src/test/server'
