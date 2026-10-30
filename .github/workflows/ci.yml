@@ -67,8 +67,8 @@ jobs:
       - name: Unit tests
         run: npm run test
 
-      # The bundle carries no API address — the edge proxy reads API_URL at runtime — so the build takes
-      # nothing. This artifact gates a push and is never deployed; Vercel holds what ships.
+      # The bundle carries no API address — the edge proxy reads API_URL at runtime — and CI names no error
+      # tracker, so the build takes nothing. This artifact gates a push and is never deployed; Vercel holds what ships.
       - name: Build (typecheck + bundle)
         run: npm run build
 

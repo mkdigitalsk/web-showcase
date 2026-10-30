@@ -26,6 +26,19 @@ async function openFromSidebar(name: string, heading: string) {
   ).toBeAttached()
 }
 
+test('a stranger is asked before anything is measured, and an answer is kept', async () => {
+  await page.goto('/sign-up')
+  const asking = page.getByRole('region', { name: 'Consent to measurement and error recording' })
+  await expect(asking).toBeVisible()
+
+  await asking.getByRole('button', { name: 'Reject all' }).click()
+  await expect(asking, 'the answer did not take the bar away').toBeHidden()
+
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'Create Account' })).toBeVisible()
+  await expect(asking, 'the answer was not kept').toBeHidden()
+})
+
 test('a stranger signs up and lands on the first screen', async () => {
   await page.goto('/sign-up')
   await expect(page.getByRole('heading', { name: 'Create Account' })).toBeVisible()

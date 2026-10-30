@@ -1,0 +1,7 @@
+.button {
+  composes: link from '../text/TextLink.module.css';
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}

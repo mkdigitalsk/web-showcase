@@ -1,6 +1,11 @@
 import 'fake-indexeddb/auto'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import * as Sentry from '@sentry/browser'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { sameAnswer } from './shared/analytics/consent'
 import { API_PREFIX } from './shared/api/apiVersion'
+import { keepAnswers } from './shared/services/consentCookies'
+import { BUILT_TRACKER, forgetTheClient } from './test/errorTracker'
+import { eventsIn, trackerReceiving } from './test/trackerEnvelopes'
 import { fakeAuthUser, http, HttpResponse, renderApp, screen, server, userEvent } from './test/test-utils'
 import { Routes } from './utils'
 
@@ -93,5 +98,38 @@ describe.each([
     await userEvent.click(screen.getByRole('button', { name: 'Retry' }))
 
     expect(await screen.findByText('Recovered')).toBeVisible()
+  })
+
+  describe('with a build that names an error tracker', () => {
+    beforeEach(() => {
+      vi.stubGlobal('__ERROR_TRACKER__', BUILT_TRACKER)
+    })
+
+    afterEach(() => {
+      forgetTheClient()
+      vi.unstubAllGlobals()
+    })
+
+    it('hands the crash to the tracker once the visitor allowed error recording, and never what it said', async () => {
+      keepAnswers(sameAnswer('granted'))
+      const envelopes = trackerReceiving()
+      await renderApp(path, { replace: { [page]: Crashing } })
+      await screen.findByRole('heading', { name: 'Something went wrong' })
+
+      await vi.waitFor(() => expect(eventsIn(envelopes)).toHaveLength(1))
+      expect(eventsIn(envelopes)[0]?.exception?.values?.[0]?.type).toBe('Error')
+      expect(envelopes.join('\n')).not.toContain('owner_id')
+    })
+
+    it('hands the tracker nothing where the visitor allowed no error recording', async () => {
+      keepAnswers(sameAnswer('denied'))
+      const envelopes = trackerReceiving()
+      await renderApp(path, { replace: { [page]: Crashing } })
+      await screen.findByRole('heading', { name: 'Something went wrong' })
+
+      await Sentry.flush(1_000)
+      expect(Sentry.isInitialized()).toBe(false)
+      expect(envelopes).toEqual([])
+    })
   })
 })

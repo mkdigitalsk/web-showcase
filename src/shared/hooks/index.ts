@@ -1,4 +1,5 @@
 export { useAuth } from './useAuth'
+export { useConsent } from './useConsent'
 export { useTranslation } from './useTranslation'
 export { useLocalStorage } from './useLocalStorage'
 export { useSessionStorage } from './useSessionStorage'

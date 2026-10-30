@@ -6,6 +6,7 @@ import { queryClient } from '../shared/api/queryClient'
 import { SnackbarProvider } from '../shared/components/feedback/Snackbar'
 import { TooltipProvider } from '../shared/components/Tooltip'
 import { ColorSchemeProvider } from '../shared/context/ColorSchemeProvider'
+import { ConsentProvider } from '../shared/context/ConsentProvider'
 import { LocaleProvider } from '../shared/context/LocaleProvider'
 import { AuthProvider } from '../shared/context/AuthProvider'
 import { AuthContext, type AuthContextValue } from '../shared/context/AuthContext'
@@ -38,7 +39,9 @@ export function renderWithProviders(
         <ColorSchemeProvider>
           <TooltipProvider>
             <LocaleProvider>
-              <SnackbarProvider>{withAuth}</SnackbarProvider>
+              <ConsentProvider>
+                <SnackbarProvider>{withAuth}</SnackbarProvider>
+              </ConsentProvider>
             </LocaleProvider>
           </TooltipProvider>
         </ColorSchemeProvider>

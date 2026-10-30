@@ -26,6 +26,14 @@ const FORWARDED_REQUEST_HEADERS = ['accept', 'accept-language', 'content-type', 
 /** fetch has already decoded the body and knows its length; on this origin only the proxy writes cookies. */
 const DROPPED_RESPONSE_HEADERS = ['content-encoding', 'content-length', 'transfer-encoding', 'connection', 'set-cookie']
 
+/** What the platform hands the proxy beside the request. */
+export interface ProxyOptions {
+  /** The key the API checks beside the visitor's address; without it, no visitor is named. */
+  readonly proxyKey?: string
+  /** Where a call the API gave no answer goes beside the host log. */
+  readonly reportUnanswered?: (cause: unknown) => void
+}
+
 export function isApiRequest(url: URL): boolean {
   return url.pathname.startsWith(`${API_PREFIX}/`)
 }
@@ -48,9 +56,8 @@ export function isApiRequest(url: URL): boolean {
  * [crbug]: https://issues.chromium.org/issues/40233601
  *
  * @param apiUrl the API's origin, read at runtime — the browser bundle never carries it.
- * @param proxyKey the key the API checks beside the visitor's address; without it, no visitor is named.
  */
-export async function proxyApi(request: Request, apiUrl: string, proxyKey?: string): Promise<Response> {
+export async function proxyApi(request: Request, apiUrl: string, options: ProxyOptions = {}): Promise<Response> {
   const url = new URL(request.url)
   if (!SAFE_METHODS.has(request.method) && request.headers.get('origin') !== url.origin) {
     return new Response(null, { status: HTTP.FORBIDDEN })
@@ -58,7 +65,7 @@ export async function proxyApi(request: Request, apiUrl: string, proxyKey?: stri
   if (url.pathname === SIGN_OUT_PATH) return signOut(request)
 
   const session = readCookie(request, SESSION_COOKIE)
-  const upstream = await callApi(request, url, apiUrl, session, proxyKey)
+  const upstream = await callApi(request, url, apiUrl, session, options)
   if (url.pathname.startsWith(AUTH_PREFIX)) return upstream.ok ? openSession(upstream) : relay(upstream)
   return relay(upstream, session && upstream.status === HTTP.UNAUTHORIZED ? [EXPIRED_SESSION] : [])
 }
@@ -68,7 +75,7 @@ async function callApi(
   url: URL,
   apiUrl: string,
   session: string | undefined,
-  proxyKey: string | undefined,
+  { proxyKey, reportUnanswered }: ProxyOptions,
 ): Promise<Response> {
   const headers = new Headers()
   for (const name of FORWARDED_REQUEST_HEADERS) {
@@ -87,6 +94,7 @@ async function callApi(
     })
   } catch (error) {
     console.error('API unreachable', error)
+    reportUnanswered?.(error)
     return new Response(null, { status: HTTP.BAD_GATEWAY })
   }
 }

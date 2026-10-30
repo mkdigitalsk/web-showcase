@@ -1,0 +1,15 @@
+.purposes {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.purpose {
+  padding: var(--space-3) 0;
+  border-top: var(--hairline);
+}
+
+.purpose:last-child {
+  border-bottom: var(--hairline);
+}

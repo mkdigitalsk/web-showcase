@@ -1,10 +1,12 @@
 import { next } from '@vercel/functions'
 import { isApiRequest, proxyApi } from './server/apiProxy.js'
+import { reportServerFailure } from './server/errorTracking.js'
 
 const ACCESS_COOKIE = 'site_access'
 const ONE_YEAR = 60 * 60 * 24 * 365
 const HTTP_UNAUTHORIZED = 401
 const HTTP_SERVER_ERROR = 500
+const HTTP_BAD_GATEWAY = 502
 
 /** ASCII / Latin-1 only — an HTTP header value is a ByteString. */
 const REALM = 'MK Digital'
@@ -25,11 +27,21 @@ function holdsBypassCookie(request: Request, bypass: string): boolean {
   return cookies.split(';').some((c) => c.trim() === `${ACCESS_COOKIE}=${bypass}`)
 }
 
+/** The `user:password` a Basic header carries — none where there is no such header, or its value is no base64. */
+function basicCredentials(request: Request): string | undefined {
+  const header = request.headers.get('authorization')
+  if (!header?.startsWith('Basic ')) return undefined
+  try {
+    return atob(header.slice(6))
+  } catch {
+    return undefined
+  }
+}
+
 function holdsSiteCredentials(request: Request, password: string): boolean {
   const user = process.env.SITE_USER ?? 'mk'
-  const header = request.headers.get('authorization')
-  if (!header?.startsWith('Basic ')) return false
-  const decoded = atob(header.slice(6))
+  const decoded = basicCredentials(request)
+  if (decoded === undefined) return false
   const separator = decoded.indexOf(':')
   return decoded.slice(0, separator) === user && decoded.slice(separator + 1) === password
 }
@@ -60,22 +72,38 @@ function siteGate(request: Request, url: URL): Response | undefined {
   return holdsSiteCredentials(request, password) ? undefined : refuse()
 }
 
-/** API_URL is read per request, so one build serves every environment the platform points it at. */
-function forwardToApi(request: Request): Promise<Response> | Response {
+/**
+ * API_URL is read per request, so one build serves every environment the platform points it at. A call the API gives
+ * no answer is filed with the error tracker as the 502 the page gets.
+ */
+function forwardToApi(request: Request): Promise<Response> {
   const apiUrl = process.env.API_URL
-  if (apiUrl) return proxyApi(request, apiUrl, process.env.PROXY_KEY)
-  console.error('API_URL is not set, so /v1 has nowhere to go')
-  return new Response(null, { status: HTTP_SERVER_ERROR })
+  if (!apiUrl) throw new Error('API_URL is not set, so /v1 has nowhere to go')
+  return proxyApi(request, apiUrl, {
+    proxyKey: process.env.PROXY_KEY,
+    reportUnanswered: (cause) => reportServerFailure(cause, HTTP_BAD_GATEWAY),
+  })
 }
 
 /**
  * `/v1` skips the gate: the API's own authorization is the boundary, and a browser need not resend the site password
  * unchallenged ([RFC 7617 § 2.2](https://www.rfc-editor.org/rfc/rfc7617#section-2.2)).
  */
-export default function middleware(request: Request) {
+function routed(request: Request): Promise<Response> | Response {
   const url = new URL(request.url)
   if (isApiRequest(url)) return forwardToApi(request)
   return siteGate(request, url) ?? next()
+}
+
+/** Every request the matcher takes — a failure on its way is logged, filed with the error tracker, answered 500. */
+export default async function middleware(request: Request): Promise<Response> {
+  try {
+    return await routed(request)
+  } catch (failure) {
+    console.error('The server path failed', failure)
+    reportServerFailure(failure, HTTP_SERVER_ERROR)
+    return new Response(null, { status: HTTP_SERVER_ERROR })
+  }
 }
 
 export const config = {
