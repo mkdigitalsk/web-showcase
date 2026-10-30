@@ -7,9 +7,9 @@ import { answersOf, isAsking, isChoosing } from './consent'
 import { ConsentChoiceForm } from './ConsentChoiceForm'
 
 /**
- * Where the visitor chooses a purpose at a time — opened from the bar and from the footer. It opens on what each
- * purpose stands at, a box ticked only where the visitor allowed it, and saves every purpose at once. Once the bar is
- * answered, the dialog closes onto the footer's control that opens it again, the bar's own gone with the answer.
+ * Where the visitor chooses a purpose at a time. It opens on what each purpose stands at, a box ticked only where the
+ * visitor allowed it, and saves every purpose at once. Once the bar is answered, the dialog closes onto the control
+ * that opens it again, the bar's own gone with the answer.
  */
 export function ConsentDialog() {
   const { t, intl } = useTranslation()

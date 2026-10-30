@@ -1,7 +1,7 @@
 import { useConsent, useTranslation } from '../../hooks'
 import styles from './MeasurementSettingsButton.module.css'
 
-/** The footer's one button — it opens the consent dialog, drawn as the links beside it are. */
+/** Opens the consent dialog, drawn as a link. */
 export function MeasurementSettingsButton() {
   const { t } = useTranslation()
   const { choose, reopener } = useConsent()
