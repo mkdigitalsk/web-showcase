@@ -18,6 +18,8 @@ const ROUTE_MODULE_EXPORTS = [
   'shouldRevalidate',
 ]
 
+const BROWSER_GLOBALS = ['navigator', 'window', 'document', 'localStorage', 'sessionStorage']
+
 /** Its peer range stops at ESLint 9; package.json overrides it, and the rules run unchanged on 10. */
 const jsxA11yRecommended = jsxA11y.flatConfigs.recommended
 
@@ -67,5 +69,16 @@ export default defineConfig([
   },
   /** routes.ts is where the literals are declared, so the rule cannot apply to it. */
   { files: ['src/utils/routes.ts'], rules: { 'no-restricted-syntax': 'off' } },
+  /** A component reaches the browser through a hook in shared/hooks/, which a test or a second platform replaces. */
+  {
+    files: ['src/**/*.tsx', 'src/routes/**/*.ts'],
+    ignores: ['**/*.test.{ts,tsx}', 'src/test/**'],
+    rules: {
+      'no-restricted-globals': [
+        'error',
+        ...BROWSER_GLOBALS.map((name) => ({ name, message: 'Reach the browser through a hook in shared/hooks/.' })),
+      ],
+    },
+  },
   eslintConfigPrettier,
 ])
