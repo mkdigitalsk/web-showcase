@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/core'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { http, HttpResponse } from 'msw'
+import { TRACKER_SETTINGS_PATH } from '../src/shared/errorTracking/trackerSettings'
 import { server } from '../src/test/server'
 import { eventsIn, TRACKER_DSN, trackerReceiving } from '../src/test/trackerEnvelopes'
 import middleware from '../middleware'
@@ -67,6 +68,24 @@ describe('middleware', () => {
     const response = await middleware(new Request(`${SITE}/v1/notes`))
 
     expect(response.status).toBe(200)
+  })
+})
+
+describe('the tracker the browser is told', () => {
+  it('is the one the environment names as the request arrives, under the deployment’s environment', async () => {
+    nameTheTracker()
+
+    const response = await middleware(new Request(`${SITE}${TRACKER_SETTINGS_PATH}`))
+
+    expect(response.status).toBe(200)
+    expect(await response.json()).toEqual({ dsn: TRACKER_DSN, environment: 'production' })
+  })
+
+  it('is none while the environment names none', async () => {
+    const response = await middleware(new Request(`${SITE}${TRACKER_SETTINGS_PATH}`))
+
+    expect(response.status).toBe(200)
+    expect(await response.json()).toBeNull()
   })
 })
 

@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/browser'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { sameAnswer } from '../analytics/consent'
 import { keepAnswers } from '../services/consentCookies'
-import { allSentToTheTracker, BUILT_TRACKER, forgetTheClient, thrownOnThePage } from '../../test/errorTracker'
+import { allSentToTheTracker, PRODUCTION_TRACKER, forgetTheClient, thrownOnThePage } from '../../test/errorTracker'
 import { eventsIn, trackerReceiving } from '../../test/trackerEnvelopes'
 import { reportBrowserError, startBrowserErrorTracking } from './browserErrorTracking'
 
@@ -34,7 +34,7 @@ describe('error tracking in the browser', () => {
   })
 
   it('runs the SDK on failures alone — no replay, no feedback widget, no tracing, no breadcrumbs, no sessions', () => {
-    startBrowserErrorTracking(BUILT_TRACKER)
+    startBrowserErrorTracking(PRODUCTION_TRACKER)
 
     const client = Sentry.getClient()
     for (const recorder of ['Replay', 'Feedback', 'BrowserTracing', 'Breadcrumbs', 'Console', 'BrowserSession']) {
@@ -47,7 +47,7 @@ describe('error tracking in the browser', () => {
   it('sends an error thrown on a page under its environment, with the page and the browser, and nothing of the visitor or what it said', async () => {
     window.history.pushState(null, '', PAGE_WITH_DATA)
     const envelopes = trackerReceiving()
-    startBrowserErrorTracking(BUILT_TRACKER)
+    startBrowserErrorTracking(PRODUCTION_TRACKER)
 
     thrownOnThePage(new TypeError(SAID))
     await allSentToTheTracker()
@@ -71,7 +71,7 @@ describe('error tracking in the browser', () => {
   it('names the page a thrown value with no stack came from without its query or fragment', async () => {
     window.history.pushState(null, '', PAGE_WITH_DATA)
     const envelopes = trackerReceiving()
-    startBrowserErrorTracking(BUILT_TRACKER)
+    startBrowserErrorTracking(PRODUCTION_TRACKER)
 
     thrownWithNoStack()
     await allSentToTheTracker()
@@ -84,7 +84,7 @@ describe('error tracking in the browser', () => {
 
   it('sends an error a route boundary caught, once', async () => {
     const envelopes = trackerReceiving()
-    startBrowserErrorTracking(BUILT_TRACKER)
+    startBrowserErrorTracking(PRODUCTION_TRACKER)
 
     reportBrowserError(new TypeError(SAID))
     await allSentToTheTracker()

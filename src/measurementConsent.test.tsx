@@ -11,7 +11,7 @@ import {
   type Purpose,
 } from './shared/analytics/consent'
 import { keepAnswers } from './shared/services/consentCookies'
-import { BUILT_TRACKER, forgetTheClient, thrownOnThePage } from './test/errorTracker'
+import { forgetTheClient, thrownOnThePage, trackerNamed } from './test/errorTracker'
 import { eventsIn, trackerReceiving } from './test/trackerEnvelopes'
 import { renderApp, screen, userEvent, waitFor, within } from './test/test-utils'
 import { beforeSendIn, forgetVercelScripts } from './test/vercelQueues'
@@ -82,16 +82,15 @@ async function sendsAThrownError(): Promise<boolean> {
   return eventsIn(envelopes).length > 0
 }
 
-/** A build that inlined a DSN, so the error tracker is the consent's to start. */
+/** A deployment that names the error tracker, so starting it is the consent's to decide. */
 beforeEach(() => {
-  vi.stubGlobal('__ERROR_TRACKER__', BUILT_TRACKER)
+  trackerNamed()
 })
 
 afterEach(async () => {
   await startsSettled()
   forgetVercelScripts()
   forgetTheClient()
-  vi.unstubAllGlobals()
 })
 
 describe('measuring visits and recording errors', () => {

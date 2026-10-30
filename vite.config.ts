@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react'
 import { configDefaults } from 'vitest/config'
 import type { InlineConfig } from 'vitest/node'
 import { apiProxy } from './server/viteApiProxy'
-import { trackerSettingsOf } from './src/shared/errorTracking/trackerSettings'
 
 /**
  * `test` typed via vitest's own InlineConfig, `plugins` via vite's UserConfig — keeps them apart so
@@ -39,14 +38,6 @@ export default defineConfig((configEnv): Config => {
     plugins: pluginsFor(configEnv, env),
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version ?? '0.0.0'),
-      /**
-       * The error tracker for the browser, which receives no environment of its own — the one `SENTRY_DSN` the edge
-       * middleware reads, parsed as the build reads it, under the environment Vercel builds for. A DSN only lets a
-       * page send events, so a visitor reading it is harmless; none leaves the SDK unloaded.
-       *
-       * @see {@link https://docs.sentry.io/concepts/key-terms/dsn-explainer/#dsn-utilization | Sentry — Data Source Name (DSN), DSN Utilization}
-       */
-      __ERROR_TRACKER__: JSON.stringify(trackerSettingsOf(env) ?? null),
     },
     /**
      * Each chunk's source map is served beside it, so the error tracker reads a browser's stack as the source has it.

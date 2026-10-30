@@ -12,7 +12,13 @@ export interface TrackerSettings {
   readonly environment: Environment
 }
 
-/** The variables the settings are read from — the build's environment, or the edge's as a request arrives. */
+/**
+ * Where the browser asks which tracker to start — the edge answers with the settings its variables name as the
+ * request arrives, so the bundle carries none and one build serves every environment.
+ */
+export const TRACKER_SETTINGS_PATH = '/error-tracker'
+
+/** The variables the settings are read from — the edge's, as a request arrives. */
 type Variables = Readonly<Record<string, string | undefined>>
 
 /**
@@ -44,4 +50,19 @@ export function trackerSettingsOf(variables: Variables): TrackerSettings | undef
   const dsn = variables.SENTRY_DSN?.trim()
   if (!dsn) return undefined
   return { dsn: dsnOf(dsn), environment: environmentOf(variables.VERCEL_ENV) }
+}
+
+/**
+ * The settings in the edge's [answer] at {@link TRACKER_SETTINGS_PATH}, parsed as their variables are — none where it
+ * answered `null`.
+ */
+export function trackerSettingsIn(answer: unknown): TrackerSettings | undefined {
+  if (answer === null) return undefined
+  if (typeof answer === 'object' && 'dsn' in answer && 'environment' in answer) {
+    const { dsn, environment } = answer
+    if (typeof dsn === 'string' && typeof environment === 'string') {
+      return { dsn: dsnOf(dsn), environment: environmentOf(environment) }
+    }
+  }
+  throw new Error('The tracker settings are malformed')
 }

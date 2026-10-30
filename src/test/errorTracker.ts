@@ -1,17 +1,24 @@
 import * as Sentry from '@sentry/browser'
-import { trackerSettingsOf, type TrackerSettings } from '../shared/errorTracking/trackerSettings'
+import { http, HttpResponse } from 'msw'
+import { TRACKER_SETTINGS_PATH, trackerSettingsOf, type TrackerSettings } from '../shared/errorTracking/trackerSettings'
+import { server } from './server'
 import { TRACKER_DSN } from './trackerEnvelopes'
 
 const FLUSH_MS = 5_000
 
-/** The settings a production build inlines once its environment names the tracker. */
-function builtFor(environment: Readonly<Record<string, string>>): TrackerSettings {
+/** The settings the edge serves once its environment names the tracker. */
+function servedFor(environment: Readonly<Record<string, string>>): TrackerSettings {
   const settings = trackerSettingsOf(environment)
   if (settings === undefined) throw new Error('the environment names no tracker')
   return settings
 }
 
-export const BUILT_TRACKER = builtFor({ SENTRY_DSN: TRACKER_DSN, VERCEL_ENV: 'production' })
+export const PRODUCTION_TRACKER = servedFor({ SENTRY_DSN: TRACKER_DSN, VERCEL_ENV: 'production' })
+
+/** A deployment whose environment names the tracker — the edge tells the browser {@link PRODUCTION_TRACKER}. */
+export function trackerNamed(): void {
+  server.use(http.get(TRACKER_SETTINGS_PATH, () => HttpResponse.json(PRODUCTION_TRACKER)))
+}
 
 /**
  * [error] as a page throws it and no code catches it, handed to the window's `onerror` as the browser hands it —

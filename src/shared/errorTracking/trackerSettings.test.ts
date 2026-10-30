@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { trackerSettingsOf } from './trackerSettings'
+import { trackerSettingsIn, trackerSettingsOf } from './trackerSettings'
 
 const DSN = 'https://public@tracker.example.com/1'
 
 describe('the tracker an environment names', () => {
-  it('is the project its DSN names, under the environment Vercel builds for', () => {
+  it('is the project its DSN names, under the environment Vercel runs it in', () => {
     expect(trackerSettingsOf({ SENTRY_DSN: DSN, VERCEL_ENV: 'preview' })).toEqual({
       dsn: DSN,
       environment: 'preview',
@@ -28,7 +28,24 @@ describe('the tracker an environment names', () => {
     'ftp://public@tracker.example.com/1',
     'https://tracker.example.com/1',
     'https://public@tracker.example.com/',
-  ])('stops the build on a DSN with no scheme of the web, key or project — %s', (malformed) => {
+  ])('refuses a DSN with no scheme of the web, key or project — %s', (malformed) => {
     expect(() => trackerSettingsOf({ SENTRY_DSN: malformed })).toThrow('SENTRY_DSN is malformed')
   })
+})
+
+describe('the tracker the edge tells the browser', () => {
+  it('is the settings it served, parsed as their variables are', () => {
+    expect(trackerSettingsIn({ dsn: DSN, environment: 'preview' })).toEqual({ dsn: DSN, environment: 'preview' })
+  })
+
+  it('is none where the edge named none', () => {
+    expect(trackerSettingsIn(null)).toBeUndefined()
+  })
+
+  it.each([{}, { dsn: DSN }, { dsn: 1, environment: 'preview' }, 'tracker'])(
+    'refuses an answer that holds no settings — %o',
+    (answer) => {
+      expect(() => trackerSettingsIn(answer)).toThrow('The tracker settings are malformed')
+    },
+  )
 })

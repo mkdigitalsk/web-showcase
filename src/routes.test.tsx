@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { sameAnswer } from './shared/analytics/consent'
 import { API_PREFIX } from './shared/api/apiVersion'
 import { keepAnswers } from './shared/services/consentCookies'
-import { BUILT_TRACKER, forgetTheClient } from './test/errorTracker'
+import { forgetTheClient, trackerNamed } from './test/errorTracker'
 import { eventsIn, trackerReceiving } from './test/trackerEnvelopes'
 import { fakeAuthUser, http, HttpResponse, renderApp, screen, server, userEvent } from './test/test-utils'
 import { Routes } from './utils'
@@ -100,14 +100,13 @@ describe.each([
     expect(await screen.findByText('Recovered')).toBeVisible()
   })
 
-  describe('with a build that names an error tracker', () => {
+  describe('with a deployment that names an error tracker', () => {
     beforeEach(() => {
-      vi.stubGlobal('__ERROR_TRACKER__', BUILT_TRACKER)
+      trackerNamed()
     })
 
     afterEach(() => {
       forgetTheClient()
-      vi.unstubAllGlobals()
     })
 
     it('hands the crash to the tracker once the visitor allowed error recording, and never what it said', async () => {

@@ -1,6 +1,7 @@
 import { next } from '@vercel/functions'
 import { isApiRequest, proxyApi } from './server/apiProxy.js'
 import { reportServerFailure } from './server/errorTracking.js'
+import { TRACKER_SETTINGS_PATH, trackerSettingsOf } from './src/shared/errorTracking/trackerSettings.js'
 
 const ACCESS_COOKIE = 'site_access'
 const ONE_YEAR = 60 * 60 * 24 * 365
@@ -86,13 +87,22 @@ function forwardToApi(request: Request): Promise<Response> {
 }
 
 /**
+ * The tracker the browser starts once the visitor allows it, read per request as API_URL is. Any other path goes on to
+ * the page or the asset it names.
+ */
+function answered(url: URL): Response {
+  if (url.pathname === TRACKER_SETTINGS_PATH) return Response.json(trackerSettingsOf(process.env) ?? null)
+  return next()
+}
+
+/**
  * `/v1` skips the gate: the API's own authorization is the boundary, and a browser need not resend the site password
  * unchallenged ([RFC 7617 § 2.2](https://www.rfc-editor.org/rfc/rfc7617#section-2.2)).
  */
 function routed(request: Request): Promise<Response> | Response {
   const url = new URL(request.url)
   if (isApiRequest(url)) return forwardToApi(request)
-  return siteGate(request, url) ?? next()
+  return siteGate(request, url) ?? answered(url)
 }
 
 /** Every request the matcher takes — a failure on its way is logged, filed with the error tracker, answered 500. */
