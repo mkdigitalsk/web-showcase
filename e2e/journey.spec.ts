@@ -1,4 +1,5 @@
-import { expect, test, type Page, type Request } from '@playwright/test'
+import { expect, test, type Locator, type Page, type Request } from '@playwright/test'
+import { CONSENT_COOKIES } from '../src/shared/analytics/consent'
 import { TRACKER_SETTINGS_PATH } from '../src/shared/errorTracking/trackerSettings'
 
 test.describe.configure({ mode: 'serial' })
@@ -35,6 +36,13 @@ test.beforeAll(async ({ browser }) => {
 test.afterAll(async () => {
   await page.close()
 })
+
+/** Where [shown] starts and ends down the window. */
+async function spanOf(shown: Locator): Promise<{ top: number; bottom: number }> {
+  const box = await shown.boundingBox()
+  if (box === null) throw new Error(`${shown.toString()} is not shown`)
+  return { top: box.y, bottom: box.y + box.height }
+}
 
 async function openFromSidebar(name: string, heading: string) {
   await page.getByRole('navigation').getByRole('link', { name, exact: true }).click()
@@ -73,6 +81,24 @@ test('a stranger signs up and lands on the first screen', async () => {
 
   await expect(page).toHaveURL(/\/ui-components$/)
   await expect(page.getByRole('heading', { level: 1, name: 'UI Components', exact: true })).toBeAttached()
+})
+
+test('a signed-in page asked again keeps to the window, the footer clear of the bar', async () => {
+  for (const name of Object.values(CONSENT_COOKIES)) await page.context().clearCookies({ name })
+  await page.reload()
+  const asking = page.getByRole('region', { name: CONSENT })
+  await expect(asking).toBeVisible()
+
+  const [pageHeight, windowHeight] = await page.evaluate<[number, number]>(
+    '[document.documentElement.scrollHeight, window.innerHeight]',
+  )
+  expect(pageHeight, 'the bar grew the page past the window').toBe(windowHeight)
+  const choice = page.getByRole('contentinfo').getByRole('button', { name: 'Measurement and error recording' })
+  await expect(choice).toBeInViewport({ ratio: 1 })
+  expect((await spanOf(choice)).bottom, 'the bar covers the footer').toBeLessThanOrEqual((await spanOf(asking)).top)
+
+  await asking.getByRole('button', { name: 'Reject all' }).click()
+  await expect(asking, 'the answer did not take the bar away').toBeHidden()
 })
 
 test('the components answer: a dialog, a notice, a deletable chip', async () => {

@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router'
+import { ConsentBar } from '../../analytics/ConsentBar'
 import { Footer } from './Footer'
 import { TopBar } from './TopBar'
 import styles from './PublicLayout.module.css'
@@ -15,6 +16,7 @@ export default function PublicLayout() {
         <Outlet />
       </main>
       <Footer />
+      <ConsentBar />
     </div>
   )
 }

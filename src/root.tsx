@@ -7,7 +7,6 @@ import '@fontsource/archivo/700.css'
 import '@fontsource/dm-mono/400.css'
 import '@fontsource/dm-mono/500.css'
 
-import { ConsentBar } from './shared/analytics/ConsentBar'
 import { ConsentDialog } from './shared/analytics/ConsentDialog'
 import { ErrorTracking } from './shared/analytics/ErrorTracking'
 import { Measurement } from './shared/analytics/Measurement'
@@ -75,7 +74,7 @@ function Chrome({ children }: { children: ReactNode }) {
   )
 }
 
-/** Every page, then the consent bar and its dialog, and the measurement and error recording the answers allow. */
+/** Every page, then the consent dialog, and the measurement and error recording the answers allow. */
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -83,7 +82,6 @@ export default function App() {
         <AuthProvider>
           <Outlet />
         </AuthProvider>
-        <ConsentBar />
         <ConsentDialog />
         <Measurement />
         <ErrorTracking />

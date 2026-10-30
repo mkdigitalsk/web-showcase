@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { Outlet, useNavigation } from 'react-router'
 import { Panel, PanelGroup, PanelResizeHandle, type ImperativePanelHandle } from 'react-resizable-panels'
+import { ConsentBar } from '../../analytics/ConsentBar'
 import { useTranslation } from '../../hooks'
 import { LinearProgress } from '../feedback'
 import { Footer } from './Footer'
@@ -10,7 +11,8 @@ import styles from './AppLayout.module.css'
 
 /**
  * The signed-in shell. A navigation waits for the next page's loaders, so a bar across the top of the page says
- * one is under way.
+ * one is under way. The consent bar is the shell's last row, so the panels give up its height and the page never
+ * outgrows the window.
  */
 export default function AppLayout() {
   const { t } = useTranslation()
@@ -58,6 +60,7 @@ export default function AppLayout() {
       </PanelGroup>
 
       <Footer />
+      <ConsentBar />
     </div>
   )
 }
