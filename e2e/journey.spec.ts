@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test, type Page, type Request } from '@playwright/test'
+import { TRACKER_SETTINGS_PATH } from '../src/shared/errorTracking/trackerSettings'
 
 test.describe.configure({ mode: 'serial' })
 
@@ -8,10 +9,27 @@ const EMAIL = `dana+${RUN_ID}@example.com`
 /** The server's policy: an upper, a lower, a digit and one of its special characters. */
 const PASSWORD = `Dana${RUN_ID}1!`
 
+const CONSENT = 'Consent to measurement and error recording'
+
 let page: Page
+
+/** Every request the journey's page sent to Vercel's measurement or toward the error tracker, in order. */
+const measuring: string[] = []
+
+/**
+ * Whether [request] measures the visit or records an error — Vercel's scripts and beacons, the error tracker's settings
+ * or its ingest.
+ */
+function measures(request: Request): boolean {
+  const { hostname, pathname } = new URL(request.url())
+  return pathname.startsWith('/_vercel/') || pathname === TRACKER_SETTINGS_PATH || hostname.endsWith('.sentry.io')
+}
 
 test.beforeAll(async ({ browser }) => {
   page = await browser.newPage()
+  page.on('request', (request) => {
+    if (measures(request)) measuring.push(request.url())
+  })
 })
 
 test.afterAll(async () => {
@@ -28,8 +46,10 @@ async function openFromSidebar(name: string, heading: string) {
 
 test('a stranger is asked before anything is measured, and an answer is kept', async () => {
   await page.goto('/sign-up')
-  const asking = page.getByRole('region', { name: 'Consent to measurement and error recording' })
+  const asking = page.getByRole('region', { name: CONSENT })
   await expect(asking).toBeVisible()
+  await page.waitForLoadState('networkidle')
+  expect(measuring, 'measured before the visitor answered').toEqual([])
 
   await asking.getByRole('button', { name: 'Reject all' }).click()
   await expect(asking, 'the answer did not take the bar away').toBeHidden()
@@ -37,6 +57,8 @@ test('a stranger is asked before anything is measured, and an answer is kept', a
   await page.reload()
   await expect(page.getByRole('heading', { name: 'Create Account' })).toBeVisible()
   await expect(asking, 'the answer was not kept').toBeHidden()
+  await page.waitForLoadState('networkidle')
+  expect(measuring, 'measured after the visitor refused').toEqual([])
 })
 
 test('a stranger signs up and lands on the first screen', async () => {
