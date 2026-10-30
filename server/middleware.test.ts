@@ -87,6 +87,16 @@ describe('the tracker the browser is told', () => {
     expect(response.status).toBe(200)
     expect(await response.json()).toBeNull()
   })
+
+  it('is told while the site is closed, as the privacy notice the gate leaves open asks for it', async () => {
+    closeTheSite()
+    nameTheTracker()
+
+    const response = await middleware(new Request(`${SITE}${TRACKER_SETTINGS_PATH}`))
+
+    expect(response.status).toBe(200)
+    expect(await response.json()).toEqual({ dsn: TRACKER_DSN, environment: 'production' })
+  })
 })
 
 describe('a failure on the server path', () => {

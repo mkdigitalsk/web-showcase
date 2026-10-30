@@ -82,23 +82,24 @@ function forwardToApi(request: Request): Promise<Response> {
   return proxyApi(request, apiUrl, { proxyKey: process.env.PROXY_KEY, reportUnanswered: reportServerFailure })
 }
 
-/**
- * The tracker the browser starts once the visitor allows it, read per request as API_URL is. Any other path goes on to
- * the page or the asset it names.
- */
-function answered(url: URL): Response {
-  if (url.pathname === TRACKER_SETTINGS_PATH) return Response.json(trackerSettingsOf(process.env) ?? null)
-  return next()
+/** The tracker the browser starts once the visitor allows it, read per request as API_URL is. */
+function trackerSettings(): Response {
+  return Response.json(trackerSettingsOf(process.env) ?? null)
 }
 
 /**
  * `/v1` skips the gate: the API's own authorization is the boundary, and a browser need not resend the site password
- * unchallenged ([RFC 7617 § 2.2](https://www.rfc-editor.org/rfc/rfc7617#section-2.2)).
+ * unchallenged ([RFC 7617 § 2.2](https://www.rfc-editor.org/rfc/rfc7617#section-2.2)). The tracker's settings skip it
+ * for the same reason — the privacy notice, which the gate leaves open, asks for them — and a DSN only lets a page
+ * send events.
+ *
+ * @see {@link https://docs.sentry.io/concepts/key-terms/dsn-explainer/#dsn-utilization | Sentry — Data Source Name (DSN), DSN Utilization}
  */
 function routed(request: Request): Promise<Response> | Response {
   const url = new URL(request.url)
   if (isApiRequest(url)) return forwardToApi(request)
-  return siteGate(request, url) ?? answered(url)
+  if (url.pathname === TRACKER_SETTINGS_PATH) return trackerSettings()
+  return siteGate(request, url) ?? next()
 }
 
 /** Every request the matcher takes — a failure on its way is logged, filed with the error tracker, answered 500. */
