@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page, type Request } from '@playwright/test'
+import en from '../src/locales/en.json' with { type: 'json' }
 import { CONSENT_COOKIES } from '../src/shared/analytics/consent'
 import { TRACKER_SETTINGS_PATH } from '../src/shared/errorTracking/trackerSettings'
 
@@ -182,11 +183,11 @@ test('the browser capabilities, the privacy notice and the terms open', async ()
   await openFromSidebar('Capabilities', 'Capabilities')
   await expect(page.getByText('Your Browser')).toBeVisible()
 
-  await page.getByRole('contentinfo').getByRole('link', { name: 'Privacy' }).click()
-  await expect(page.getByRole('heading', { name: 'Privacy', exact: true })).toBeVisible()
+  await page.getByRole('contentinfo').getByRole('link', { name: en['privacy.link'], exact: true }).click()
+  await expect(page.getByRole('heading', { name: en['privacy.title'], exact: true })).toBeVisible()
 
-  await page.getByRole('contentinfo').getByRole('link', { name: 'Terms of use' }).click()
-  await expect(page.getByRole('heading', { name: 'Terms of use of the showcase apps' })).toBeVisible()
+  await page.getByRole('contentinfo').getByRole('link', { name: en['terms.link'], exact: true }).click()
+  await expect(page.getByRole('heading', { name: en['terms.title'], exact: true })).toBeVisible()
 })
 
 test('the account signs out, signs back in, and is deleted', async () => {
