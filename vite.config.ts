@@ -3,7 +3,7 @@ import { reactRouter } from '@react-router/dev/vite'
 import react from '@vitejs/plugin-react'
 import { configDefaults } from 'vitest/config'
 import type { InlineConfig } from 'vitest/node'
-import { apiProxy } from './server/viteApiProxy'
+import { apiProxy } from './server/viteApiProxy.ts'
 
 /**
  * `test` typed via vitest's own InlineConfig, `plugins` via vite's UserConfig — keeps them apart so

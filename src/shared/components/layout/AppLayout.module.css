@@ -30,7 +30,7 @@
 }
 
 .handle:hover::after,
-.handle[data-resize-handle-state='drag']::after,
+.handle[data-separator='active']::after,
 .handle:focus-visible::after {
   width: 2px;
   background: var(--color-action);

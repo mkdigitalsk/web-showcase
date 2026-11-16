@@ -36,8 +36,17 @@ const apiCall = () =>
 /** What no report of a failed call may carry — the visitor's address, their session, the path they asked for. */
 const NEVER_SENT = [ADDRESS, SESSION, '/v1/notes']
 
-/** The API gone silent — every call to it fails before an answer. */
-const apiSilent = () => server.use(http.get(`${API}/v1/notes`, () => HttpResponse.error()))
+/**
+ * The API gone silent — every call to it fails before an answer, as fetch fails one: a TypeError with a stack of its
+ * own. MSW's network error carries no stack frame, so the call fails at fetch and the rest goes on to MSW.
+ */
+function apiSilent() {
+  const passOn = globalThis.fetch
+  vi.spyOn(globalThis, 'fetch').mockImplementation((input, init) => {
+    const url = input instanceof Request ? input.url : String(input)
+    return url.startsWith(API) ? Promise.reject(new TypeError('fetch failed')) : passOn(input, init)
+  })
+}
 
 /** The failure's own lines in the host log, kept out of the run's output. */
 const hostLog = () => vi.spyOn(console, 'error').mockImplementation(() => {})

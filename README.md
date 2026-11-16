@@ -3,10 +3,10 @@
 A production-ready React web app showcasing modern frontend development with Base UI and CSS Modules, a wrapper-component design system, and the shared MK Digital brand tokens. The web counterpart of the [KMP mobile showcase](https://github.com/mkdigitalsk/kmp-showcase).
 
 [![CI](https://github.com/mkdigitalsk/web-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/mkdigitalsk/web-showcase/actions/workflows/ci.yml)
-[![React](https://img.shields.io/badge/React-19-61DAFB.svg?logo=react&logoColor=black)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Vite](https://img.shields.io/badge/Vite-8-646CFF.svg?logo=vite&logoColor=white)](https://vite.dev)
-[![Base UI](https://img.shields.io/badge/Base_UI-1-000000.svg)](https://base-ui.com)
+[![React](https://img.shields.io/badge/React-61DAFB.svg?logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-646CFF.svg?logo=vite&logoColor=white)](https://vite.dev)
+[![Base UI](https://img.shields.io/badge/Base_UI-000000.svg)](https://base-ui.com)
 
 > 🔗 **[View it live →](https://showcase.mkdigital.sk)** — it's a web app, just open it in a browser. No build, install, or device needed.
 

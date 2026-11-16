@@ -2,7 +2,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http'
 import { Readable } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
 import type { Connect, Plugin } from 'vite'
-import { isApiRequest, proxyApi } from './apiProxy'
+import { isApiRequest, proxyApi } from './apiProxy.ts'
 
 /** No silent fallback: the API a machine develops against is its own choice, and .env.local is where it lives. */
 function requireApiUrl(apiUrl: string | undefined): void {
