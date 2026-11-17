@@ -77,8 +77,8 @@ describe('AccountPage', () => {
   })
 
   it('reads an account the API sends without the demo flag as a normal one', async () => {
-    const { id, email, themeMode, locale } = fakeAuthUser()
-    server.use(http.get(account, () => HttpResponse.json({ id, email, themeMode, locale })))
+    const { id, email, themeMode, language } = fakeAuthUser()
+    server.use(http.get(account, () => HttpResponse.json({ id, email, themeMode, language })))
     await openAccountPage()
 
     expect(screen.getByRole('button', { name: 'Delete account' })).toBeVisible()

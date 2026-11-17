@@ -28,7 +28,7 @@ describe('LocaleProvider', () => {
   })
 
   it('reads a kept language the app no longer offers in English', () => {
-    localStorage.setItem(LOCALE_STORAGE_KEY, JSON.stringify('de-DE'))
+    localStorage.setItem(LOCALE_STORAGE_KEY, JSON.stringify('fr-FR'))
     renderWithProviders(<SwitchToSlovak />)
 
     expect(document.documentElement).toHaveAttribute('lang', Locale.EN_GB)

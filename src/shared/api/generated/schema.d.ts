@@ -411,7 +411,7 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": components["schemas"]["UpdateLocaleRequestDTO"];
+                    "application/json": components["schemas"]["UpdateLanguageRequestDTO"];
                 };
             };
             responses: {
@@ -715,7 +715,8 @@ export interface components {
             email: string;
             /** @enum {string} */
             themeMode: "system" | "light" | "dark";
-            locale: string;
+            /** @enum {string} */
+            language?: "SK" | "EN";
             demo?: boolean;
         };
         /** AuthResponseDTO */
@@ -735,7 +736,8 @@ export interface components {
             createdAt: number;
             /** @enum {string} */
             themeMode: "system" | "light" | "dark";
-            locale: string;
+            /** @enum {string} */
+            language?: "SK" | "EN";
             demo?: boolean;
         };
         /** UpdateThemeModeRequestDTO */
@@ -743,9 +745,10 @@ export interface components {
             /** @enum {string} */
             themeMode: "system" | "light" | "dark";
         };
-        /** UpdateLocaleRequestDTO */
-        UpdateLocaleRequestDTO: {
-            locale: string;
+        /** UpdateLanguageRequestDTO */
+        UpdateLanguageRequestDTO: {
+            /** @enum {string} */
+            language: "SK" | "EN";
         };
         /** NoteResponseDTO */
         NoteResponseDTO: {

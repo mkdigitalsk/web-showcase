@@ -1,8 +1,8 @@
 import { userApi } from '../api'
-import type { ThemeMode } from '../types'
+import type { Language, ThemeMode } from '../types'
 
 export const userService = {
   updateThemeMode: (themeMode: ThemeMode) => userApi.updateThemeMode(themeMode),
-  updateLocale: (locale: string) => userApi.updateLocale(locale),
+  updateLanguage: (language: Language) => userApi.updateLanguage(language),
   deleteAccount: () => userApi.deleteAccount(),
 }

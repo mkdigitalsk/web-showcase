@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import type { AuthUser, ThemeMode } from '../types'
+import type { AuthUser, Language, ThemeMode } from '../types'
 import { sessionQueryOptions } from '../auth/session'
 import { authService, clearLocalUserData, userService } from '../services'
 import { useColorScheme } from '../hooks/useColorScheme'
 import { useLocale } from '../hooks/useLocale'
-import { DEFAULT_LOCALE } from '../i18n/locales'
+import { DEFAULT_LOCALE, localeOf } from '../i18n/locales'
 import { AuthContext, type AuthContextValue } from './AuthContext'
 
 /**
@@ -30,7 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const startSession = (signedIn: AuthUser) => {
     storeUser(signedIn)
     setMode(signedIn.themeMode)
-    setLocale(signedIn.locale)
+    setLocale(localeOf(signedIn.language))
   }
 
   const forgetThisDevice = async () => {
@@ -64,10 +64,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     await syncPreference(userService.updateThemeMode(themeMode), storeUser)
   }
 
-  const updateLocale = async (locale: string) => {
-    setLocale(locale)
+  const updateLanguage = async (language: Language) => {
+    setLocale(localeOf(language))
     if (!user) return
-    await syncPreference(userService.updateLocale(locale), storeUser)
+    await syncPreference(userService.updateLanguage(language), storeUser)
   }
 
   const value: AuthContextValue = {
@@ -77,7 +77,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     signOut,
     deleteAccount,
     updateThemeMode,
-    updateLocale,
+    updateLanguage,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

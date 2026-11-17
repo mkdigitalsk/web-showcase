@@ -61,7 +61,7 @@ export function fakeAuthValue(overrides: Partial<AuthContextValue> = {}): AuthCo
     signOut: async () => {},
     deleteAccount: async () => {},
     updateThemeMode: async () => {},
-    updateLocale: async () => {},
+    updateLanguage: async () => {},
     ...overrides,
   }
 }

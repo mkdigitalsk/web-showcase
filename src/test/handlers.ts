@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw'
 import { API_PREFIX } from '../shared/api/apiVersion'
 import { TRACKER_SETTINGS_PATH } from '../shared/errorTracking/trackerSettings'
+import type { Language } from '../shared/types'
 import { fakeAuthResponse, fakeRemoteNote, fakeUser } from './fakes'
 
 /**
@@ -29,8 +30,8 @@ export const handlers = [
   }),
 
   http.put(`${users}/me/locale`, async ({ request }) => {
-    const { locale } = (await request.json()) as { locale: string }
-    return HttpResponse.json(fakeUser({ locale }))
+    const { language } = (await request.json()) as { language: Language }
+    return HttpResponse.json(fakeUser({ language }))
   }),
 
   http.delete(`${users}/me`, () => new HttpResponse(null, { status: 204 })),

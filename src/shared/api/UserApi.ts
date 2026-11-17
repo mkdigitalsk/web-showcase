@@ -1,4 +1,4 @@
-import type { ThemeMode, User } from '../types'
+import type { Language, ThemeMode, User } from '../types'
 import { BaseApiService } from './BaseApiService'
 import { API_PREFIX } from './apiVersion'
 
@@ -23,8 +23,8 @@ export class UserApi extends BaseApiService {
     return this._put<User>(`${this.baseRoute}/me/theme-mode`, { themeMode })
   }
 
-  updateLocale(locale: string): Promise<User> {
-    return this._put<User>(`${this.baseRoute}/me/locale`, { locale })
+  updateLanguage(language: Language): Promise<User> {
+    return this._put<User>(`${this.baseRoute}/me/locale`, { language })
   }
 
   deleteAccount(): Promise<void> {

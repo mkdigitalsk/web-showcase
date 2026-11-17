@@ -1,3 +1,4 @@
+export type { Language } from './language'
 export type { AuthResponse, AuthUser, SignInRequest, SignUpRequest } from './auth'
 export type { Note, RemoteNote, RemoteNoteInput } from './note'
 export type { ThemeMode } from './theme'

@@ -7,7 +7,7 @@ import styles from './LocaleSwitcher.module.css'
 export function LocaleSwitcher() {
   const { t } = useTranslation()
   const { locale, locales } = useLocale()
-  const { updateLocale } = useAuth()
+  const { updateLanguage } = useAuth()
 
   return (
     <Menu
@@ -18,7 +18,11 @@ export function LocaleSwitcher() {
       }
     >
       {locales.map((option) => (
-        <MenuItem key={option.code} selected={option.code === locale} onClick={() => void updateLocale(option.code)}>
+        <MenuItem
+          key={option.code}
+          selected={option.code === locale}
+          onClick={() => void updateLanguage(option.language)}
+        >
           {option.label}
           {option.code === locale && <CheckIcon className={styles.check} aria-hidden />}
         </MenuItem>

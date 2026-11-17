@@ -3,15 +3,15 @@ import { renderWithProviders, fakeAuthValue, screen, userEvent } from '../../../
 import { LocaleSwitcher } from './LocaleSwitcher'
 
 describe('LocaleSwitcher', () => {
-  it('lists the available languages and calls updateLocale on selection', async () => {
-    const updateLocale = vi.fn()
-    renderWithProviders(<LocaleSwitcher />, { authValue: fakeAuthValue({ updateLocale }) })
+  it('lists the available languages and calls updateLanguage on selection', async () => {
+    const updateLanguage = vi.fn()
+    renderWithProviders(<LocaleSwitcher />, { authValue: fakeAuthValue({ updateLanguage }) })
 
     await userEvent.click(screen.getByRole('button', { name: 'Change language' }))
 
     expect(await screen.findByRole('menuitem', { name: /English/ })).toBeVisible()
     await userEvent.click(screen.getByRole('menuitem', { name: /Slovenčina/ }))
 
-    expect(updateLocale).toHaveBeenCalledWith('sk-SK')
+    expect(updateLanguage).toHaveBeenCalledWith('SK')
   })
 })

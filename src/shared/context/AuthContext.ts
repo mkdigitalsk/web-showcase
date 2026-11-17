@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import type { AuthUser, SignInRequest, SignUpRequest, ThemeMode } from '../types'
+import type { AuthUser, Language, SignInRequest, SignUpRequest, ThemeMode } from '../types'
 
 export interface AuthContextValue {
   user: AuthUser | null
@@ -21,7 +21,7 @@ export interface AuthContextValue {
    */
   updateThemeMode: (themeMode: ThemeMode) => Promise<void>
   /** Applies the language at once and, like the theme, saves it to the account only when somebody is signed in. */
-  updateLocale: (locale: string) => Promise<void>
+  updateLanguage: (language: Language) => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
